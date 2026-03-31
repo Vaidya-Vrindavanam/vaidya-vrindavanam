@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vaidyavrindavanam.com/sitemap-index.xml
