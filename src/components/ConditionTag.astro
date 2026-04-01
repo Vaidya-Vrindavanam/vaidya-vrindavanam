@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: string;
+  slug?: string;
+}
+
+const { name, slug } = Astro.props;
+const href = slug ? `/conditions/${slug}` : undefined;
+---
+
+{href ? (
+  <a href={href} class="border border-brand-gold-border text-text-secondary px-4 py-1.5 text-xs tracking-wide hover:border-brand-gold hover:text-brand-gold transition-colors">
+    {name}
+  </a>
+) : (
+  <span class="border border-brand-gold-border text-text-secondary px-4 py-1.5 text-xs tracking-wide">
+    {name}
+  </span>
+)}

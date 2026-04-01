@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TreatmentCard from '../../components/TreatmentCard.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const conditions = await getCollection('conditions');
+  return conditions.map(condition => ({
+    params: { slug: condition.slug },
+    props: { condition },
+  }));
+}
+
+const { condition } = Astro.props;
+const { Content } = await condition.render();
+
+const allTreatments = await getCollection('treatments');
+const relatedTreatments = allTreatments.filter(t =>
+  condition.data.treatments.includes(t.slug)
+);
+
+const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'd like to consult about Ayurvedic treatment for ${condition.data.name}.`)}`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalCondition",
+  "name": condition.data.name,
+  "description": condition.data.shortDescription,
+  "possibleTreatment": relatedTreatments.map(t => ({
+    "@type": "MedicalTherapy",
+    "name": t.data.name,
+  })),
+  "relevantSpecialty": {
+    "@type": "MedicalSpecialty",
+    "name": "Ayurveda"
+  }
+};
+---
+
+<BaseLayout
+  title={`Ayurvedic Treatment for ${condition.data.name}`}
+  description={`${condition.data.shortDescription}. Expert Ayurvedic care at Vaidya Vrindavanam, Haripad, Kerala.`}
+  schema={schema}
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Conditions We Treat</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{condition.data.name}</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+  </section>
+
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
+      <Content />
+    </div>
+  </section>
+
+  {relatedTreatments.length > 0 && (
+    <section class="py-12 px-6 bg-brand-bg-alt">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6 text-center">Recommended Treatments</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {relatedTreatments.map(t => (
+            <TreatmentCard name={t.data.name} description={t.data.shortDescription} icon={t.data.icon} slug={t.slug} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="py-12 px-6 bg-brand-bg text-center">
+    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Get Expert Advice</h2>
+    <p class="text-sm text-text-secondary mb-6">Consult our doctors about Ayurvedic treatment for {condition.data.name}.</p>
+    <a href={waLink} target="_blank" rel="noopener noreferrer" class="inline-block bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest">
+      CONSULT VIA WHATSAPP
+    </a>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

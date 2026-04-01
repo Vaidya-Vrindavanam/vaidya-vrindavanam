@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../components/BlogPostCard.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title="Ayurveda Health Blog"
+  description="Expert Ayurvedic health tips, treatment guides, and seasonal wellness advice from the doctors at Vaidya Vrindavanam, Haripad, Kerala."
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Health & Wellness</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">Our Blog</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <p class="text-sm text-text-secondary mt-4 max-w-lg mx-auto">Insights on Ayurvedic health, wellness practices, and treatment guides from our physicians.</p>
+  </section>
+
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      {posts.map(post => (
+        <BlogPostCard
+          title={post.data.title}
+          excerpt={post.data.excerpt}
+          date={post.data.date.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+          slug={post.slug}
+        />
+      ))}
+    </div>
+    {posts.length === 0 && (
+      <p class="text-center text-text-muted">Blog posts coming soon. Stay tuned for Ayurvedic health tips and insights.</p>
+    )}
+  </section>
+
+  <CTABanner />
+</BaseLayout>

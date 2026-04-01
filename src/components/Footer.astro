@@ -1,0 +1,92 @@
+---
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Treatments', href: '/treatments' },
+  { label: 'Packages', href: '/packages' },
+  { label: 'Conditions', href: '/conditions' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-brand-bg-footer border-t border-brand-gold-border">
+  <div class="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+    <!-- Col 1: Clinic Info -->
+    <div>
+      <h3 class="font-display text-xl text-brand-gold tracking-wide mb-4">Vaidya Vrindavanam</h3>
+      <p class="text-sm text-text-secondary leading-relaxed mb-4">
+        Authentic Ayurvedic healing rooted in Kerala's ancient traditions.<br />
+        Haripad, Alappuzha, Kerala — 690514
+      </p>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="tel:+919074848705" class="text-text-secondary hover:text-brand-gold transition-colors">
+            📞 +91 90748 48705
+          </a>
+        </li>
+        <li>
+          <a href="tel:+918281861587" class="text-text-secondary hover:text-brand-gold transition-colors">
+            📞 +91 82818 61587
+          </a>
+        </li>
+        <li>
+          <a href="mailto:info@vaidyavrindavanam.com" class="text-text-secondary hover:text-brand-gold transition-colors">
+            ✉ info@vaidyavrindavanam.com
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Col 2: Navigate -->
+    <div>
+      <h3 class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Navigate</h3>
+      <ul class="space-y-2">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm text-text-secondary hover:text-brand-gold transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Col 3: Clinic Hours -->
+    <div>
+      <h3 class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Clinic Hours</h3>
+      <ul class="space-y-3 text-sm text-text-secondary">
+        <li class="flex justify-between gap-4 border-b border-brand-gold-border pb-2">
+          <span>Monday – Saturday</span>
+          <span class="text-text-primary">9AM–12PM</span>
+        </li>
+        <li class="flex justify-between gap-4 border-b border-brand-gold-border pb-2">
+          <span>Monday – Saturday</span>
+          <span class="text-text-primary">4PM–7PM</span>
+        </li>
+        <li class="flex justify-between gap-4">
+          <span>Sunday</span>
+          <span class="text-text-muted italic">Closed</span>
+        </li>
+      </ul>
+      <p class="mt-5 text-xs text-text-muted">
+        Residential care available 24/7 for in-patients.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-brand-gold-border">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-text-subtle">
+      <span>&copy; {year} Vaidya Vrindavanam Ayurveda Hospital. All rights reserved.</span>
+      <span>Haripad, Kerala, India</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import DoctorProfile from '../components/DoctorProfile.astro';
+import CTABanner from '../components/CTABanner.astro';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn about Vaidya Vrindavanam Ayurveda Hospital — Haripad's trusted Ayurvedic healing centre since 2014. Meet our BAMS & MD qualified doctors and explore our residential facilities."
+>
+  <!-- Hero -->
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Est. 2014 · Haripad, Kerala</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">About Vaidya Vrindavanam</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+  </section>
+
+  <!-- Story -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Our Story" heading="Rooted in Tradition, Guided by Science" />
+      <div class="text-sm text-text-secondary leading-relaxed space-y-4 font-light">
+        <p>Founded in 2014 in the heart of Haripad, Vaidya Vrindavanam Ayurveda Hospital was born from a deep commitment to making authentic Kerala Ayurveda accessible to all. What started as a small consulting practice has grown into a comprehensive Ayurvedic healing centre serving patients from across South Kerala, other Indian states, and international visitors.</p>
+        <p>Our name — <strong class="text-brand-gold">Vaidya Vrindavanam</strong> — reflects our philosophy: a grove (Vrindavanam) of healing, where ancient medical wisdom (Vaidya) flourishes. We believe in treating the whole person, not just the symptoms.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Makes Us Unique -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Our Difference" heading="What Makes Us Unique" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border border-brand-gold-dim p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Marma Chikitsa + Chiropractic</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">Our signature approach uniquely combines ancient Marma therapy (vital energy point stimulation) with modern chiropractic techniques — addressing both energetic and structural imbalances for superior results.</p>
+        </div>
+        <div class="border border-brand-gold-dim p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Residential Care</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">We offer inpatient facilities for patients undergoing extended treatment programs — from 7-day rejuvenation courses to 45-day weight loss packages, with full accommodation and meals.</p>
+        </div>
+        <div class="border border-brand-gold-dim p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">In-House Dispensary</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">All Ayurvedic medicines are dispensed from our on-site pharmacy. We stock from multiple reputed manufacturers to ensure the best medicine for each patient's needs.</p>
+        </div>
+        <div class="border border-brand-gold-dim p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Online Consultations</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">Can't visit in person? Our doctors offer online consultations via WhatsApp video call, making Ayurvedic guidance accessible from anywhere in the world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facility -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Our Facility" heading="Where Healing Happens" />
+      <div class="text-sm text-text-secondary leading-relaxed space-y-4 font-light">
+        <p>Located on NH-66 near RK Junction, Haripad, our hospital is easily accessible by both road and rail. The clinic features two dedicated treatment rooms, residential accommodation for inpatients, a consultation area, and an in-house Ayurvedic dispensary.</p>
+        <p>We are a licensed private hospital, committed to maintaining the highest standards of hygiene and patient care. Parking is available for visiting patients.</p>
+      </div>
+      <div class="mt-6 text-sm text-text-muted">
+        <p><strong class="text-text-primary">Insurance:</strong> Insurance reimbursement is available. Please contact us for details.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctors -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Expert Care" heading="Our Physicians" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mx-auto">
+        <div class="text-center">
+          <div class="w-28 h-28 bg-brand-bg border-2 border-brand-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span class="text-text-muted text-xs">Photo</span>
+          </div>
+          <h3 class="text-lg text-text-primary font-display">Dr. Jayakrishnan T J</h3>
+          <p class="text-sm text-brand-gold mt-1">BAMS, MD (Ayurveda)</p>
+          <p class="text-xs text-text-muted mt-1">Consultant Physician & Founder</p>
+          <p class="text-sm text-text-secondary mt-3 leading-relaxed">With extensive experience in Ayurvedic medicine, Dr. Jayakrishnan specialises in Marma Chikitsa combined with modern chiropractic techniques. His unique integrative approach has helped numerous patients find relief from chronic conditions.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-28 h-28 bg-brand-bg border-2 border-brand-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span class="text-text-muted text-xs">Photo</span>
+          </div>
+          <h3 class="text-lg text-text-primary font-display">Dr. Ganga SS</h3>
+          <p class="text-sm text-brand-gold mt-1">BAMS</p>
+          <p class="text-xs text-text-muted mt-1">Consultant Physician</p>
+          <p class="text-sm text-text-secondary mt-3 leading-relaxed">Dr. Ganga brings expertise in traditional Kerala Ayurvedic therapies and women's health (Stree Roga). She is skilled in Panchakarma treatments and provides compassionate, personalised care to every patient.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

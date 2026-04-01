@@ -1,0 +1,30 @@
+---
+interface Props {
+  name: string;
+  duration: string;
+  price: string;
+  popular?: boolean;
+  whatsappMessage: string;
+}
+
+const { name, duration, price, popular = false, whatsappMessage } = Astro.props;
+const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(whatsappMessage)}`;
+---
+
+<div class="border border-brand-gold-border p-6 relative">
+  {popular && (
+    <div class="absolute top-3 right-3 bg-brand-gold text-brand-bg text-[7px] font-bold tracking-widest px-2 py-0.5">POPULAR</div>
+  )}
+  <h3 class="text-lg text-text-primary font-display font-light">{name}</h3>
+  <div class="text-sm text-text-muted mt-1">{duration}</div>
+  <div class="w-5 h-px bg-brand-gold-border my-3"></div>
+  <div class="text-sm text-brand-gold font-medium">{price}</div>
+  <a
+    href={waLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-block mt-4 text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors"
+  >
+    ENQUIRE NOW →
+  </a>
+</div>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+const conditions = (await getCollection('conditions')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Conditions We Treat"
+  description="Ayurvedic treatment for arthritis, asthma, diabetes, skin disorders, infertility, obesity, stress, and more at Vaidya Vrindavanam, Haripad, Kerala."
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Speciality Care</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">Conditions We Treat</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <p class="text-sm text-text-secondary mt-4 max-w-lg mx-auto">Ayurvedic management of chronic and acute conditions, addressing the root cause rather than just the symptoms.</p>
+  </section>
+
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {conditions.map(c => (
+        <a href={`/conditions/${c.slug}`} class="border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
+          <h2 class="text-lg text-text-primary font-display group-hover:text-brand-gold transition-colors">{c.data.name}</h2>
+          <p class="text-sm text-text-secondary mt-2 leading-relaxed">{c.data.shortDescription}</p>
+          <span class="inline-block mt-3 text-brand-gold text-xs tracking-widest">LEARN MORE →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

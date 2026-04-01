@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const packages = [
+  {
+    name: 'Rejuvenation Package',
+    duration: '7 – 14 days',
+    description: 'A comprehensive rejuvenation program combining Abhyangam, Shirodhara, Njavara Kizhi, and other therapies to restore vitality, improve immunity, and slow the ageing process. Ideal for those seeking complete body and mind renewal.',
+    includes: ['Daily Ayurvedic treatments', 'Doctor consultations', 'Accommodation', 'Ayurvedic meals', 'Herbal medicines', 'Yoga guidance'],
+    popular: true,
+  },
+  {
+    name: 'Detox Program',
+    duration: '7 – 21 days',
+    description: 'A Panchakarma-based detoxification program that systematically removes accumulated toxins (Ama) from the body. Includes preparatory therapies (Poorvakarma), main detox procedures (Pradhanakarma), and post-detox care (Paschatkarma).',
+    includes: ['Full Panchakarma course', 'Doctor consultations', 'Accommodation', 'Detox-specific diet', 'Herbal medicines', 'Post-detox dietary guidance'],
+    popular: false,
+  },
+  {
+    name: 'Relaxation Package',
+    duration: '10 – 20 days',
+    description: 'A stress-relief program centred around calming therapies like Shirodhara, Abhyangam, and gentle Marma therapy. Designed for urban professionals and anyone dealing with chronic stress, anxiety, or burnout.',
+    includes: ['Daily relaxation therapies', 'Shirodhara sessions', 'Doctor consultations', 'Accommodation', 'Sattvic meals', 'Meditation guidance'],
+    popular: false,
+  },
+  {
+    name: 'Weight Loss Program',
+    duration: '21 – 45 days',
+    description: 'An intensive weight management program combining Udwarthanam (herbal powder massage), Panchakarma detox, dietary modification, and therapeutic exercises. Addresses obesity at its root through Ayurvedic principles.',
+    includes: ['Udwarthanam & other therapies', 'Panchakarma detox', 'Personalised diet plan', 'Accommodation', 'Exercise guidance', 'Follow-up plan'],
+    popular: false,
+  },
+  {
+    name: 'Deep Tissue Massage',
+    duration: '3 – 5 days',
+    description: 'A short intensive program for travellers and those seeking quick relief from muscle tension and body pain. Combines Abhyangam, Elakizhi, and targeted Marma therapy.',
+    includes: ['Daily massage therapies', 'Doctor consultation', 'Herbal medicines'],
+    popular: false,
+  },
+];
+
+const faqs = [
+  { question: 'What is included in the residential packages?', answer: 'All residential packages include daily Ayurvedic treatments, doctor consultations, accommodation, Ayurvedic meals (where specified), and herbal medicines. The specific treatments are customised based on your condition and the doctor\'s assessment.' },
+  { question: 'Can treatment duration be customised?', answer: 'Yes. The durations listed are standard ranges. After the initial consultation, the doctor will recommend the optimal duration based on your specific condition. Longer durations generally yield better and more lasting results.' },
+  { question: 'Is insurance reimbursement available?', answer: 'Yes, insurance reimbursement is available. Please contact us with your insurance details and we will guide you through the process.' },
+  { question: 'How do I book a package?', answer: 'You can book via WhatsApp (+91 9074848705), phone call (+91 8281861587), or walk in to the clinic. We recommend booking in advance for residential packages to ensure room availability.' },
+  { question: 'What should I bring for a residential stay?', answer: 'Bring comfortable loose clothing, personal toiletries, and any current medications. We provide treatment-specific clothing, towels, and all Ayurvedic supplies. Light, modest clothing is recommended.' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+---
+
+<BaseLayout
+  title="Treatment Packages"
+  description="Residential Ayurvedic treatment packages at Vaidya Vrindavanam, Haripad — Rejuvenation, Detox, Weight Loss, Relaxation programs with accommodation and meals. 7 to 45 days."
+  schema={schema}
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Residential Programs</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">Healing Packages</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <p class="text-sm text-text-secondary mt-4 max-w-lg mx-auto">Comprehensive treatment programs with accommodation, meals, and personalised Ayurvedic care.</p>
+  </section>
+
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto space-y-6">
+      {packages.map(pkg => {
+        const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in the ${pkg.name}. Please share details and pricing.`)}`;
+        return (
+          <div class="border border-brand-gold-border p-8 relative">
+            {pkg.popular && (
+              <div class="absolute top-4 right-4 bg-brand-gold text-brand-bg text-[7px] font-bold tracking-widest px-3 py-1">POPULAR</div>
+            )}
+            <h2 class="text-xl font-display text-text-primary">{pkg.name}</h2>
+            <p class="text-sm text-brand-gold mt-1">{pkg.duration}</p>
+            <div class="w-5 h-px bg-brand-gold-border my-4"></div>
+            <p class="text-sm text-text-secondary leading-relaxed">{pkg.description}</p>
+            <div class="mt-4">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2">What's Included:</p>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                {pkg.includes.map(item => (
+                  <li class="text-sm text-text-secondary flex items-center gap-2">
+                    <span class="text-brand-gold text-xs">✦</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block mt-6 bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest"
+            >
+              ENQUIRE & BOOK →
+            </a>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Common Questions" heading="Package FAQs" />
+      <FAQAccordion items={faqs} />
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

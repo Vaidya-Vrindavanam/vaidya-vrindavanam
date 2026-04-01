@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const treatments = await getCollection('treatments');
+  return treatments.map(treatment => ({
+    params: { slug: treatment.slug },
+    props: { treatment },
+  }));
+}
+
+const { treatment } = Astro.props;
+const { Content } = await treatment.render();
+const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in ${treatment.data.name}. Please share more details.`)}`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": treatment.data.name,
+  "description": treatment.data.shortDescription,
+  "provider": {
+    "@type": "MedicalBusiness",
+    "name": "Vaidya Vrindavanam Ayurveda Hospital",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Haripad",
+      "addressRegion": "Kerala",
+      "addressCountry": "IN"
+    }
+  }
+};
+---
+
+<BaseLayout
+  title={`${treatment.data.name} Treatment`}
+  description={`${treatment.data.shortDescription}. Available at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala. Book via WhatsApp.`}
+  schema={schema}
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{treatment.data.category.replace(/-/g, ' ')}</p>
+    <div class="text-4xl mb-3 opacity-60">{treatment.data.icon}</div>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.data.name}</h1>
+    {treatment.data.malayalam && (
+      <p class="text-sm text-text-muted mt-2">{treatment.data.malayalam}</p>
+    )}
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    {treatment.data.duration && (
+      <p class="text-xs text-text-muted mt-3">Duration: {treatment.data.duration}</p>
+    )}
+  </section>
+
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
+      <Content />
+    </div>
+  </section>
+
+  <!-- WhatsApp CTA -->
+  <section class="py-12 px-6 bg-brand-bg-alt text-center">
+    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Interested in {treatment.data.name}?</h2>
+    <p class="text-sm text-text-secondary mb-6">Speak to our doctors about whether this treatment is right for you.</p>
+    <a
+      href={waLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-block bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
+    >
+      ENQUIRE VIA WHATSAPP
+    </a>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

@@ -1,26 +1,167 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatsBar from '../components/StatsBar.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import DoctorProfile from '../components/DoctorProfile.astro';
+import TreatmentCard from '../components/TreatmentCard.astro';
+import PackageCard from '../components/PackageCard.astro';
+import ConditionTag from '../components/ConditionTag.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+const treatments = (await getCollection('treatments')).sort((a, b) => a.data.order - b.data.order);
+const featuredTreatments = treatments.slice(0, 5);
+const conditions = (await getCollection('conditions')).sort((a, b) => a.data.order - b.data.order);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Vaidya Vrindavanam Ayurveda Hospital",
+  "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ traditional treatments with residential care.",
+  "url": "https://vaidyavrindavanam.com",
+  "telephone": "+919074848705",
+  "email": "info@vaidyavrindavanam.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Near RK Junction, NH-66",
+    "addressLocality": "Haripad",
+    "addressRegion": "Kerala",
+    "postalCode": "690514",
+    "addressCountry": "IN"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "12:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "16:00",
+      "closes": "19:00"
+    }
+  ],
+  "founder": {
+    "@type": "Person",
+    "name": "Dr. Jayakrishnan T J",
+    "jobTitle": "Consultant Physician",
+    "description": "BAMS, MD (Ayurveda)"
+  }
+};
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Vaidya Vrindavanam — Authentic Ayurvedic healing in Kerala, India. Experience traditional Panchakarma, personalized treatments, and holistic wellness rooted in ancient wisdom." />
-    <title>Vaidya Vrindavanam | Authentic Ayurvedic Hospital, Kerala</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body>
-    <main class="min-h-screen flex items-center justify-center">
-      <div class="text-center px-6">
-        <h1 class="font-display text-5xl md:text-7xl text-brand-gold mb-4">
-          Vaidya Vrindavanam
-        </h1>
-        <p class="text-text-secondary text-xl font-body">
-          Authentic Ayurvedic Hospital — Kerala, India
-        </p>
+<BaseLayout
+  title="Authentic Kerala Ayurveda"
+  description="Vaidya Vrindavanam Ayurveda Hospital in Haripad, Kerala — authentic Panchakarma, Marma Chikitsa with chiropractic care, 20+ treatments, residential packages. Book via WhatsApp."
+  schema={schema}
+>
+  <!-- HERO -->
+  <section class="relative bg-gradient-to-br from-brand-bg via-brand-bg-alt to-brand-bg min-h-[80vh] flex items-center justify-center text-center px-6 py-20">
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 text-[120px] opacity-[0.03] text-brand-gold select-none">☘</div>
+    <div class="relative z-10 max-w-xl">
+      <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">Authentic Kerala Ayurveda · Est. 2014</p>
+      <h1 class="text-4xl md:text-5xl font-display font-light text-text-primary leading-tight tracking-wide">
+        Heal. Renew.<br /><em class="font-normal">Flourish.</em>
+      </h1>
+      <div class="w-10 h-px bg-brand-gold mx-auto my-6"></div>
+      <p class="text-sm text-text-secondary leading-relaxed font-light max-w-md mx-auto">
+        Where ancient Marma wisdom meets modern healing. Residential Panchakarma, personalised treatments, and holistic recovery in the heart of Kerala.
+      </p>
+      <div class="flex gap-3 justify-center mt-8 flex-wrap">
+        <a
+          href="https://wa.me/919074848705?text=Hi%2C%20I'd%20like%20to%20book%20an%20appointment%20at%20Vaidya%20Vrindavanam"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
+        >
+          BOOK VIA WHATSAPP
+        </a>
+        <a href="/treatments" class="border border-brand-gold text-brand-gold px-7 py-3 text-xs tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors">
+          EXPLORE TREATMENTS
+        </a>
       </div>
-    </main>
-  </body>
-</html>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <StatsBar />
+
+  <!-- ABOUT + DOCTORS -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="About the Hospital" heading="A Legacy of Healing" />
+      <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-10 font-light">
+        Since 2014, Vaidya Vrindavanam has been Haripad's trusted centre for authentic Ayurvedic healing.
+        We uniquely combine traditional <strong class="text-brand-gold">Marma Chikitsa</strong> with
+        <strong class="text-brand-gold">modern chiropractic treatment</strong> — alongside a full range
+        of Panchakarma therapies, residential care, and an in-house dispensary.
+      </p>
+      <div class="flex gap-10 justify-center flex-wrap">
+        <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician" />
+        <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" />
+      </div>
+      <div class="text-center mt-8">
+        <a href="/about" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">LEARN MORE ABOUT US →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREATMENTS + CONDITIONS -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Treatments & Conditions" heading="Our Healing Therapies" subtitle="Authentic Panchakarma & Kerala Ayurvedic treatments" />
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+        {featuredTreatments.map(t => (
+          <TreatmentCard name={t.data.name} description={t.data.shortDescription} icon={t.data.icon} slug={t.slug} />
+        ))}
+        <a href="/treatments" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
+          <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
+          <div class="text-xs text-brand-gold mt-1">View All Treatments →</div>
+        </a>
+      </div>
+
+      <div class="text-center">
+        <p class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</p>
+        <div class="flex flex-wrap gap-2 justify-center">
+          {conditions.map(c => (
+            <ConditionTag name={c.data.name} slug={c.slug} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Residential Programs" heading="Healing Packages" subtitle="With accommodation & full board" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <PackageCard name="Rejuvenation" duration="7 – 14 days" price="₹ Contact for pricing" popular={true} whatsappMessage="Hi, I'm interested in the Rejuvenation package. Please share details and pricing." />
+        <PackageCard name="Detox" duration="7 – 21 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Detox package. Please share details and pricing." />
+        <PackageCard name="Weight Loss" duration="21 – 45 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Weight Loss package. Please share details and pricing." />
+        <PackageCard name="Relaxation" duration="10 – 20 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Relaxation package. Please share details and pricing." />
+      </div>
+      <div class="text-center mt-6">
+        <a href="/packages" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">VIEW ALL PACKAGES →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Patient Stories" heading="Voices of Healing" />
+      <div class="border-l-2 border-brand-gold pl-6 py-2 max-w-lg mx-auto">
+        <p class="text-sm text-text-secondary italic leading-relaxed">
+          "Patient testimonials from Google Reviews will be displayed here as they become available. We look forward to sharing our patients' healing stories."
+        </p>
+        <p class="text-sm text-text-primary font-semibold mt-3">— Vaidya Vrindavanam</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner />
+</BaseLayout>

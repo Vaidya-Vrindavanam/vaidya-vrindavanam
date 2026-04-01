@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: string;
+  qualification: string;
+  title: string;
+  image?: string;
+}
+
+const { name, qualification, title, image } = Astro.props;
+---
+
+<div class="text-center">
+  <div class="w-24 h-24 bg-brand-bg-alt border-2 border-brand-gold rounded-full mx-auto mb-3 flex items-center justify-center overflow-hidden">
+    {image ? (
+      <img src={image} alt={name} class="w-full h-full object-cover" />
+    ) : (
+      <span class="text-text-muted text-xs">Photo</span>
+    )}
+  </div>
+  <div class="text-base text-text-primary font-semibold">{name}</div>
+  <div class="text-xs text-brand-gold tracking-wide mt-1">{qualification}</div>
+  <div class="text-xs text-text-muted mt-1">{title}</div>
+</div>

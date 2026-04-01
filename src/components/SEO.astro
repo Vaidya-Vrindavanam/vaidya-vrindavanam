@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  articlePublishedTime?: string;
+  articleAuthor?: string;
+  schema?: object;
+}
+
+const { title, description, canonical, ogImage, ogType = 'website', articlePublishedTime, articleAuthor, schema } = Astro.props;
+
+const fullTitle = `${title} | Vaidya Vrindavanam Ayurveda Hospital, Haripad`;
+const siteUrl = 'https://vaidyavrindavanam.com';
+const canonicalUrl = canonical ?? Astro.url.href;
+const ogImageUrl = ogImage ?? `${siteUrl}/og-default.jpg`;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:type" content={ogType} />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:site_name" content="Vaidya Vrindavanam Ayurveda Hospital" />
+{ogType === 'article' && articlePublishedTime && (
+  <meta property="article:published_time" content={articlePublishedTime} />
+)}
+{ogType === 'article' && articleAuthor && (
+  <meta property="article:author" content={articleAuthor} />
+)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<!-- JSON-LD Schema -->
+{schema && (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}

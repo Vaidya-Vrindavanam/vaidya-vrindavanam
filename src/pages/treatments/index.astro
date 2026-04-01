@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TreatmentCard from '../../components/TreatmentCard.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getCollection } from 'astro:content';
+
+const treatments = (await getCollection('treatments')).sort((a, b) => a.data.order - b.data.order);
+
+const categories = [
+  { key: 'panchakarma', label: 'Panchakarma' },
+  { key: 'massage', label: 'Massage Therapies' },
+  { key: 'speciality', label: 'Speciality Treatments' },
+];
+---
+
+<BaseLayout
+  title="Ayurvedic Treatments"
+  description="Explore 20+ authentic Ayurvedic treatments at Vaidya Vrindavanam, Haripad — Panchakarma, Abhyangam, Shirodhara, Marma Chikitsa, and more. Traditional Kerala therapies for holistic healing."
+>
+  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Authentic Kerala Ayurveda</p>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">Our Treatments</h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <p class="text-sm text-text-secondary mt-4 max-w-lg mx-auto">Over 20 traditional Ayurvedic therapies — from Panchakarma detox to specialised Marma Chikitsa with chiropractic care.</p>
+  </section>
+
+  {categories.map(cat => {
+    const catTreatments = treatments.filter(t => t.data.category === cat.key);
+    return catTreatments.length > 0 && (
+      <section class="py-12 px-6 odd:bg-brand-bg even:bg-brand-bg-alt">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">{cat.label}</h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {catTreatments.map(t => (
+              <TreatmentCard name={t.data.name} description={t.data.shortDescription} icon={t.data.icon} slug={t.slug} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <CTABanner />
+</BaseLayout>

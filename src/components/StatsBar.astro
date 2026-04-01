@@ -1,0 +1,21 @@
+---
+const yearsActive = `${new Date().getFullYear() - 2014}+`;
+const stats = [
+  { value: yearsActive, label: 'Years' },
+  { value: '20+', label: 'Therapies' },
+  { value: '5', label: 'Packages' },
+  { value: '24/7', label: 'Residential' },
+];
+---
+
+<div class="flex bg-brand-bg-alt">
+  {stats.map((stat, i) => (
+    <div class:list={[
+      'flex-1 text-center py-5',
+      i < stats.length - 1 && 'border-r border-brand-gold-dim',
+    ]}>
+      <div class="text-3xl font-display font-light text-brand-gold">{stat.value}</div>
+      <div class="text-[8px] text-text-muted uppercase tracking-[2px] mt-1">{stat.label}</div>
+    </div>
+  ))}
+</div>
