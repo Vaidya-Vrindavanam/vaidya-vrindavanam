@@ -13,20 +13,27 @@ const currentPath = Astro.url.pathname;
 const whatsappUrl = "https://wa.me/919074848705?text=Hi%2C%20I'd%20like%20to%20book%20an%20appointment%20at%20Vaidya%20Vrindavanam";
 ---
 
-<!-- Top Bar -->
-<div class="bg-brand-bg-footer border-b border-brand-gold-border">
-  <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-xs text-text-muted">
-    <a href="tel:+919074848705" class="hover:text-brand-gold transition-colors">
-      📞 +91 90748 48705
-    </a>
-    <span class="hidden sm:inline text-text-subtle">|</span>
-    <a href="mailto:info@vaidyavrindavanam.com" class="hover:text-brand-gold transition-colors">
-      ✉ info@vaidyavrindavanam.com
-    </a>
-    <span class="hidden sm:inline text-text-subtle">|</span>
-    <span>Mon–Sat: 9AM–12PM &amp; 4PM–7PM</span>
+<!-- Announcement Bar -->
+<div id="announcement-bar" class="announcement-bar-bg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-8 py-3 flex items-center justify-center">
+    <p class="text-center font-body text-sm font-light" style="color: #0f1a0a;">
+      25% off all treatment plans — for a limited time.
+      <a
+        href="https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%2025%25%20discount%20on%20treatment%20plans"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 font-medium ml-1 hover:opacity-70 transition-opacity"
+        style="color: #0f1a0a;"
+      >Book now</a>
+    </p>
   </div>
 </div>
+
+<style>
+  .announcement-bar-bg {
+    background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold) 40%, var(--color-gold-light) 60%, var(--color-gold) 80%, var(--color-gold-dark) 100%);
+  }
+</style>
 
 <!-- Main Navbar -->
 <nav id="main-nav" class="sticky top-0 z-50 bg-brand-bg/95 backdrop-blur-md border-b border-brand-gold-border">
@@ -115,7 +122,7 @@ const whatsappUrl = "https://wa.me/919074848705?text=Hi%2C%20I'd%20like%20to%20b
         <li>
           <a
             href={link.href}
-            class={`font-display text-2xl transition-colors ${
+            class={`font-body text-2xl transition-colors ${
               isActive ? 'text-brand-gold' : 'text-text-primary hover:text-brand-gold'
             }`}
           >

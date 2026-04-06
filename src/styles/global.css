@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-gold: #c8a96e;
+  --color-gold-dark: #a07840;
+  --color-gold-light: #dfc080;
+}
+
 @layer base {
   html {
     @apply bg-brand-bg text-text-primary font-body;

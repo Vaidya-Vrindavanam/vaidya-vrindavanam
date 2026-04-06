@@ -99,8 +99,8 @@ const schema = {
         of Panchakarma therapies, residential care, and an in-house dispensary.
       </p>
       <div class="flex gap-10 justify-center flex-wrap">
-        <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician" />
-        <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" />
+        <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician" image="/dr-jayakrishnan.jpg" />
+        <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" image="/dr-ganga.jpg" />
       </div>
       <div class="text-center mt-8">
         <a href="/about" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">LEARN MORE ABOUT US →</a>
@@ -151,14 +151,69 @@ const schema = {
 
   <!-- TESTIMONIALS -->
   <section class="py-16 px-6 bg-brand-bg-alt">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       <SectionHeader label="Patient Stories" heading="Voices of Healing" />
-      <div class="border-l-2 border-brand-gold pl-6 py-2 max-w-lg mx-auto">
-        <p class="text-sm text-text-secondary italic leading-relaxed">
-          "Patient testimonials from Google Reviews will be displayed here as they become available. We look forward to sharing our patients' healing stories."
-        </p>
-        <p class="text-sm text-text-primary font-semibold mt-3">— Vaidya Vrindavanam</p>
+
+      <!-- Google Rating Summary -->
+      <div class="flex items-center justify-center gap-3 mb-10">
+        <span class="font-display text-4xl font-light text-brand-gold">4.2</span>
+        <div>
+          <div class="flex gap-0.5">
+            {[1,2,3,4].map(() => (
+              <svg width="16" height="16" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+            <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="half"><stop offset="42%" stop-color="var(--color-gold)"/><stop offset="42%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
+              <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z" fill="url(#half)"/>
+            </svg>
+          </div>
+          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">5 Google Reviews</p>
+        </div>
       </div>
+
+      <!-- Review Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+
+        <!-- Review 1 -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"Very good — a genuinely positive experience at the clinic."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Shephy Rustham</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"A trusted Ayurvedic clinic in Haripad — recommended for anyone seeking authentic treatment."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Karundas Das</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Link to Google -->
+      <div class="text-center mt-8">
+        <a
+          href="https://www.google.com/maps/place/Vaidya+Vrindavanam+Ayurveda+Hospital+Haripad/@9.2711918,76.4608952,17z"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors"
+        >READ ALL REVIEWS ON GOOGLE →</a>
+      </div>
+
     </div>
   </section>
 
