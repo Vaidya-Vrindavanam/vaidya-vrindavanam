@@ -75,8 +75,9 @@ const schema = {
       <!-- Contact form -->
       <div>
         <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">Send a Message</h2>
-        <form name="contact" method="POST" data-netlify="true" class="space-y-4">
+        <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-4">
           <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden" aria-hidden="true"><label>Do not fill: <input name="bot-field" /></label></p>
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="name">Your Name</label>
             <input type="text" id="name" name="name" required class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
