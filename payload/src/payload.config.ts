@@ -1,6 +1,10 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { Treatments } from './collections/Treatments'
+import { Conditions } from './collections/Conditions'
+import { Blog } from './collections/Blog'
+import { Media } from './collections/Media'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -12,9 +16,7 @@ export default buildConfig({
     user: 'users',
   },
   editor: lexicalEditor(),
-  collections: [
-    // Collections will be added in Phase 2
-  ],
+  collections: [Treatments, Conditions, Blog, Media],
   secret: (() => {
     const s = process.env.PAYLOAD_SECRET
     if (!s) throw new Error('PAYLOAD_SECRET environment variable is required')
