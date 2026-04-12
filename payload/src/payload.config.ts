@@ -15,6 +15,14 @@ const dirname = path.dirname(filename)
 // Use dynamic key access to prevent Turbopack from statically replacing env vars at build time
 const env = (key: string) => process.env[key] || ''
 
+// Diagnostic: log env availability at module load time
+console.log('[payload.config] ENV CHECK:', {
+  hasSecret: !!env('PAYLOAD_SECRET'),
+  secretLen: env('PAYLOAD_SECRET').length,
+  hasDB: !!env('DATABASE_URI'),
+  nodeEnv: process.env['NODE_ENV'],
+})
+
 export default buildConfig({
   admin: {
     user: 'users',
