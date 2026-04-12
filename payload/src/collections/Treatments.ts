@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { triggerNetlifyBuild } from '../lib/triggerNetlifyBuild'
 
 export const Treatments: CollectionConfig = {
   slug: 'treatments',
@@ -6,14 +7,7 @@ export const Treatments: CollectionConfig = {
     useAsTitle: 'name',
   },
   hooks: {
-    afterChange: [
-      async () => {
-        const hookUrl = process.env.NETLIFY_BUILD_HOOK_URL
-        if (hookUrl) {
-          await fetch(hookUrl, { method: 'POST' }).catch(() => {})
-        }
-      },
-    ],
+    afterChange: [triggerNetlifyBuild],
   },
   fields: [
     { name: 'name', type: 'text', required: true },
@@ -32,7 +26,7 @@ export const Treatments: CollectionConfig = {
         { label: 'Speciality', value: 'speciality' },
       ],
     },
-    { name: 'conditions', type: 'array', fields: [{ name: 'slug', type: 'text' }] },
+    { name: 'conditions', type: 'array', admin: { description: 'Condition slugs related to this treatment (resolved at Astro build time)' }, fields: [{ name: 'slug', type: 'text' }] },
     { name: 'duration', type: 'text' },
     { name: 'order', type: 'number', defaultValue: 99 },
     { name: 'content', type: 'richText' },
