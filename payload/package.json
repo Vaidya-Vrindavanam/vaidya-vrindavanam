@@ -16,12 +16,10 @@
     "@payloadcms/db-postgres": "^3.82.1",
     "@payloadcms/next": "^3.82.1",
     "@payloadcms/richtext-lexical": "^3.82.1",
+    "gray-matter": "^4.0.3",
     "next": "^16.2.3",
     "payload": "^3.82.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
-  },
-  "devDependencies": {
-    "gray-matter": "^4.0.3"
   }
 }
