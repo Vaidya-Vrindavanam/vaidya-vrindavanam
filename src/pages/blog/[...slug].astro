@@ -1,26 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getCollection } from 'astro:content';
+import { getBlogPosts } from '../../lib/payload';
+import type { BlogPost } from '../../lib/payload';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getBlogPosts();
   return posts.map(post => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
-const { post } = Astro.props;
-const { Content } = await post.render();
+const { post } = Astro.props as { post: BlogPost };
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": post.data.title,
-  "description": post.data.excerpt,
-  "author": { "@type": "Person", "name": post.data.author },
-  "datePublished": post.data.date.toISOString(),
+  "headline": post.title,
+  "description": post.excerpt,
+  "author": { "@type": "Person", "name": post.author },
+  "datePublished": post.date.toISOString(),
   "publisher": {
     "@type": "Organization",
     "name": "Vaidya Vrindavanam Ayurveda Hospital"
@@ -29,25 +29,25 @@ const schema = {
 ---
 
 <BaseLayout
-  title={post.data.title}
-  description={post.data.excerpt}
+  title={post.title}
+  description={post.excerpt}
   schema={schema}
   ogType="article"
-  articlePublishedTime={post.data.date.toISOString()}
-  articleAuthor={post.data.author}
+  articlePublishedTime={post.date.toISOString()}
+  articleAuthor={post.author}
 >
   <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
-    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{post.data.category.replace(/-/g, ' ')}</p>
-    <h1 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide max-w-2xl mx-auto">{post.data.title}</h1>
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{post.category.replace(/-/g, ' ')}</p>
+    <h1 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide max-w-2xl mx-auto">{post.title}</h1>
     <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
     <p class="text-xs text-text-muted mt-3">
-      By {post.data.author} · {post.data.date.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+      By {post.author} · {post.date.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
     </p>
   </section>
 
   <section class="py-12 px-6 bg-brand-bg">
     <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
-      <Content />
+      <div set:html={post.contentHTML}></div>
     </div>
   </section>
 

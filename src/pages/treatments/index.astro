@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getCollection } from 'astro:content';
+import { getTreatments } from '../../lib/payload';
 
-const treatments = (await getCollection('treatments')).sort((a, b) => a.data.order - b.data.order);
+const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 
 const categories = [
   { key: 'panchakarma', label: 'Panchakarma' },
@@ -25,14 +25,14 @@ const categories = [
   </section>
 
   {categories.map(cat => {
-    const catTreatments = treatments.filter(t => t.data.category === cat.key);
+    const catTreatments = treatments.filter(t => t.category === cat.key);
     return catTreatments.length > 0 && (
       <section class="py-12 px-6 odd:bg-brand-bg even:bg-brand-bg-alt">
         <div class="max-w-4xl mx-auto">
           <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">{cat.label}</h2>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             {catTreatments.map(t => (
-              <TreatmentCard name={t.data.name} description={t.data.shortDescription} icon={t.data.icon} slug={t.slug} />
+              <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} />
             ))}
           </div>
         </div>

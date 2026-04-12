@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getCollection } from 'astro:content';
+import { getConditions } from '../../lib/payload';
 
-const conditions = (await getCollection('conditions')).sort((a, b) => a.data.order - b.data.order);
+const conditions = (await getConditions()).sort((a, b) => a.order - b.order);
 ---
 
 <BaseLayout
@@ -21,8 +21,8 @@ const conditions = (await getCollection('conditions')).sort((a, b) => a.data.ord
     <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
       {conditions.map(c => (
         <a href={`/conditions/${c.slug}`} class="border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
-          <h2 class="text-lg text-text-primary font-display group-hover:text-brand-gold transition-colors">{c.data.name}</h2>
-          <p class="text-sm text-text-secondary mt-2 leading-relaxed">{c.data.shortDescription}</p>
+          <h2 class="text-lg text-text-primary font-display group-hover:text-brand-gold transition-colors">{c.name}</h2>
+          <p class="text-sm text-text-secondary mt-2 leading-relaxed">{c.shortDescription}</p>
           <span class="inline-block mt-3 text-brand-gold text-xs tracking-widest">LEARN MORE →</span>
         </a>
       ))}

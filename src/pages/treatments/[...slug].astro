@@ -1,25 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getCollection } from 'astro:content';
+import { getTreatments } from '../../lib/payload';
+import type { Treatment } from '../../lib/payload';
 
 export async function getStaticPaths() {
-  const treatments = await getCollection('treatments');
+  const treatments = await getTreatments();
   return treatments.map(treatment => ({
     params: { slug: treatment.slug },
     props: { treatment },
   }));
 }
 
-const { treatment } = Astro.props;
-const { Content } = await treatment.render();
-const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in ${treatment.data.name}. Please share more details.`)}`;
+const { treatment } = Astro.props as { treatment: Treatment };
+const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in ${treatment.name}. Please share more details.`)}`;
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "MedicalTherapy",
-  "name": treatment.data.name,
-  "description": treatment.data.shortDescription,
+  "name": treatment.name,
+  "description": treatment.shortDescription,
   "provider": {
     "@type": "MedicalBusiness",
     "name": "Vaidya Vrindavanam Ayurveda Hospital",
@@ -34,32 +34,32 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${treatment.data.name} Treatment`}
-  description={`${treatment.data.shortDescription}. Available at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala. Book via WhatsApp.`}
+  title={`${treatment.name} Treatment`}
+  description={`${treatment.shortDescription}. Available at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala. Book via WhatsApp.`}
   schema={schema}
 >
   <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
-    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{treatment.data.category.replace(/-/g, ' ')}</p>
-    <div class="text-4xl mb-3 opacity-60">{treatment.data.icon}</div>
-    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.data.name}</h1>
-    {treatment.data.malayalam && (
-      <p class="text-sm text-text-muted mt-2">{treatment.data.malayalam}</p>
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{treatment.category.replace(/-/g, ' ')}</p>
+    <div class="text-4xl mb-3 opacity-60">{treatment.icon}</div>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.name}</h1>
+    {treatment.malayalam && (
+      <p class="text-sm text-text-muted mt-2">{treatment.malayalam}</p>
     )}
     <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
-    {treatment.data.duration && (
-      <p class="text-xs text-text-muted mt-3">Duration: {treatment.data.duration}</p>
+    {treatment.duration && (
+      <p class="text-xs text-text-muted mt-3">Duration: {treatment.duration}</p>
     )}
   </section>
 
   <section class="py-12 px-6 bg-brand-bg">
     <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
-      <Content />
+      <div set:html={treatment.contentHTML}></div>
     </div>
   </section>
 
   <!-- WhatsApp CTA -->
   <section class="py-12 px-6 bg-brand-bg-alt text-center">
-    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Interested in {treatment.data.name}?</h2>
+    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Interested in {treatment.name}?</h2>
     <p class="text-sm text-text-secondary mb-6">Speak to our doctors about whether this treatment is right for you.</p>
     <a
       href={waLink}
