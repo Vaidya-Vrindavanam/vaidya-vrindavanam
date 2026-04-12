@@ -5,6 +5,7 @@ import { Treatments } from './collections/Treatments'
 import { Conditions } from './collections/Conditions'
 import { Blog } from './collections/Blog'
 import { Media } from './collections/Media'
+import { Users } from './collections/Users'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -16,7 +17,7 @@ export default buildConfig({
     user: 'users',
   },
   editor: lexicalEditor(),
-  collections: [Treatments, Conditions, Blog, Media],
+  collections: [Users, Treatments, Conditions, Blog, Media],
   secret: (() => {
     const s = process.env.PAYLOAD_SECRET
     if (!s) throw new Error('PAYLOAD_SECRET environment variable is required')
