@@ -12,6 +12,11 @@
     "payload": "payload",
     "migrate:content": "payload run scripts/migrate.ts"
   },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.0"
+  },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.82.1",
     "@payloadcms/next": "^3.82.1",
