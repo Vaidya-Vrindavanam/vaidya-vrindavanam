@@ -58,10 +58,15 @@ async function fetchCollection(collection: string): Promise<unknown[]> {
     console.warn(`[payload.ts] PAYLOAD_URL not set — ${collection} will be empty`)
     return []
   }
-  const res = await fetch(`${PAYLOAD_URL}/api/${collection}?limit=200&depth=0`)
-  if (!res.ok) throw new Error(`Payload API error: ${res.status} for ${collection}`)
-  const json = await res.json() as { docs: unknown[] }
-  return json.docs
+  try {
+    const res = await fetch(`${PAYLOAD_URL}/api/${collection}?limit=200&depth=0`)
+    if (!res.ok) throw new Error(`Payload API error: ${res.status} for ${collection}`)
+    const json = await res.json() as { docs: unknown[] }
+    return json.docs
+  } catch (err) {
+    console.error(`[payload.ts] Failed to fetch ${collection}:`, err)
+    return []
+  }
 }
 
 // ---- Public API ----
@@ -115,7 +120,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     slug: doc.slug,
     title: doc.title,
     excerpt: doc.excerpt,
-    date: new Date(doc.date),
+    date: doc.date ? new Date(doc.date) : new Date(),
     author: doc.author ?? 'Dr. Jayakrishnan T J',
     category: doc.category,
     contentHTML: lexicalToHTML(doc.content),

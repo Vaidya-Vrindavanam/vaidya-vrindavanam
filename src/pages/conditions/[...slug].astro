@@ -3,19 +3,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import { getConditions, getTreatments } from '../../lib/payload';
-import type { Condition } from '../../lib/payload';
+import type { Condition, Treatment } from '../../lib/payload';
 
 export async function getStaticPaths() {
-  const conditions = await getConditions();
+  const [conditions, allTreatments] = await Promise.all([
+    getConditions(),
+    getTreatments(),
+  ]);
   return conditions.map(condition => ({
     params: { slug: condition.slug },
-    props: { condition },
+    props: { condition, allTreatments },
   }));
 }
 
-const { condition } = Astro.props as { condition: Condition };
+const { condition, allTreatments } = Astro.props as { condition: Condition; allTreatments: Treatment[] };
 
-const allTreatments = await getTreatments();
 const relatedTreatments = allTreatments.filter(t =>
   condition.treatments.some(cs => cs.slug === t.slug)
 );
