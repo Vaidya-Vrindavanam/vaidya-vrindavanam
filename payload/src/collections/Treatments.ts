@@ -3,6 +3,9 @@ import { triggerNetlifyBuild } from '../lib/triggerNetlifyBuild'
 
 export const Treatments: CollectionConfig = {
   slug: 'treatments',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'name',
   },

@@ -3,6 +3,9 @@ import { triggerNetlifyBuild } from '../lib/triggerNetlifyBuild'
 
 export const Conditions: CollectionConfig = {
   slug: 'conditions',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'name',
   },
