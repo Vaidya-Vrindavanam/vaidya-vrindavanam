@@ -1,5 +1,10 @@
 import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import type {
+  Treatment as PayloadTreatment,
+  Condition as PayloadCondition,
+  Blog as PayloadBlog,
+} from '../../payload/src/payload-types'
 
 const PAYLOAD_URL = import.meta.env.PAYLOAD_URL as string | undefined
 
@@ -72,7 +77,7 @@ async function fetchCollection(collection: string): Promise<unknown[]> {
 // ---- Public API ----
 
 export async function getTreatments(): Promise<Treatment[]> {
-  const docs = await fetchCollection('treatments') as any[]
+  const docs = await fetchCollection('treatments') as PayloadTreatment[]
   return docs.map(doc => ({
     id: doc.id,
     slug: doc.slug,
@@ -96,7 +101,7 @@ export async function getTreatmentBySlug(slug: string): Promise<Treatment | null
 }
 
 export async function getConditions(): Promise<Condition[]> {
-  const docs = await fetchCollection('conditions') as any[]
+  const docs = await fetchCollection('conditions') as PayloadCondition[]
   return docs.map(doc => ({
     id: doc.id,
     slug: doc.slug,
@@ -114,7 +119,7 @@ export async function getConditionBySlug(slug: string): Promise<Condition | null
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const docs = await fetchCollection('blog') as any[]
+  const docs = await fetchCollection('blog') as PayloadBlog[]
   return docs.map(doc => ({
     id: doc.id,
     slug: doc.slug,

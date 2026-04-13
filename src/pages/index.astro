@@ -7,11 +7,11 @@ import TreatmentCard from '../components/TreatmentCard.astro';
 import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
-import { getCollection } from 'astro:content';
+import { getTreatments, getConditions } from '../lib/payload';
 
-const treatments = (await getCollection('treatments')).sort((a, b) => a.data.order - b.data.order);
+const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 const featuredTreatments = treatments.slice(0, 5);
-const conditions = (await getCollection('conditions')).sort((a, b) => a.data.order - b.data.order);
+const conditions = (await getConditions()).sort((a, b) => a.order - b.order);
 
 const schema = {
   "@context": "https://schema.org",
@@ -114,7 +114,7 @@ const schema = {
       <SectionHeader label="Treatments & Conditions" heading="Our Healing Therapies" subtitle="Authentic Panchakarma & Kerala Ayurvedic treatments" />
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
         {featuredTreatments.map(t => (
-          <TreatmentCard name={t.data.name} description={t.data.shortDescription} icon={t.data.icon} slug={t.slug} />
+          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} />
         ))}
         <a href="/treatments" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
           <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
@@ -126,7 +126,7 @@ const schema = {
         <p class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</p>
         <div class="flex flex-wrap gap-2 justify-center">
           {conditions.map(c => (
-            <ConditionTag name={c.data.name} slug={c.slug} />
+            <ConditionTag name={c.name} slug={c.slug} />
           ))}
         </div>
       </div>

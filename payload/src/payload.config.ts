@@ -13,7 +13,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 // Use dynamic key access to prevent Turbopack from statically replacing env vars at build time
-const env = (key: string) => process.env[key] || ''
+const env = (key: string, required = false): string => {
+  const val = process.env[key] || ''
+  if (required && !val) throw new Error(`Missing required environment variable: ${key}`)
+  return val
+}
 
 export default buildConfig({
   admin: {
@@ -21,7 +25,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   collections: [Users, Treatments, Conditions, Blog, Media],
-  secret: env('PAYLOAD_SECRET'),
+  secret: env('PAYLOAD_SECRET', true),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
@@ -29,7 +33,7 @@ export default buildConfig({
     pool: {
       connectionString: env('DATABASE_URI'),
     },
-    push: true,
+    push: false,
   }),
   serverURL: env('NEXT_PUBLIC_SERVER_URL') || 'http://localhost:3000',
 })
