@@ -11,9 +11,9 @@ type Args = {
 }
 
 export const generateMetadata = ({ params, searchParams }: Args) =>
-  generatePageMetadata({ config: import('../../../../payload.config'), params, searchParams })
+  generatePageMetadata({ config: import('../../../../payload.config').then((m) => m.default), params, searchParams })
 
 const Page = ({ params, searchParams }: Args) =>
-  RootPage({ config: import('../../../../payload.config'), importMap, params, searchParams })
+  RootPage({ config: import('../../../../payload.config').then((m) => m.default), importMap, params, searchParams })
 
 export default Page

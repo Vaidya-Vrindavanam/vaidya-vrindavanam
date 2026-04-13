@@ -11,6 +11,6 @@ type Args = {
 }
 
 const NotFound = ({ params, searchParams }: Args) =>
-  NotFoundPage({ config: import('../../../../payload.config'), importMap, params, searchParams })
+  NotFoundPage({ config: import('../../../../payload.config').then((m) => m.default), importMap, params, searchParams })
 
 export default NotFound
