@@ -1,6 +1,6 @@
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import React from 'react'
-import { importMap } from './admin/importMap.js'
+import { importMap } from './admin/importMap'
 
 const configPromise = import('../../payload.config').then((m) => m.default)
 
