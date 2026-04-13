@@ -37,7 +37,7 @@ Last updated: 2026-04-01
 
 - [ ] **Fix Google Maps embed** — Replace placeholder iframe src in `contact.astro` (line 103) with the real embed URL from the clinic's Google Business Profile
 - [ ] **Doctor photos** — Replace circular "Photo" placeholder divs with real clinic images in `about.astro` and `index.astro`
-- [ ] **Confirm email address** — Plan mentions `ayurvv@gmail.com`; site currently uses `info@vaidyavrindavanam.com`. Verify correct address with client and update everywhere if needed.
+- [x] **Confirm email address** — Updated everywhere to `ayurvv@gmail.com`.
 
 ### Deployment (Task 13)
 

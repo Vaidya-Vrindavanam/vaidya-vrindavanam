@@ -96,7 +96,7 @@ Use these semantic token names — do not hardcode hex values:
 ## Clinic Details (for content)
 
 - **Phone:** +91 90748 48705, +91 82818 61587
-- **Email:** info@vaidyavrindavanam.com
+- **Email:** ayurvv@gmail.com
 - **Location:** Haripad, Alappuzha, Kerala — 690514
 - **Hours:** Mon–Sat 9AM–12PM & 4PM–7PM, Sunday closed
 - **USP:** Marma Chikitsa combined with modern chiropractic treatment
