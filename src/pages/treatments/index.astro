@@ -32,7 +32,7 @@ const categories = [
           <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">{cat.label}</h2>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             {catTreatments.map(t => (
-              <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} />
+              <TreatmentCard name={t.name} description={t.shortDescription} imageUrl={t.imageUrl} slug={t.slug} />
             ))}
           </div>
         </div>
