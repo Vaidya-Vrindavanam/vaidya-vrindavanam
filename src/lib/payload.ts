@@ -27,6 +27,7 @@ export type Treatment = {
   malayalam?: string
   shortDescription: string
   icon: string
+  imageUrl?: string
   category: 'panchakarma' | 'massage' | 'speciality'
   conditions: Array<{ slug: string }>
   duration?: string
@@ -58,13 +59,13 @@ export type BlogPost = {
 
 // ---- Fetch helpers ----
 
-async function fetchCollection(collection: string): Promise<unknown[]> {
+async function fetchCollection(collection: string, depth = 0): Promise<unknown[]> {
   if (!PAYLOAD_URL) {
     console.warn(`[payload.ts] PAYLOAD_URL not set — ${collection} will be empty`)
     return []
   }
   try {
-    const res = await fetch(`${PAYLOAD_URL}/api/${collection}?limit=200&depth=0`)
+    const res = await fetch(`${PAYLOAD_URL}/api/${collection}?limit=200&depth=${depth}`)
     if (!res.ok) throw new Error(`Payload API error: ${res.status} for ${collection}`)
     const json = await res.json() as { docs: unknown[] }
     return json.docs
@@ -77,22 +78,28 @@ async function fetchCollection(collection: string): Promise<unknown[]> {
 // ---- Public API ----
 
 export async function getTreatments(): Promise<Treatment[]> {
-  const docs = await fetchCollection('treatments') as PayloadTreatment[]
-  return docs.map(doc => ({
-    id: doc.id,
-    slug: doc.slug,
-    name: doc.name,
-    sanskrit: doc.sanskrit ?? undefined,
-    malayalam: doc.malayalam ?? undefined,
-    shortDescription: doc.shortDescription,
-    icon: doc.icon ?? '🌿',
-    category: doc.category,
-    conditions: (doc.conditions ?? []) as Array<{ slug: string }>,
-    duration: doc.duration ?? undefined,
-    order: doc.order ?? 99,
-    contentHTML: lexicalToHTML(doc.content),
-    featured: doc.featured ?? false,
-  }))
+  const docs = await fetchCollection('treatments', 1) as PayloadTreatment[]
+  return docs.map(doc => {
+    const image = doc.image as { url?: string } | null | undefined
+    return {
+      id: doc.id,
+      slug: doc.slug,
+      name: doc.name,
+      sanskrit: doc.sanskrit ?? undefined,
+      malayalam: doc.malayalam ?? undefined,
+      shortDescription: doc.shortDescription,
+      icon: doc.icon ?? '🌿',
+      imageUrl: image && typeof image === 'object' && image.url
+        ? `${PAYLOAD_URL}${image.url}`
+        : undefined,
+      category: doc.category,
+      conditions: (doc.conditions ?? []) as Array<{ slug: string }>,
+      duration: doc.duration ?? undefined,
+      order: doc.order ?? 99,
+      contentHTML: lexicalToHTML(doc.content),
+      featured: doc.featured ?? false,
+    }
+  })
 }
 
 export async function getTreatmentBySlug(slug: string): Promise<Treatment | null> {
