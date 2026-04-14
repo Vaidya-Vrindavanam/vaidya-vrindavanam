@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 
+const googleMapsApiKey = import.meta.env.GOOGLE_MAPS_API_KEY;
+
 const faqs = [
   { question: 'What are your clinic hours?', answer: 'We are open Monday through Saturday. Morning: 9:00 AM – 12:00 PM. Evening: 4:00 PM – 7:00 PM. We are closed on Sundays for outpatient consultations, but inpatients receive care daily.' },
   { question: 'Do I need to book in advance?', answer: 'Walk-ins are welcome for regular consultations. However, for residential treatment packages, we recommend booking in advance to ensure availability.' },
@@ -98,16 +100,21 @@ const schema = {
 
   <!-- Google Maps -->
   <section class="bg-brand-bg-alt">
-    <iframe
-      src="https://share.google/UiQAZiOrjY5IPz95b"
-      width="100%"
-      height="400"
-      style="border:0;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="Vaidya Vrindavanam location on Google Maps"
-    ></iframe>
+    <a
+      href="https://www.google.com/maps/search/Vaidya+Vrindavanam,+Haripad,+Alappuzha/@12.1448,76.4079,15z"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block"
+      title="View Vaidya Vrindavanam on Google Maps"
+    >
+      <img
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=12.1448,76.4079&zoom=15&size=1200x400&style=feature:all|element:labels|visibility:off&style=feature:water|color:0x1a1a2e&style=feature:land|color:0x0f3c4d&style=feature:road|visibility:off&markers=color:0xd4af37|12.1448,76.4079&key=${googleMapsApiKey}`}
+        alt="Map location of Vaidya Vrindavanam Ayurveda Hospital, Haripad, Alappuzha, Kerala"
+        width="100%"
+        height="400"
+        style="display: block; width: 100%; height: 400px; object-fit: cover;"
+      />
+    </a>
   </section>
 
   <!-- FAQ -->
