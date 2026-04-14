@@ -90,7 +90,7 @@ export async function getTreatments(): Promise<Treatment[]> {
       shortDescription: doc.shortDescription,
       icon: doc.icon ?? '🌿',
       imageUrl: image && typeof image === 'object' && image.url
-        ? `${PAYLOAD_URL}${image.url}`
+        ? (image.url.startsWith('http') ? image.url : `${PAYLOAD_URL}${image.url}`)
         : undefined,
       category: doc.category,
       conditions: (doc.conditions ?? []) as Array<{ slug: string }>,
