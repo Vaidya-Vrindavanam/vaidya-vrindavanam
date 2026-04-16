@@ -114,7 +114,7 @@ const schema = {
       <SectionHeader label="Treatments & Conditions" heading="Our Healing Therapies" subtitle="Authentic Panchakarma & Kerala Ayurvedic treatments" />
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
         {featuredTreatments.map(t => (
-          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} />
+          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} imageUrl={t.imageUrl} />
         ))}
         <a href="/treatments" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
           <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
