@@ -4,56 +4,76 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Website for **Vaidya Vrindavanam Ayurveda Hospital** (Haripad, Kerala, India). Dark-premium static site targeting local patients and medical tourists/NRIs. Primary conversion action: WhatsApp booking.
+Website for **Vaidya Vrindavanam Ayurveda Hospital** (Haripad, Kerala, India). Dark-premium static site targeting local patients and medical tourists/NRIs. Primary conversion action: WhatsApp booking (+91 90748 48705).
+
+**Status:** Production-ready. 40 static pages live at vaidyavrindavanam.com.
 
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (localhost:4321)
-npm run build    # Production build → dist/
+# Frontend (run from vaidya-vrindavanam/ directory)
+npm run dev      # Start Astro dev server (localhost:4321)
+npm run build    # Production build → dist/ (40 pages)
 npm run preview  # Preview production build locally
-```
 
-All commands run from the `vaidya-vrindavanam/` directory.
+# Sanity Studio (run from ../sanity/ directory)
+npm run dev      # Local Studio (localhost:3333)
+npm run deploy   # Deploy Studio to vaidya-vrindavanam.sanity.studio
+```
 
 ## Tech Stack
 
+### Frontend
 - **Astro 4.x** — static site generator (zero JS by default)
 - **Tailwind CSS v3** with `@tailwindcss/typography` plugin
 - **Google Fonts** — Cormorant Garamond (display) + Inter (body)
 - **No framework** — pure `.astro` components, no React/Vue/Svelte
+- **Vercel Analytics & Speed Insights**
+
+### Backend
+- **Sanity CMS v3** — Headless CMS with Sanity Studio
+- **Sanity Image CDN** — Persistent image hosting (cdn.sanity.io) — no re-upload needed on deploy
+- **Studio URL:** https://vaidya-vrindavanam.sanity.studio (for content editing)
+- **API client:** `src/lib/sanity.ts` — GROQ queries, same types as old payload.ts
+- **Vercel** — hosts Astro frontend
 
 ## Architecture
+
+### Data Flow
+
+```
+Sanity CMS → GROQ API → Astro build-time fetch (src/lib/sanity.ts)
+→ 40 static HTML pages → Vercel CDN (vaidyavrindavanam.com)
+```
+
+All content is fetched at **build time** — zero JavaScript in browser. API client is at `src/lib/sanity.ts` (functions: `getTreatments`, `getConditions`, `getBlogPosts`).
 
 ### Layout & Components
 
 Every page uses `BaseLayout.astro` which wraps content with `SEO.astro` (head), `Navbar.astro`, `Footer.astro`, and `WhatsAppButton.astro` (fixed floating button). Pages pass `title`, `description`, and optional `schema` (JSON-LD) props to BaseLayout.
 
-**Note:** The current `index.astro` does NOT use BaseLayout yet — it has its own inline HTML. New pages should use BaseLayout.
+### Pages (all complete)
 
-### Content Strategy (Planned)
-
-The site will use **Astro Content Collections** (`src/content/`) with Markdown files for:
-- `treatments/` — 20 treatment pages (Abhyangam, Shirodhara, Pizhichil, etc.)
-- `conditions/` — 11 condition pages (Arthritis, Asthma, Diabetes, etc.)
-- `blog/` — Educational articles
-
-Dynamic routes at `/treatments/[slug]`, `/conditions/[slug]`, `/blog/[slug]` will render these. Content collection schemas go in `src/content/config.ts`.
-
-### Pages Roadmap
-
-| Page | Route | Status |
+| Page | Route | Notes |
 |---|---|---|
-| Homepage | `/` | Scaffold only (placeholder) |
-| About | `/about` | Not started |
-| Treatments listing | `/treatments` | Not started |
-| Treatment detail | `/treatments/[slug]` | Not started |
-| Packages | `/packages` | Not started |
-| Conditions listing | `/conditions` | Not started |
-| Conditions detail | `/conditions/[slug]` | Not started |
-| Blog listing | `/blog` | Not started |
-| Blog post | `/blog/[slug]` | Not started |
-| Contact | `/contact` | Not started |
+| Homepage | `/` | Hero, treatments, conditions, testimonials, CTA |
+| About | `/about` | Clinic story + doctors |
+| Treatments listing | `/treatments` | All 20+ treatments |
+| Treatment detail | `/treatments/[slug]` | Dynamic, fetches from Sanity |
+| Packages | `/packages` | 5 packages + pricing |
+| Conditions listing | `/conditions` | All 11+ conditions |
+| Conditions detail | `/conditions/[slug]` | Dynamic, links to treatments |
+| Blog listing | `/blog` | All articles |
+| Blog post | `/blog/[slug]` | Dynamic, rich text content |
+| Contact | `/contact` | Maps + form + FAQ |
+
+### CMS Collections (Sanity)
+
+- **Treatments** — name, slug, sanskrit, malayalam, shortDescription, icon, image (Sanity Image CDN), category (panchakarma|massage|speciality), conditions[], content (Portable Text), featured, order
+- **Conditions** — name, slug, shortDescription, treatments[], content (Portable Text), order
+- **Blog** — title, slug, excerpt, date, author, category, content (Portable Text)
+
+**Studio:** https://vaidya-vrindavanam.sanity.studio
 
 ## Design System
 
@@ -80,16 +100,35 @@ Use these semantic token names — do not hardcode hex values:
 - All CTAs link to WhatsApp (`wa.me/919074848705`) or `tel:` links
 - Client-side JS only for: mobile menu toggle, FAQ accordions. Everything else is static.
 
+## Treatment Card Images
+
+Images are hosted on **Sanity Image CDN** (`cdn.sanity.io`) — persistent, no re-upload needed on redeploy. Uploaded manually via Sanity Studio (Treatments → Treatment Image field).
+
+## Environment Variables
+
+```
+# Frontend (.env in vaidya-vrindavanam/)
+SANITY_PROJECT_ID=7rhexv2k
+SANITY_DATASET=production
+SANITY_API_TOKEN=<editor token>
+GOOGLE_MAPS_API_KEY=...
+KIE_AI_API_KEY=...
+```
+
+Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel dashboard → Settings → Environment Variables.
+
 ## Key Reference Documents
 
-- **Design spec:** `docs/superpowers/specs/2026-03-31-vaidya-vrindavanam-website-design.md` — full page-by-page design with sections, content, and layout details
-- **Site architecture:** `Site-Architecture.md` — routes, nav structure, internal linking, SEO requirements
-- **Implementation plan:** `docs/superpowers/plans/2026-03-31-vaidya-vrindavanam-website.md` — step-by-step build plan with file structure
+- **Design spec:** `docs/superpowers/specs/2026-03-31-vaidya-vrindavanam-website-design.md`
+- **Site architecture:** `Site-Architecture.md` — routes, nav, internal linking, SEO strategy
+- **Implementation plan:** `docs/superpowers/plans/2026-03-31-vaidya-vrindavanam-website.md`
+- **Deployment guide:** `PAYLOAD_DEPLOY.md` — Neon + Railway + Vercel setup
+- **TODO tracker:** `TODO.md`
 
 ## SEO Requirements
 
 - JSON-LD schema markup per page (LocalBusiness, MedicalBusiness, FAQPage, Article)
-- Unique title/description per page (SEO component handles format: `{title} | Vaidya Vrindavanam Ayurveda Hospital, Haripad`)
+- Unique title/description per page (format: `{title} | Vaidya Vrindavanam Ayurveda Hospital, Haripad`)
 - Sitemap auto-generated via `@astrojs/sitemap` (site: `https://vaidyavrindavanam.com`)
 - Image alt text must include location + treatment keywords
 
@@ -101,3 +140,9 @@ Use these semantic token names — do not hardcode hex values:
 - **Hours:** Mon–Sat 9AM–12PM & 4PM–7PM, Sunday closed
 - **USP:** Marma Chikitsa combined with modern chiropractic treatment
 - **Operating since:** 2014
+
+## Open TODOs
+
+- Fix Google Maps embed (placeholder in `contact.astro`)
+- Add real doctor photos (Dr. Ganga, Dr. Jayakrishnan — placeholders in `about.astro` & `index.astro`)
+- Google Analytics / Search Console setup

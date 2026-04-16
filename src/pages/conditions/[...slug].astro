@@ -2,8 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getConditions, getTreatments } from '../../lib/payload';
-import type { Condition, Treatment } from '../../lib/payload';
+import { getConditions, getTreatments } from '../../lib/sanity';
+import type { Condition, Treatment } from '../../lib/sanity';
 
 export async function getStaticPaths() {
   const [conditions, allTreatments] = await Promise.all([

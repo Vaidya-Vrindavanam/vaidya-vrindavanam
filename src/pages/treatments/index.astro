@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getTreatments } from '../../lib/payload';
+import { getTreatments } from '../../lib/sanity';
 
 const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 

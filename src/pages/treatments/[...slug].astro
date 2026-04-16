@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getTreatments } from '../../lib/payload';
-import type { Treatment } from '../../lib/payload';
+import { getTreatments } from '../../lib/sanity';
+import type { Treatment } from '../../lib/sanity';
 
 export async function getStaticPaths() {
   const treatments = await getTreatments();

@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getBlogPosts } from '../../lib/payload';
+import { getBlogPosts } from '../../lib/sanity';
 
 const posts = (await getBlogPosts()).sort((a, b) => b.date.getTime() - a.date.getTime());
 ---

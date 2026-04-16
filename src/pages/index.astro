@@ -7,7 +7,7 @@ import TreatmentCard from '../components/TreatmentCard.astro';
 import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
-import { getTreatments, getConditions } from '../lib/payload';
+import { getTreatments, getConditions } from '../lib/sanity';
 
 const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 const featuredTreatments = treatments.slice(0, 5);

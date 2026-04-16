@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getConditions } from '../../lib/payload';
+import { getConditions } from '../../lib/sanity';
 
 const conditions = (await getConditions()).sort((a, b) => a.order - b.order);
 ---
