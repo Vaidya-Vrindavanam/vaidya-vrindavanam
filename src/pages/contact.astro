@@ -8,7 +8,7 @@ const faqs = [
   { question: 'What are your clinic hours?', answer: 'We are open Monday through Saturday. Morning: 9:00 AM – 12:00 PM. Evening: 4:00 PM – 7:00 PM. We are closed on Sundays for outpatient consultations, but inpatients receive care daily.' },
   { question: 'Do I need to book in advance?', answer: 'Walk-ins are welcome for regular consultations. However, for residential treatment packages, we recommend booking in advance to ensure availability.' },
   { question: 'How do I reach Vaidya Vrindavanam?', answer: 'We are located on NH-66 near RK Junction, Haripad. Haripad is well-connected by both road and rail. The Haripad railway station is nearby. Ample parking is available at the clinic.' },
-  { question: 'Do you offer online consultations?', answer: 'Yes, we offer online consultations via WhatsApp video call. Contact us on WhatsApp (+91 90748 48705) to schedule a virtual appointment.' },
+  { question: 'Do you offer online consultations?', answer: `Yes, we offer online consultations via WhatsApp video call. Contact us on WhatsApp (${PHONE_PRIMARY}) to schedule a virtual appointment.` },
 ];
 
 const schema = {
@@ -24,7 +24,7 @@ const schema = {
 
 <BaseLayout
   title="Contact Us"
-  description="Visit or contact Vaidya Vrindavanam Ayurveda Hospital, near RK Junction, NH-66, Haripad, Alappuzha, Kerala. Call +91 9074848705 or WhatsApp us."
+  description={`Visit or contact Vaidya Vrindavanam Ayurveda Hospital, near RK Junction, NH-66, Haripad, Alappuzha, Kerala. Call ${PHONE_PRIMARY} or WhatsApp us.`}
   schema={schema}
 >
   <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
