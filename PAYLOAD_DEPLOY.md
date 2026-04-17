@@ -40,7 +40,7 @@ PORT=3000
 ```
 
 7. Deploy — Railway builds and starts the app
-8. Once deployed, copy the Railway URL (e.g. `https://vaidya-vrindavanam-payload.up.railway.app`)
+8. Once deployed, copy the Railway URL (e.g. `https://<railway-project-url>.up.railway.app`)
 9. Go back to Railway env vars and set: `NEXT_PUBLIC_SERVER_URL=https://your-railway-url.up.railway.app`
 10. Redeploy
 

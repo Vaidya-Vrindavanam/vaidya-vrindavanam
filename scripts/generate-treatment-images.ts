@@ -16,7 +16,7 @@
  *   KIE_AI_API_KEY
  *   PAYLOAD_EMAIL
  *   PAYLOAD_PASSWORD
- *   PAYLOAD_URL  (e.g. https://vaidya-vrindavanam-production.up.railway.app)
+ *   PAYLOAD_URL  (e.g. https://<railway-project-url>.up.railway.app)
  */
 
 import 'dotenv/config'

@@ -13,7 +13,7 @@
  *   npx tsx scripts/migrate-to-sanity.ts
  *
  * Required env vars (.env):
- *   PAYLOAD_URL        — https://vaidya-vrindavanam-production.up.railway.app
+ *   PAYLOAD_URL        — https://<railway-project-url>.up.railway.app
  *   SANITY_PROJECT_ID
  *   SANITY_DATASET
  *   SANITY_API_TOKEN   — must have Editor permissions

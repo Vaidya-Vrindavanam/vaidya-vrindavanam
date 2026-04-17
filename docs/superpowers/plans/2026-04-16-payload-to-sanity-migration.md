@@ -985,7 +985,7 @@ This script fetches all content from the live Payload REST API and imports it in
  *   npx tsx scripts/migrate-to-sanity.ts
  *
  * Required env vars (.env):
- *   PAYLOAD_URL        — https://vaidya-vrindavanam-production.up.railway.app
+ *   PAYLOAD_URL        — https://<railway-project-url>.up.railway.app
  *   SANITY_PROJECT_ID
  *   SANITY_DATASET
  *   SANITY_API_TOKEN   — must have Editor permissions
@@ -1299,7 +1299,7 @@ main().catch(err => {
 - [ ] **Step 1: Ensure `PAYLOAD_URL` is still in `.env`**
 
 ```env
-PAYLOAD_URL=https://vaidya-vrindavanam-production.up.railway.app
+PAYLOAD_URL=https://<railway-project-url>.up.railway.app
 ```
 
 - [ ] **Step 2: Run the migration script**
@@ -1312,7 +1312,7 @@ npx tsx scripts/migrate-to-sanity.ts
 Expected output:
 ```
 === Vaidya Vrindavanam — Payload → Sanity Migration ===
-Payload URL: https://vaidya-vrindavanam-production.up.railway.app
+Payload URL: https://<railway-project-url>.up.railway.app
 Sanity project: <id>/production
 
 Fetching from Payload...
