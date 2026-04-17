@@ -942,10 +942,10 @@ SANITY_DATASET=production
 SANITY_API_TOKEN=your_editor_token_here
 
 # Google Maps (unchanged)
-GOOGLE_MAPS_API_KEY=AIzaSyAFqbiVlhoTIkLUB4AsHd_SIUAJihs9SDI
+GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
 
 # kie.ai (kept for reference — image generation script is now manual)
-KIE_AI_API_KEY=6d5370975c31701fad09f6cfa48cf6e0
+KIE_AI_API_KEY=<your-kie-ai-api-key>
 ```
 
 > Keep `PAYLOAD_URL` in `.env` temporarily — needed for Task 10 (migration script). Remove it after migration is confirmed.
@@ -1541,6 +1541,6 @@ In the Neon dashboard, delete the `vaidya-vrindavanam` database project. All con
 | Task 12 — Local build test | ✅ Done | 40 pages, 0 errors |
 | Task 13 — Upload images (manual) | ✅ Done | All 20 images on cdn.sanity.io. 40 pages built, 0 errors. |
 | Task 14 — Deploy Studio | ✅ Done | Live at https://vaidya-vrindavanam.sanity.studio |
-| Task 15 — CLAUDE.md + decommission | ⬜ Not started | |
+| Task 15 — CLAUDE.md + decommission | ✅ Done | CLAUDE.md updated, payload.ts + payload/ deleted, pushed to Vercel |
 
 > **Resume point:** Update this table with `✅ Done` / `🔄 In progress` as tasks complete. At session end, save progress to memory so the next session has full context.
