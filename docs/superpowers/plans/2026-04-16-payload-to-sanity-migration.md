@@ -1527,7 +1527,7 @@ In the Neon dashboard, delete the `vaidya-vrindavanam` database project. All con
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Task 1 — Create Sanity Project | ✅ Done | Project ID: 7rhexv2k |
+| Task 1 — Create Sanity Project | ✅ Done | Project ID: <your-sanity-project-id> |
 | Task 2 — Scaffold Studio Files | ✅ Done | |
 | Task 3 — Treatment Schema | ✅ Done | |
 | Task 4 — Condition Schema | ✅ Done | |

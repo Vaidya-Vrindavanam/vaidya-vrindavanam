@@ -108,7 +108,7 @@ Images are hosted on **Sanity Image CDN** (`cdn.sanity.io`) — persistent, no r
 
 ```
 # Frontend (.env in vaidya-vrindavanam/)
-SANITY_PROJECT_ID=7rhexv2k
+SANITY_PROJECT_ID=<your-sanity-project-id>
 SANITY_DATASET=production
 SANITY_API_TOKEN=<editor token>
 GOOGLE_MAPS_API_KEY=...
