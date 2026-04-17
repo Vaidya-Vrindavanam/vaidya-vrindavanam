@@ -3,8 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 
-const googleMapsApiKey = import.meta.env.GOOGLE_MAPS_API_KEY;
-
 const faqs = [
   { question: 'What are your clinic hours?', answer: 'We are open Monday through Saturday. Morning: 9:00 AM – 12:00 PM. Evening: 4:00 PM – 7:00 PM. We are closed on Sundays for outpatient consultations, but inpatients receive care daily.' },
   { question: 'Do I need to book in advance?', answer: 'Walk-ins are welcome for regular consultations. However, for residential treatment packages, we recommend booking in advance to ensure availability.' },
@@ -78,13 +76,25 @@ const schema = {
       <div>
         <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">Send a Message</h2>
         <form action="https://formspree.io/f/mgoreanz" method="POST" class="space-y-4">
+          <!-- Honeypot — hidden from real users, catches bots -->
+          <input type="text" name="_honey" style="display:none" />
+          <!-- Subject line in the notification email -->
+          <input type="hidden" name="_subject" value="New Enquiry — Vaidya Vrindavanam" />
+
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="name">Your Name</label>
-            <input type="text" id="name" name="name" required class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <input type="text" id="name" name="name" required autocomplete="name" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
           </div>
           <div>
-            <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="phone">Phone / WhatsApp</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+          </div>
+          <div>
+            <!-- name="email" tells Formspree to use this as the reply-to address -->
+            <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="email">
+              Email Address <span class="text-brand-gold normal-case tracking-normal">(required for overseas enquiries)</span>
+            </label>
+            <input type="email" id="email" name="email" autocomplete="email" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
           </div>
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="message">Message</label>
@@ -100,21 +110,15 @@ const schema = {
 
   <!-- Google Maps -->
   <section class="bg-brand-bg-alt">
-    <a
-      href="https://www.google.com/maps/search/Vaidya+Vrindavanam,+Haripad,+Alappuzha/@12.1448,76.4079,15z"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="block"
-      title="View Vaidya Vrindavanam on Google Maps"
-    >
-      <img
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=12.1448,76.4079&zoom=15&size=600x400&markers=color:0xd4af37|label:V|12.1448,76.4079&key=${googleMapsApiKey}`}
-        alt="Map location of Vaidya Vrindavanam Ayurveda Hospital, Haripad, Alappuzha, Kerala"
-        width="100%"
-        height="400"
-        style="display: block; width: 100%; height: 400px; object-fit: cover;"
-      />
-    </a>
+    <iframe
+      src="https://www.google.com/maps?q=Vaidya+Vrindavanam+Ayurveda+Hospital+Haripad+Kerala&output=embed"
+      title="Vaidya Vrindavanam Ayurveda Hospital location map"
+      width="100%"
+      height="400"
+      style="display: block; border: none;"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
   </section>
 
   <!-- FAQ -->
