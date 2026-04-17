@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABanner from '../components/CTABanner.astro';
-import { whatsappLink } from '../config/contact';
+import { whatsappLink, PHONE_PRIMARY, PHONE_SECONDARY } from '../config/contact';
 
 const packages = [
   {
@@ -47,7 +47,7 @@ const faqs = [
   { question: 'What is included in the residential packages?', answer: 'All residential packages include daily Ayurvedic treatments, doctor consultations, accommodation, Ayurvedic meals (where specified), and herbal medicines. The specific treatments are customised based on your condition and the doctor\'s assessment.' },
   { question: 'Can treatment duration be customised?', answer: 'Yes. The durations listed are standard ranges. After the initial consultation, the doctor will recommend the optimal duration based on your specific condition. Longer durations generally yield better and more lasting results.' },
   { question: 'Is insurance reimbursement available?', answer: 'Yes, insurance reimbursement is available. Please contact us with your insurance details and we will guide you through the process.' },
-  { question: 'How do I book a package?', answer: 'You can book via WhatsApp (+91 9074848705), phone call (+91 8281861587), or walk in to the clinic. We recommend booking in advance for residential packages to ensure room availability.' },
+  { question: 'How do I book a package?', answer: `You can book via WhatsApp (${PHONE_PRIMARY}), phone call (${PHONE_SECONDARY}), or walk in to the clinic. We recommend booking in advance for residential packages to ensure room availability.` },
   { question: 'What should I bring for a residential stay?', answer: 'Bring comfortable loose clothing, personal toiletries, and any current medications. We provide treatment-specific clothing, towels, and all Ayurvedic supplies. Light, modest clothing is recommended.' },
 ];
 
