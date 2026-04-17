@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import { getTreatments, getConditions } from '../../lib/sanity';
 import type { Treatment, Condition } from '../../lib/sanity';
+import { whatsappLink } from '../../config/contact';
 
 export async function getStaticPaths() {
   const [treatments, allConditions] = await Promise.all([getTreatments(), getConditions()]);
@@ -16,7 +17,7 @@ const { treatment, allConditions } = Astro.props as { treatment: Treatment; allC
 const relatedConditions = allConditions.filter(c =>
   treatment.conditions.some(tc => tc.slug === c.slug)
 );
-const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in ${treatment.name}. Please share more details.`)}`;
+const waLink = whatsappLink(`Hi, I'm interested in ${treatment.name}. Please share more details.`);
 
 const schema = {
   "@context": "https://schema.org",

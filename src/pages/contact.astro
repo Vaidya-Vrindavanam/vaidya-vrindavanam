@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
+import { PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL, WA_DEFAULT } from '../config/contact';
 
 const faqs = [
   { question: 'What are your clinic hours?', answer: 'We are open Monday through Saturday. Morning: 9:00 AM – 12:00 PM. Evening: 4:00 PM – 7:00 PM. We are closed on Sundays for outpatient consultations, but inpatients receive care daily.' },
@@ -44,12 +45,12 @@ const schema = {
           </div>
           <div>
             <p class="text-text-muted text-xs uppercase tracking-wider mb-1">Phone</p>
-            <p><a href="tel:+919074848705" class="text-brand-gold hover:text-text-primary transition-colors">+91 90748 48705</a></p>
-            <p><a href="tel:+918281861587" class="text-brand-gold hover:text-text-primary transition-colors">+91 82818 61587</a></p>
+            <p><a href={`tel:+${PHONE_PRIMARY_RAW}`} class="text-brand-gold hover:text-text-primary transition-colors">{PHONE_PRIMARY}</a></p>
+            <p><a href={`tel:+${PHONE_SECONDARY_RAW}`} class="text-brand-gold hover:text-text-primary transition-colors">{PHONE_SECONDARY}</a></p>
           </div>
           <div>
             <p class="text-text-muted text-xs uppercase tracking-wider mb-1">Email</p>
-            <p><a href="mailto:ayurvv@gmail.com" class="text-brand-gold hover:text-text-primary transition-colors">ayurvv@gmail.com</a></p>
+            <p><a href={`mailto:${EMAIL}`} class="text-brand-gold hover:text-text-primary transition-colors">{EMAIL}</a></p>
           </div>
           <div>
             <p class="text-text-muted text-xs uppercase tracking-wider mb-1">Hours</p>
@@ -59,14 +60,14 @@ const schema = {
 
         <div class="mt-8 flex gap-3 flex-wrap">
           <a
-            href="https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20Vaidya%20Vrindavanam"
+            href={WA_DEFAULT}
             target="_blank"
             rel="noopener noreferrer"
             class="bg-brand-whatsapp text-white px-6 py-2.5 text-xs font-bold tracking-widest"
           >
             WHATSAPP
           </a>
-          <a href="tel:+919074848705" class="bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest">
+          <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest">
             CALL
           </a>
         </div>

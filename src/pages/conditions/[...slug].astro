@@ -4,6 +4,7 @@ import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import { getConditions, getTreatments } from '../../lib/sanity';
 import type { Condition, Treatment } from '../../lib/sanity';
+import { whatsappLink } from '../../config/contact';
 
 export async function getStaticPaths() {
   const [conditions, allTreatments] = await Promise.all([
@@ -22,7 +23,7 @@ const relatedTreatments = allTreatments.filter(t =>
   condition.treatments.some(cs => cs.slug === t.slug)
 );
 
-const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'd like to consult about Ayurvedic treatment for ${condition.name}.`)}`;
+const waLink = whatsappLink(`Hi, I'd like to consult about Ayurvedic treatment for ${condition.name}.`);
 
 const schema = {
   "@context": "https://schema.org",

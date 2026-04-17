@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABanner from '../components/CTABanner.astro';
+import { whatsappLink } from '../config/contact';
 
 const packages = [
   {
@@ -76,7 +77,7 @@ const schema = {
   <section class="py-12 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto space-y-6">
       {packages.map(pkg => {
-        const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in the ${pkg.name}. Please share details and pricing.`)}`;
+        const waLink = whatsappLink(`Hi, I'm interested in the ${pkg.name}. Please share details and pricing.`);
         return (
           <div class="border border-brand-gold-border p-8 relative">
             {pkg.popular && (

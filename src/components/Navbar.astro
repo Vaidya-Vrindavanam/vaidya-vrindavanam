@@ -1,4 +1,5 @@
 ---
+import { WA_DEFAULT, whatsappLink } from '../config/contact';
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
@@ -10,7 +11,7 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
-const whatsappUrl = "https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20Vaidya%20Vrindavanam";
+const whatsappUrl = WA_DEFAULT;
 ---
 
 <!-- Announcement Bar -->
@@ -19,7 +20,7 @@ const whatsappUrl = "https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%2
     <p class="text-center font-body text-sm font-light" style="color: #0f1a0a;">
       25% off all treatment plans — for a limited time.
       <a
-        href="https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%2025%25%20discount%20on%20treatment%20plans"
+        href={whatsappLink('Hi, I\'d like to know more about the 25% discount on treatment plans')}
         target="_blank"
         rel="noopener noreferrer"
         class="underline underline-offset-2 font-medium ml-1 hover:opacity-70 transition-opacity"

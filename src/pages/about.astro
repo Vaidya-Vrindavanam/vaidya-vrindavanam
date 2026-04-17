@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import DoctorProfile from '../components/DoctorProfile.astro';
 import CTABanner from '../components/CTABanner.astro';
+import { PHONE_PRIMARY_RAW } from '../config/contact';
 
 const schema = {
   "@context": "https://schema.org",
@@ -12,7 +13,7 @@ const schema = {
       "name": "Vaidya Vrindavanam Ayurveda Hospital",
       "url": "https://vaidyavrindavanam.com",
       "image": "https://vaidyavrindavanam.com/og-default.jpg",
-      "telephone": "+919074848705",
+      "telephone": `+${PHONE_PRIMARY_RAW}`,
       "foundingDate": "2014",
       "sameAs": ["https://share.google/7sp4iCnGkZaIpZ53O"],
       "address": {

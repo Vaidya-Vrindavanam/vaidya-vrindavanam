@@ -8,6 +8,7 @@ import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
 import { getTreatments, getConditions } from '../lib/sanity';
+import { WA_DEFAULT, PHONE_PRIMARY_RAW } from '../config/contact';
 
 const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 const featuredTreatments = treatments.slice(0, 5);
@@ -19,7 +20,7 @@ const schema = {
   "name": "Vaidya Vrindavanam Ayurveda Hospital",
   "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ traditional treatments with residential care.",
   "url": "https://vaidyavrindavanam.com",
-  "telephone": "+919074848705",
+  "telephone": `+${PHONE_PRIMARY_RAW}`,
   "email": "ayurvv@gmail.com",
   "image": "https://vaidyavrindavanam.com/og-default.jpg",
   "priceRange": "₹₹",
@@ -86,7 +87,7 @@ const schema = {
       </p>
       <div class="flex gap-3 justify-center mt-8 flex-wrap">
         <a
-          href="https://wa.me/919074848705?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20Vaidya%20Vrindavanam"
+          href={WA_DEFAULT}
           target="_blank"
           rel="noopener noreferrer"
           class="bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"

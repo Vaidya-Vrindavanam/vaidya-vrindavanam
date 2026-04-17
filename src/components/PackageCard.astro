@@ -1,4 +1,5 @@
 ---
+import { whatsappLink } from '../config/contact';
 interface Props {
   name: string;
   duration: string;
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { name, duration, price, popular = false, whatsappMessage } = Astro.props;
-const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(whatsappMessage)}`;
+const waLink = whatsappLink(whatsappMessage);
 ---
 
 <div class="border border-brand-gold-border p-6 relative">

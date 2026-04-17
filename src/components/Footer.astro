@@ -1,4 +1,5 @@
 ---
+import { PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL } from '../config/contact';
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
@@ -24,18 +25,18 @@ const year = new Date().getFullYear();
       </p>
       <ul class="space-y-2 text-sm">
         <li>
-          <a href="tel:+919074848705" class="text-text-secondary hover:text-brand-gold transition-colors">
-            📞 +91 90748 48705
+          <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="text-text-secondary hover:text-brand-gold transition-colors">
+            📞 {PHONE_PRIMARY}
           </a>
         </li>
         <li>
-          <a href="tel:+918281861587" class="text-text-secondary hover:text-brand-gold transition-colors">
-            📞 +91 82818 61587
+          <a href={`tel:+${PHONE_SECONDARY_RAW}`} class="text-text-secondary hover:text-brand-gold transition-colors">
+            📞 {PHONE_SECONDARY}
           </a>
         </li>
         <li>
-          <a href="mailto:ayurvv@gmail.com" class="text-text-secondary hover:text-brand-gold transition-colors">
-            ✉ ayurvv@gmail.com
+          <a href={`mailto:${EMAIL}`} class="text-text-secondary hover:text-brand-gold transition-colors">
+            ✉ {EMAIL}
           </a>
         </li>
       </ul>
