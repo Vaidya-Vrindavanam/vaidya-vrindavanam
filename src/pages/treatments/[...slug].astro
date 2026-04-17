@@ -1,35 +1,50 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getTreatments } from '../../lib/sanity';
-import type { Treatment } from '../../lib/sanity';
+import { getTreatments, getConditions } from '../../lib/sanity';
+import type { Treatment, Condition } from '../../lib/sanity';
 
 export async function getStaticPaths() {
-  const treatments = await getTreatments();
+  const [treatments, allConditions] = await Promise.all([getTreatments(), getConditions()]);
   return treatments.map(treatment => ({
     params: { slug: treatment.slug },
-    props: { treatment },
+    props: { treatment, allConditions },
   }));
 }
 
-const { treatment } = Astro.props as { treatment: Treatment };
+const { treatment, allConditions } = Astro.props as { treatment: Treatment; allConditions: Condition[] };
+const relatedConditions = allConditions.filter(c =>
+  treatment.conditions.some(tc => tc.slug === c.slug)
+);
 const waLink = `https://wa.me/919074848705?text=${encodeURIComponent(`Hi, I'm interested in ${treatment.name}. Please share more details.`)}`;
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "MedicalTherapy",
-  "name": treatment.name,
-  "description": treatment.shortDescription,
-  "provider": {
-    "@type": "MedicalBusiness",
-    "name": "Vaidya Vrindavanam Ayurveda Hospital",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Haripad",
-      "addressRegion": "Kerala",
-      "addressCountry": "IN"
+  "@graph": [
+    {
+      "@type": "MedicalTherapy",
+      "name": treatment.name,
+      "description": treatment.shortDescription,
+      "provider": {
+        "@type": "MedicalBusiness",
+        "name": "Vaidya Vrindavanam Ayurveda Hospital",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Haripad",
+          "addressRegion": "Kerala",
+          "addressCountry": "IN"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com" },
+        { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments" },
+        { "@type": "ListItem", "position": 3, "name": treatment.name, "item": `https://vaidyavrindavanam.com/treatments/${treatment.slug}` }
+      ]
     }
-  }
+  ]
 };
 ---
 
@@ -56,6 +71,22 @@ const schema = {
       <div set:html={treatment.contentHTML}></div>
     </div>
   </section>
+
+  <!-- Related Conditions -->
+  {relatedConditions.length > 0 && (
+    <section class="py-10 px-6 bg-brand-bg-alt">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-base font-display text-brand-gold tracking-wide mb-4">Conditions This Treats</h2>
+        <div class="flex flex-wrap gap-2">
+          {relatedConditions.map(c => (
+            <a href={`/conditions/${c.slug}`} class="border border-brand-gold-dim text-text-secondary text-xs px-4 py-2 hover:border-brand-gold hover:text-brand-gold transition-colors">
+              {c.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- WhatsApp CTA -->
   <section class="py-12 px-6 bg-brand-bg-alt text-center">

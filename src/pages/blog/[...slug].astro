@@ -16,15 +16,35 @@ const { post } = Astro.props as { post: BlogPost };
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": post.title,
-  "description": post.excerpt,
-  "author": { "@type": "Person", "name": post.author },
-  "datePublished": post.date.toISOString(),
-  "publisher": {
-    "@type": "Organization",
-    "name": "Vaidya Vrindavanam Ayurveda Hospital"
-  }
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": post.title,
+      "description": post.excerpt,
+      "image": "https://vaidyavrindavanam.com/og-default.jpg",
+      "author": {
+        "@type": "Person",
+        "name": post.author
+      },
+      "datePublished": post.date.toISOString(),
+      "publisher": {
+        "@type": "Organization",
+        "name": "Vaidya Vrindavanam Ayurveda Hospital",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://vaidyavrindavanam.com/og-default.jpg"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://vaidyavrindavanam.com/blog" },
+        { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://vaidyavrindavanam.com/blog/${post.slug}` }
+      ]
+    }
+  ]
 };
 ---
 

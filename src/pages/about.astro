@@ -3,11 +3,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import DoctorProfile from '../components/DoctorProfile.astro';
 import CTABanner from '../components/CTABanner.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalBusiness",
+      "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "url": "https://vaidyavrindavanam.com",
+      "image": "https://vaidyavrindavanam.com/og-default.jpg",
+      "telephone": "+919074848705",
+      "foundingDate": "2014",
+      "sameAs": ["https://share.google/7sp4iCnGkZaIpZ53O"],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Near RK Junction, NH-66",
+        "addressLocality": "Haripad",
+        "addressRegion": "Kerala",
+        "postalCode": "690514",
+        "addressCountry": "IN"
+      },
+      "employee": [
+        {
+          "@type": "Person",
+          "name": "Dr. Jayakrishnan T J",
+          "jobTitle": "Consultant Physician & Founder",
+          "description": "BAMS, MD (Ayurveda). Specialises in Marma Chikitsa combined with modern chiropractic techniques.",
+          "image": "https://vaidyavrindavanam.com/dr-jayakrishnan.webp"
+        },
+        {
+          "@type": "Person",
+          "name": "Dr. Ganga SS",
+          "jobTitle": "Consultant Physician",
+          "description": "BAMS. Expert in traditional Kerala Ayurvedic therapies and women's health (Stree Roga).",
+          "image": "https://vaidyavrindavanam.com/dr-ganga.webp"
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <BaseLayout
-  title="About Us"
+  title="About Our Ayurveda Doctors & Clinic, Haripad"
   description="Learn about Vaidya Vrindavanam Ayurveda Hospital — Haripad's trusted Ayurvedic healing centre since 2014. Meet our BAMS & MD qualified doctors and explore our residential facilities."
+  schema={schema}
 >
   <!-- Hero -->
   <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
@@ -72,22 +112,12 @@ import CTABanner from '../components/CTABanner.astro';
       <SectionHeader label="Expert Care" heading="Our Physicians" />
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mx-auto">
         <div class="text-center">
-          <div class="w-28 h-28 bg-brand-bg border-2 border-brand-gold rounded-sm mx-auto mb-4 flex items-center justify-center">
-            <span class="text-text-muted text-xs">Photo</span>
-          </div>
-          <h3 class="text-lg text-text-primary font-display">Dr. Jayakrishnan T J</h3>
-          <p class="text-sm text-brand-gold mt-1">BAMS, MD (Ayurveda)</p>
-          <p class="text-xs text-text-muted mt-1">Consultant Physician & Founder</p>
-          <p class="text-sm text-text-secondary mt-3 leading-relaxed">With extensive experience in Ayurvedic medicine, Dr. Jayakrishnan specialises in Marma Chikitsa combined with modern chiropractic techniques. His unique integrative approach has helped numerous patients find relief from chronic conditions.</p>
+          <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician & Founder" image="/dr-jayakrishnan.webp" />
+          <p class="text-sm text-text-secondary mt-4 leading-relaxed">With extensive experience in Ayurvedic medicine, Dr. Jayakrishnan specialises in Marma Chikitsa combined with modern chiropractic techniques. His unique integrative approach has helped numerous patients find relief from chronic conditions.</p>
         </div>
         <div class="text-center">
-          <div class="w-28 h-28 bg-brand-bg border-2 border-brand-gold rounded-sm mx-auto mb-4 flex items-center justify-center">
-            <span class="text-text-muted text-xs">Photo</span>
-          </div>
-          <h3 class="text-lg text-text-primary font-display">Dr. Ganga SS</h3>
-          <p class="text-sm text-brand-gold mt-1">BAMS</p>
-          <p class="text-xs text-text-muted mt-1">Consultant Physician</p>
-          <p class="text-sm text-text-secondary mt-3 leading-relaxed">Dr. Ganga brings expertise in traditional Kerala Ayurvedic therapies and women's health (Stree Roga). She is skilled in Panchakarma treatments and provides compassionate, personalised care to every patient.</p>
+          <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" image="/dr-ganga.webp" />
+          <p class="text-sm text-text-secondary mt-4 leading-relaxed">Dr. Ganga brings expertise in traditional Kerala Ayurvedic therapies and women's health (Stree Roga). She is skilled in Panchakarma treatments and provides compassionate, personalised care to every patient.</p>
         </div>
       </div>
     </div>

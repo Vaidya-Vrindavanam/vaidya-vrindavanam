@@ -21,6 +21,9 @@ const schema = {
   "url": "https://vaidyavrindavanam.com",
   "telephone": "+919074848705",
   "email": "ayurvv@gmail.com",
+  "image": "https://vaidyavrindavanam.com/og-default.jpg",
+  "priceRange": "₹₹",
+  "sameAs": ["https://share.google/7sp4iCnGkZaIpZ53O"],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Near RK Junction, NH-66",
@@ -28,6 +31,17 @@ const schema = {
     "addressRegion": "Kerala",
     "postalCode": "690514",
     "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 9.2711918,
+    "longitude": 76.4608952
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.2",
+    "reviewCount": "5",
+    "bestRating": "5"
   },
   "openingHoursSpecification": [
     {
@@ -53,7 +67,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Authentic Kerala Ayurveda"
+  title="Ayurveda Hospital in Haripad, Kerala"
   description="Vaidya Vrindavanam Ayurveda Hospital in Haripad, Kerala — authentic Panchakarma, Marma Chikitsa with chiropractic care, 20+ treatments, residential packages. Book via WhatsApp."
   schema={schema}
 >
@@ -62,9 +76,10 @@ const schema = {
     <div class="absolute top-10 left-1/2 -translate-x-1/2 text-[120px] opacity-[0.03] text-brand-gold select-none">☘</div>
     <div class="relative z-10 max-w-xl">
       <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">Authentic Kerala Ayurveda · Est. 2014</p>
-      <h1 class="text-4xl md:text-5xl font-display font-light text-text-primary leading-tight tracking-wide">
+      <h1 class="sr-only">Ayurveda Hospital in Haripad, Kerala — Vaidya Vrindavanam</h1>
+      <p class="text-4xl md:text-5xl font-display font-light text-text-primary leading-tight tracking-wide" aria-hidden="true">
         Heal. Renew.<br /><em class="font-normal">Flourish.</em>
-      </h1>
+      </p>
       <div class="w-10 h-px bg-brand-gold mx-auto my-6"></div>
       <p class="text-sm text-text-secondary leading-relaxed font-light max-w-md mx-auto">
         Where ancient Marma wisdom meets modern healing. Residential Panchakarma, personalised treatments, and holistic recovery in the heart of Kerala.
