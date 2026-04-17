@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client'
 import { toHTML } from '@portabletext/to-html'
+import sanitizeHtml from 'sanitize-html'
 
 const client = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID as string,
@@ -51,10 +52,24 @@ export type BlogPost = {
 
 // ---- Portable Text → HTML ----
 
+const ALLOWED_TAGS = [
+  'p', 'h2', 'h3', 'h4', 'ul', 'ol', 'li',
+  'strong', 'em', 'a', 'br', 'blockquote',
+]
+
+const ALLOWED_ATTRS: sanitizeHtml.IOptions['allowedAttributes'] = {
+  a: ['href', 'title', 'target', 'rel'],
+}
+
 function portableTextToHTML(content: unknown): string {
   if (!content || !Array.isArray(content) || content.length === 0) return ''
   try {
-    return toHTML(content as Parameters<typeof toHTML>[0])
+    const raw = toHTML(content as Parameters<typeof toHTML>[0])
+    return sanitizeHtml(raw, {
+      allowedTags: ALLOWED_TAGS,
+      allowedAttributes: ALLOWED_ATTRS,
+      allowedSchemes: ['https', 'mailto', 'tel'],
+    })
   } catch {
     return ''
   }
