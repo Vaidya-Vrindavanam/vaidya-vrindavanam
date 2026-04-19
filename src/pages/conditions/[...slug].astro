@@ -4,8 +4,6 @@ import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import { getConditions, getTreatments } from '../../lib/sanity';
 import type { Condition, Treatment } from '../../lib/sanity';
-import { whatsappLink } from '../../config/contact';
-
 export async function getStaticPaths() {
   const [conditions, allTreatments] = await Promise.all([
     getConditions(),
@@ -22,8 +20,6 @@ const { condition, allTreatments } = Astro.props as { condition: Condition; allT
 const relatedTreatments = allTreatments.filter(t =>
   condition.treatments.some(cs => cs.slug === t.slug)
 );
-
-const waLink = whatsappLink(`Hi, I'd like to consult about Ayurvedic treatment for ${condition.name}.`);
 
 const schema = {
   "@context": "https://schema.org",
@@ -76,20 +72,12 @@ const schema = {
         <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6 text-center">Recommended Treatments</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           {relatedTreatments.map(t => (
-            <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} />
+            <TreatmentCard name={t.name} description={t.shortDescription} imageUrl={t.imageUrl} slug={t.slug} />
           ))}
         </div>
       </div>
     </section>
   )}
-
-  <section class="py-12 px-6 bg-brand-bg text-center">
-    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Get Expert Advice</h2>
-    <p class="text-sm text-text-secondary mb-6">Consult our doctors about Ayurvedic treatment for {condition.name}.</p>
-    <a href={waLink} target="_blank" rel="noopener noreferrer" class="inline-block bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest">
-      CONSULT VIA WHATSAPP
-    </a>
-  </section>
 
   <CTABanner />
 </BaseLayout>

@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client'
 import { toHTML } from '@portabletext/to-html'
 import sanitizeHtml from 'sanitize-html'
+import { marked } from 'marked'
 
 const client = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID as string,
@@ -61,15 +62,42 @@ const ALLOWED_ATTRS: sanitizeHtml.IOptions['allowedAttributes'] = {
   a: ['href', 'title', 'target', 'rel'],
 }
 
+type PTBlock = { _type: string; style?: string; listItem?: string; children?: Array<{ _type: string; text?: string }> }
+
+function hasMarkdownSyntax(blocks: PTBlock[]): boolean {
+  for (const block of blocks) {
+    if (block._type !== 'block') continue
+    const text = (block.children ?? []).map(c => c.text ?? '').join('')
+    if (/^#{1,6}\s/.test(text) || /^[-*]\s/.test(text) || /\*\*[^*]+\*\*/.test(text)) return true
+  }
+  return false
+}
+
+function blocksToMarkdown(blocks: PTBlock[]): string {
+  return blocks
+    .filter(b => b._type === 'block')
+    .map(b => {
+      const text = (b.children ?? []).map(c => c.text ?? '').join('')
+      if (b.listItem === 'bullet') return `- ${text}`
+      return text
+    })
+    .join('\n\n')
+}
+
 function portableTextToHTML(content: unknown): string {
   if (!content || !Array.isArray(content) || content.length === 0) return ''
   try {
-    const raw = toHTML(content as Parameters<typeof toHTML>[0])
-    return sanitizeHtml(raw, {
+    const sanitizeOpts = {
       allowedTags: ALLOWED_TAGS,
       allowedAttributes: ALLOWED_ATTRS,
       allowedSchemes: ['https', 'mailto', 'tel'],
-    })
+    }
+    if (hasMarkdownSyntax(content as PTBlock[])) {
+      const markdown = blocksToMarkdown(content as PTBlock[])
+      return sanitizeHtml(marked.parse(markdown) as string, sanitizeOpts)
+    }
+    const raw = toHTML(content as Parameters<typeof toHTML>[0])
+    return sanitizeHtml(raw, sanitizeOpts)
   } catch {
     return ''
   }

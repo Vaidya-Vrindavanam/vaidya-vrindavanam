@@ -1,23 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { getTreatments, getConditions } from '../../lib/sanity';
-import type { Treatment, Condition } from '../../lib/sanity';
-import { whatsappLink } from '../../config/contact';
+import { getTreatments } from '../../lib/sanity';
+import type { Treatment } from '../../lib/sanity';
 
 export async function getStaticPaths() {
-  const [treatments, allConditions] = await Promise.all([getTreatments(), getConditions()]);
+  const treatments = await getTreatments();
   return treatments.map(treatment => ({
     params: { slug: treatment.slug },
-    props: { treatment, allConditions },
+    props: { treatment },
   }));
 }
 
-const { treatment, allConditions } = Astro.props as { treatment: Treatment; allConditions: Condition[] };
-const relatedConditions = allConditions.filter(c =>
-  treatment.conditions.some(tc => tc.slug === c.slug)
-);
-const waLink = whatsappLink(`Hi, I'm interested in ${treatment.name}. Please share more details.`);
+const { treatment } = Astro.props as { treatment: Treatment };
 
 const schema = {
   "@context": "https://schema.org",
@@ -54,16 +49,26 @@ const schema = {
   description={`${treatment.shortDescription}. Available at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala. Book via WhatsApp.`}
   schema={schema}
 >
-  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
-    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">{treatment.category.replace(/-/g, ' ')}</p>
-    <div class="text-4xl mb-3 opacity-60">{treatment.icon}</div>
+  {treatment.imageUrl && (
+    <div class="w-full" style="max-height: 480px; overflow: hidden;">
+      <img
+        src={treatment.imageUrl}
+        alt={`${treatment.name} treatment at Vaidya Vrindavanam`}
+        class="w-full object-cover"
+        style="max-height: 480px; object-position: center;"
+      />
+    </div>
+  )}
+
+  <section class="py-12 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">{treatment.category.replace(/-/g, ' ')}</p>
     <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.name}</h1>
     {treatment.malayalam && (
       <p class="text-sm text-text-muted mt-2">{treatment.malayalam}</p>
     )}
-    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-5"></div>
     {treatment.duration && (
-      <p class="text-xs text-text-muted mt-3">Duration: {treatment.duration}</p>
+      <p class="text-xs text-text-muted mt-4">Duration: {treatment.duration}</p>
     )}
   </section>
 
@@ -71,36 +76,6 @@ const schema = {
     <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
       <div set:html={treatment.contentHTML}></div>
     </div>
-  </section>
-
-  <!-- Related Conditions -->
-  {relatedConditions.length > 0 && (
-    <section class="py-10 px-6 bg-brand-bg-alt">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-base font-display text-brand-gold tracking-wide mb-4">Conditions This Treats</h2>
-        <div class="flex flex-wrap gap-2">
-          {relatedConditions.map(c => (
-            <a href={`/conditions/${c.slug}`} class="border border-brand-gold-dim text-text-secondary text-xs px-4 py-2 hover:border-brand-gold hover:text-brand-gold transition-colors">
-              {c.name}
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- WhatsApp CTA -->
-  <section class="py-12 px-6 bg-brand-bg-alt text-center">
-    <h2 class="text-xl font-display text-text-primary font-light tracking-wide mb-3">Interested in {treatment.name}?</h2>
-    <p class="text-sm text-text-secondary mb-6">Speak to our doctors about whether this treatment is right for you.</p>
-    <a
-      href={waLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-block bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
-    >
-      ENQUIRE VIA WHATSAPP
-    </a>
   </section>
 
   <CTABanner />
