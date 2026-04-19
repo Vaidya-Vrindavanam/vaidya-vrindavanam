@@ -60,7 +60,7 @@ const schema = {
     </div>
   )}
 
-  <section class="py-12 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
+  <section class="pt-12 pb-6 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
     <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">{treatment.category.replace(/-/g, ' ')}</p>
     <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.name}</h1>
     {treatment.malayalam && (
@@ -72,7 +72,7 @@ const schema = {
     )}
   </section>
 
-  <section class="py-12 px-6 bg-brand-bg">
+  <section class="pt-6 pb-12 px-6 bg-brand-bg">
     <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
       <div set:html={treatment.contentHTML}></div>
     </div>
