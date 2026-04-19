@@ -67,11 +67,97 @@ def add_title_page(doc):
     # Add page break
     doc.add_page_break()
 
+def add_section_header(doc, section_num, section_title):
+    """Add a formatted section header"""
+    header = doc.add_paragraph()
+    header.paragraph_format.space_before = Pt(12)
+    header.paragraph_format.space_after = Pt(6)
+    header_run = header.add_run(f"Section {section_num}: {section_title}")
+    header_run.font.size = Pt(14)
+    header_run.font.bold = True
+    header_run.font.color.rgb = RGBColor(44, 62, 80)
+
+def add_question_number(doc, question_num, question_text):
+    """Add a numbered question with consistent formatting"""
+    q = doc.add_paragraph(style='List Number')
+    q.paragraph_format.space_before = Pt(6)
+    q.paragraph_format.space_after = Pt(3)
+    q_run = q.add_run(question_text)
+    q_run.font.size = Pt(11)
+
+def add_structured_response_space(doc, placeholder_text, height_lines=2):
+    """Add space for structured responses (short answers, checkboxes)"""
+    response = doc.add_paragraph(placeholder_text)
+    response.paragraph_format.left_indent = Inches(0.5)
+    response.paragraph_format.space_after = Pt(12)
+    response_run = response.runs[0]
+    response_run.font.italic = True
+    response_run.font.color.rgb = RGBColor(149, 165, 166)  # Light gray placeholder
+    response_run.font.size = Pt(10)
+
+def add_narrative_prompt(doc, prompt_text):
+    """Add space for open-ended narrative response"""
+    doc.add_paragraph()
+    prompt = doc.add_paragraph()
+    prompt_run = prompt.add_run(f"[*] Narrative Prompt: {prompt_text}")
+    prompt_run.font.italic = True
+    prompt_run.font.bold = True
+    prompt_run.font.color.rgb = RGBColor(41, 128, 185)  # Blue for emphasis
+
+    # Add expandable text box instruction
+    instruction = doc.add_paragraph("(Please provide a 200-400 word response in the space below)")
+    instruction_run = instruction.runs[0]
+    instruction_run.font.italic = True
+    instruction_run.font.size = Pt(9)
+    instruction_run.font.color.rgb = RGBColor(127, 140, 141)
+
+    # Add space for response (gray shaded box simulation)
+    response_box = doc.add_paragraph()
+    response_box.paragraph_format.left_indent = Inches(0.5)
+    for i in range(6):  # 6 lines for text box
+        doc.add_paragraph()
+    response_box.paragraph_format.space_after = Pt(12)
+
+def add_section_1_origins_mission(doc):
+    """Section 1: Origins & Mission"""
+    add_section_header(doc, 1, "Origins & Mission")
+
+    doc.add_paragraph(
+        "Capture the founding story, 'why we exist,' and current vision for the clinic."
+    ).runs[0].font.italic = True
+
+    # Q1
+    add_question_number(doc, 1, "How was Vaidya Vrindavanam founded?")
+    add_structured_response_space(doc, "Who founded it? When (year)? What inspired the founder/leadership to open this clinic?")
+
+    # Q2
+    add_question_number(doc, 2, "How long have you been operating?")
+    add_structured_response_space(doc, "Years in operation: _____", height_lines=1)
+
+    # Q3
+    add_question_number(doc, 3, "What is your mission statement or core purpose?")
+    add_structured_response_space(doc, "(Or: 'What problem do you solve for patients?') — 1-2 sentence mission statement")
+
+    # Q4
+    add_question_number(doc, 4, "What are your long-term goals for the clinic?")
+    add_structured_response_space(doc, "3-5 bullet points or paragraph format")
+
+    # Narrative Prompt
+    add_narrative_prompt(
+        doc,
+        "Tell us the story of your clinic in 3-4 sentences — what makes it special to you and your patients?"
+    )
+
+    doc.add_page_break()
+
 # Initialize document with default settings
 doc = Document()
 
 # Call title page function
 add_title_page(doc)
+
+# Call section 1 function
+add_section_1_origins_mission(doc)
 
 # Set default font
 style = doc.styles['Normal']
