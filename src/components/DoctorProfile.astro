@@ -4,15 +4,24 @@ interface Props {
   qualification: string;
   title: string;
   image?: string;
+  eager?: boolean;
 }
 
-const { name, qualification, title, image } = Astro.props;
+const { name, qualification, title, image, eager = false } = Astro.props;
 ---
 
 <div class="text-center">
   <div class="w-40 h-40 bg-brand-bg-alt border-2 border-brand-gold rounded-full mx-auto mb-3 flex items-center justify-center overflow-hidden">
     {image ? (
-      <img src={image} alt={name} class="w-full h-full object-cover object-top" />
+      <img
+        src={image}
+        alt={name}
+        width="160"
+        height="160"
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        class="w-full h-full object-cover object-top"
+      />
     ) : (
       <span class="text-text-muted text-xs">Photo</span>
     )}
