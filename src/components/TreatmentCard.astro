@@ -4,15 +4,29 @@ interface Props {
   description: string;
   slug: string;
   imageUrl?: string;
+  eager?: boolean;
 }
 
-const { name, description, slug, imageUrl } = Astro.props;
+const { name, description, slug, imageUrl, eager = false } = Astro.props;
+
+// Append Sanity CDN image transforms to reduce file size (~1,743 KiB savings)
+const optimizedUrl = imageUrl
+  ? `${imageUrl}?w=600&h=400&fit=crop&auto=format&q=75`
+  : undefined;
 ---
 
 <a href={`/treatments/${slug}`} class="block bg-brand-bg/60 border border-brand-gold-border hover:border-brand-gold transition-colors group overflow-hidden">
   <div class="aspect-[3/2] overflow-hidden bg-brand-bg-alt">
-    {imageUrl
-      ? <img src={imageUrl} alt={`${name} Ayurveda treatment at Vaidya Vrindavanam, Haripad`} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+    {optimizedUrl
+      ? <img
+          src={optimizedUrl}
+          alt={`${name} Ayurveda treatment at Vaidya Vrindavanam, Haripad`}
+          width="600"
+          height="400"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
       : <div class="w-full h-full" aria-hidden="true" />
     }
   </div>
