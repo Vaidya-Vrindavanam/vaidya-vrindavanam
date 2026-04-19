@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found — Vaidya Vrindavanam Ayurveda Hospital, Haripad"
+  description="The page you're looking for doesn't exist. Return to our homepage or explore our Ayurvedic treatments at Vaidya Vrindavanam, Haripad."
+>
+  <section class="relative min-h-[calc(100vh-80px)] flex items-center justify-center bg-gradient-to-b from-brand-bg to-brand-bg-alt overflow-hidden px-6 py-24">
+
+    <!-- Decorative background ornament -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+      <span class="text-[28rem] leading-none text-brand-gold opacity-[0.03] font-display">
+        ☘
+      </span>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 text-center max-w-lg mx-auto">
+
+      <!-- 404 number -->
+      <p class="font-display text-8xl sm:text-9xl font-light text-brand-gold tracking-widest leading-none">
+        404
+      </p>
+
+      <!-- Divider -->
+      <div class="mx-auto mt-6 mb-6 h-px w-24 bg-brand-gold opacity-40"></div>
+
+      <!-- Heading -->
+      <h1 class="font-display text-3xl sm:text-4xl font-light text-text-primary tracking-wide">
+        Page Not Found
+      </h1>
+
+      <!-- Subtext -->
+      <p class="mt-4 font-body text-base text-text-secondary leading-relaxed max-w-sm mx-auto">
+        The path you're looking for has wandered off. Let us guide you back to healing.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/"
+          class="inline-block font-body text-sm font-medium tracking-widest uppercase px-8 py-3 bg-brand-gold text-brand-bg hover:bg-brand-gold/90 transition-colors duration-200 rounded-sm"
+        >
+          Return Home
+        </a>
+        <a
+          href="/treatments"
+          class="inline-block font-body text-sm font-medium tracking-widest uppercase px-8 py-3 border border-brand-gold-border text-brand-gold hover:border-brand-gold transition-colors duration-200 rounded-sm"
+        >
+          View Treatments
+        </a>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

@@ -29,14 +29,14 @@ const schema = {
           "@type": "Person",
           "name": "Dr. Jayakrishnan T J",
           "jobTitle": "Consultant Physician & Founder",
-          "description": "BAMS, MD (Ayurveda). Specialises in Marma Chikitsa combined with modern chiropractic techniques.",
+          "description": "BAMS, MD (Ayurveda). 15 years of clinical experience. Specialises in Marma Chikitsa for chronic pain, neurological, and musculoskeletal conditions.",
           "image": "https://vaidyavrindavanam.com/dr-jayakrishnan.webp"
         },
         {
           "@type": "Person",
           "name": "Dr. Ganga SS",
           "jobTitle": "Consultant Physician",
-          "description": "BAMS. Expert in traditional Kerala Ayurvedic therapies and women's health (Stree Roga).",
+          "description": "BAMS. 13 years of experience. Specialises in Prasooti and Stree Roga — women's health from adolescence through postnatal care.",
           "image": "https://vaidyavrindavanam.com/dr-ganga.webp"
         }
       ]
@@ -46,79 +46,189 @@ const schema = {
 ---
 
 <BaseLayout
-  title="About Our Ayurveda Doctors & Clinic, Haripad"
-  description="Learn about Vaidya Vrindavanam Ayurveda Hospital — Haripad's trusted Ayurvedic healing centre since 2014. Meet our BAMS & MD qualified doctors and explore our residential facilities."
+  title="About Our Ayurveda Doctors & Clinic | Vaidya Vrindavanam, Haripad"
+  description="Vaidya Vrindavanam Ayurveda Hospital, founded in 2014 in Haripad, Kerala. Classical Ayurveda, prakriti-based care, and 12 years of healing. Meet Dr. Jayakrishnan and Dr. Ganga."
   schema={schema}
 >
+
   <!-- Hero -->
   <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
     <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Est. 2014 · Haripad, Kerala</p>
-    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">About Vaidya Vrindavanam</h1>
-    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">
+      Where Ayurveda Finds Its Root
+    </h1>
+    <div class="w-8 h-px bg-brand-gold mx-auto mt-4 mb-5"></div>
+    <p class="text-sm text-text-secondary font-light max-w-md mx-auto leading-relaxed">
+      Twelve years of classical healing in the heart of Kerala — unhurried, thorough, and rooted in ancient wisdom.
+    </p>
   </section>
 
   <!-- Story -->
   <section class="py-16 px-6 bg-brand-bg">
     <div class="max-w-3xl mx-auto">
-      <SectionHeader label="Our Story" heading="Rooted in Tradition, Guided by Science" />
+      <SectionHeader label="Our Story" heading="Born From a Calling, Built on Trust" />
       <div class="text-sm text-text-secondary leading-relaxed space-y-4 font-light">
-        <p>Founded in 2014 in the heart of Haripad, Vaidya Vrindavanam Ayurveda Hospital was born from a deep commitment to making authentic Kerala Ayurveda accessible to all. What started as a small consulting practice has grown into a comprehensive Ayurvedic healing centre serving patients from across South Kerala, other Indian states, and international visitors.</p>
-        <p>Our name — <strong class="text-brand-gold">Vaidya Vrindavanam</strong> — reflects our philosophy: a grove (Vrindavanam) of healing, where ancient medical wisdom (Vaidya) flourishes. We believe in treating the whole person, not just the symptoms.</p>
+        <p>
+          In 2014, after completing his MD in Ayurveda from Alvas Ayurveda College, Moodbidri, Dr. Jayakrishnan T J made a deliberate choice. Rather than practise on someone else's terms, he wanted a space of his own — a place where every patient could receive unhurried, thorough care. Guided by the counsel of his mentor, Dr. J Hareendran Nair, he opened Vaidya Vrindavanam in Haripad.
+        </p>
+        <p>
+          What began as a modest consulting practice grew, patient by patient, into a full-fledged hospital within two years. Today, twelve years on, Vaidya Vrindavanam serves patients from across Kerala, other Indian states, and overseas — all seeking the same thing: not a prescription, but a genuine cure.
+        </p>
+        <p>
+          Our name says what we are. <strong class="text-brand-gold">Vaidya</strong> — healer. <strong class="text-brand-gold">Vrindavanam</strong> — a grove, a sacred space. Together, a place where ancient wisdom takes root and people find their way back to health.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- What Makes Us Unique -->
+  <!-- Philosophy -->
   <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Our Approach" heading="Classical Ayurveda, Exactly as It Was Meant" />
+      <div class="text-sm text-text-secondary leading-relaxed space-y-4 font-light">
+        <p>
+          We practise classical Ayurveda — the kind documented in the ancient texts, undiluted by shortcuts. Every patient undergoes a thorough <strong class="text-text-primary">prakriti</strong> (mind-body constitution) assessment before a single treatment is planned. Your constitution guides everything: the medicines, the procedures, the diet.
+        </p>
+        <p>
+          There is no rush here. We explain your condition, outline what treatment can and cannot do, and let you decide. When you are ready, we design a treatment structure together — and walk with you through every step of it.
+        </p>
+        <p>
+          Our focus is the root cause. Not relief that lasts a week, but resolution that holds.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-16 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto">
-      <SectionHeader label="Our Difference" heading="What Makes Us Unique" />
+      <SectionHeader label="What Guides Us" heading="Our Core Values" />
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="border border-brand-gold-dim p-6">
-          <h3 class="text-brand-gold font-display text-lg mb-2">Marma Chikitsa + Chiropractic</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Our signature approach uniquely combines ancient Marma therapy (vital energy point stimulation) with modern chiropractic techniques — addressing both energetic and structural imbalances for superior results.</p>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Unhurried Attention</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Every consultation runs as long as it needs to. We do not move on until we have heard the full story — the condition, the context, the person behind it.
+          </p>
         </div>
-        <div class="border border-brand-gold-dim p-6">
-          <h3 class="text-brand-gold font-display text-lg mb-2">Residential Care</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">We offer inpatient facilities for patients undergoing extended treatment programs — from 7-day rejuvenation courses to 45-day weight loss packages, with full accommodation and meals.</p>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Prakriti-First Medicine</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Your constitution determines your treatment. No two patients receive the same care — medicines, therapies, and diet are tailored specifically to you.
+          </p>
         </div>
-        <div class="border border-brand-gold-dim p-6">
-          <h3 class="text-brand-gold font-display text-lg mb-2">In-House Dispensary</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">All Ayurvedic medicines are dispensed from our on-site pharmacy. We stock from multiple reputed manufacturers to ensure the best medicine for each patient's needs.</p>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Root Cause Resolution</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            We treat the cause, not just the complaint. Lasting healing sometimes takes longer — we are comfortable with that, and we make sure our patients are too.
+          </p>
         </div>
-        <div class="border border-brand-gold-dim p-6">
-          <h3 class="text-brand-gold font-display text-lg mb-2">Online Consultations</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Can't visit in person? Our doctors offer online consultations via WhatsApp video call, making Ayurvedic guidance accessible from anywhere in the world.</p>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Diet as Medicine</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Ayurveda has always held food as its first medicine. Dietary guidance is not an afterthought here — it is integral to every treatment plan we prepare.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Facility -->
-  <section class="py-16 px-6 bg-brand-bg">
+  <section class="py-16 px-6 bg-brand-bg-alt">
     <div class="max-w-3xl mx-auto">
-      <SectionHeader label="Our Facility" heading="Where Healing Happens" />
+      <SectionHeader label="Our Facility" heading="A Space Built for Healing" />
       <div class="text-sm text-text-secondary leading-relaxed space-y-4 font-light">
-        <p>Located on NH-66 near RK Junction, Haripad, our hospital is easily accessible by both road and rail. The clinic features two dedicated treatment rooms, residential accommodation for inpatients, a consultation area, and an in-house Ayurvedic dispensary.</p>
-        <p>We are a licensed private hospital, committed to maintaining the highest standards of hygiene and patient care. Parking is available for visiting patients.</p>
+        <p>
+          Situated near RK Junction on NH-66 in Haripad, the hospital is easy to reach — 500 metres from the Haripad bus stand and one kilometre from the railway station. But what patients notice first is not the location.
+        </p>
+        <p>
+          It is the feeling of the place: a garden, a pond, open air, and Kerala's green all around. The kind of environment where the body begins to settle before treatment has even started.
+        </p>
+        <p>
+          For patients staying with us, we offer four private rooms, a dormitory, and a canteen that serves simple, sattvic meals — sometimes in an open hut, the way Kerala has always done it. Yoga and pranayama are available each morning. A small library is open to those who want quiet time.
+        </p>
+        <p>
+          The hospital has 15 inpatient beds, two dedicated treatment rooms, and an in-house Ayurvedic dispensary. All medicines are dispensed on-site, sourced from trusted classical manufacturers.
+        </p>
       </div>
-      <div class="mt-6 text-sm text-text-muted">
-        <p><strong class="text-text-primary">Insurance:</strong> Insurance reimbursement is available. Please contact us for details.</p>
+
+      <!-- Facility highlights -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+        {[
+          { label: '15', sub: 'Patient Beds' },
+          { label: '4+', sub: 'Accommodation Rooms' },
+          { label: '12', sub: 'Years in Practice' },
+          { label: '2', sub: 'Treatment Rooms' },
+          { label: '2', sub: 'Qualified Doctors' },
+          { label: '500m', sub: 'From Bus Stand' },
+        ].map(({ label, sub }) => (
+          <div class="border border-brand-gold-border py-4 px-3">
+            <p class="font-display text-2xl font-light text-brand-gold">{label}</p>
+            <p class="text-[10px] tracking-widest uppercase text-text-muted mt-1">{sub}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- Doctors -->
-  <section class="py-16 px-6 bg-brand-bg-alt">
+  <section class="py-16 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto">
       <SectionHeader label="Expert Care" heading="Our Physicians" />
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mx-auto">
         <div class="text-center">
-          <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician & Founder" image="/dr-jayakrishnan.webp" />
-          <p class="text-sm text-text-secondary mt-4 leading-relaxed">With extensive experience in Ayurvedic medicine, Dr. Jayakrishnan specialises in Marma Chikitsa combined with modern chiropractic techniques. His unique integrative approach has helped numerous patients find relief from chronic conditions.</p>
+          <DoctorProfile
+            name="Dr. Jayakrishnan T J"
+            qualification="BAMS, MD (Ayurveda)"
+            title="Consultant Physician & Founder"
+            image="/dr-jayakrishnan.webp"
+          />
+          <p class="text-sm text-text-secondary mt-4 leading-relaxed">
+            Dr. Jayakrishnan founded Vaidya Vrindavanam in 2014 after completing his MD at Alvas Ayurveda College, Moodbidri. With 15 years of clinical experience, he specialises in <strong class="text-text-primary">Marma Chikitsa</strong> — the classical science of vital energy points — applied to chronic pain, neurological conditions, and musculoskeletal disorders. He personally oversees each patient's care from first consultation to discharge.
+          </p>
         </div>
         <div class="text-center">
-          <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" image="/dr-ganga.webp" />
-          <p class="text-sm text-text-secondary mt-4 leading-relaxed">Dr. Ganga brings expertise in traditional Kerala Ayurvedic therapies and women's health (Stree Roga). She is skilled in Panchakarma treatments and provides compassionate, personalised care to every patient.</p>
+          <DoctorProfile
+            name="Dr. Ganga SS"
+            qualification="BAMS"
+            title="Consultant Physician"
+            image="/dr-ganga.webp"
+          />
+          <p class="text-sm text-text-secondary mt-4 leading-relaxed">
+            Dr. Ganga brings 13 years of experience in classical Ayurvedic practice, with a specialisation in <strong class="text-text-primary">Prasooti and Stree Roga</strong> — women's health across all stages, from adolescence and fertility through pregnancy and postnatal recovery. Patients know her for her patience in listening and her precision in treatment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <section class="py-16 px-6 bg-brand-bg-alt">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="Looking Ahead" heading="Where We Are Going" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Panchakarma Destination</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Building Vaidya Vrindavanam into a premier destination for authentic Karkidaka Chikitsa and classical Panchakarma — for those who want the real Kerala experience.
+          </p>
+        </div>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Lifestyle Disease Reversal</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Structured programs for diabetes, hypertension, PCOS, and arthritis — conditions that modern medicine manages but Ayurveda can address at the root.
+          </p>
+        </div>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Mental Wellness through Ayurveda</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Expanding care for stress, insomnia, and anxiety — combining Shirodhara, sattvic lifestyle guidance, and personalised counselling into integrated treatment plans.
+          </p>
+        </div>
+        <div class="border border-brand-gold-border p-6">
+          <h3 class="text-brand-gold font-display text-lg mb-2">Women & Child Wellness</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            Deepening our expertise in pre and postnatal care, fertility, and adolescent health — drawing on Kerala's traditional <em>Balachikitsa</em> and <em>Sthree Roga</em> lineage.
+          </p>
         </div>
       </div>
     </div>
