@@ -22,7 +22,7 @@ export default {
       },
       fontFamily: {
         display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter Variable', 'Inter', 'system-ui', 'sans-serif'],
       },
     },
   },
