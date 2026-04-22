@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import Analytics from '@vercel/analytics/astro';
-import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title: string;
@@ -45,7 +44,6 @@ const { title, description, schema, ogType, articlePublishedTime, articleAuthor 
     <Footer />
     <WhatsAppButton />
     <Analytics />
-    <SpeedInsights />
     <!-- Google Analytics — deferred until after page load -->
     <script>
       window.addEventListener('load', function() {
