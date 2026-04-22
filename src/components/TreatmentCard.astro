@@ -9,9 +9,12 @@ interface Props {
 
 const { name, description, slug, imageUrl, eager = false } = Astro.props;
 
-// Append Sanity CDN image transforms to reduce file size (~1,743 KiB savings)
+// Sanity CDN image transforms: explicit WebP, responsive srcset
 const optimizedUrl = imageUrl
-  ? `${imageUrl}?w=600&h=400&fit=crop&auto=format&q=75`
+  ? `${imageUrl}?w=600&h=400&fit=crop&fm=webp&q=75`
+  : undefined;
+const srcset = imageUrl
+  ? `${imageUrl}?w=300&h=200&fit=crop&fm=webp&q=75 300w, ${imageUrl}?w=600&h=400&fit=crop&fm=webp&q=75 600w`
   : undefined;
 ---
 
@@ -20,11 +23,14 @@ const optimizedUrl = imageUrl
     {optimizedUrl
       ? <img
           src={optimizedUrl}
+          srcset={srcset}
+          sizes="(max-width: 640px) 50vw, 33vw"
           alt={`${name} Ayurveda treatment at Vaidya Vrindavanam, Haripad`}
           width="600"
           height="400"
           loading={eager ? 'eager' : 'lazy'}
-          decoding="async"
+          fetchpriority={eager ? 'high' : 'auto'}
+          decoding={eager ? 'sync' : 'async'}
           class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       : <div class="w-full h-full" aria-hidden="true" />

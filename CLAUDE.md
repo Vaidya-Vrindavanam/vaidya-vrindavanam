@@ -141,8 +141,3 @@ Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel das
 - **USP:** Marma Chikitsa combined with modern chiropractic treatment
 - **Operating since:** 2014
 
-## Open TODOs
-
-- Fix Google Maps embed (placeholder in `contact.astro`)
-- Add real doctor photos (Dr. Ganga, Dr. Jayakrishnan — placeholders in `about.astro` & `index.astro`)
-- Google Analytics / Search Console setup

@@ -19,7 +19,8 @@ const { name, qualification, title, image, eager = false } = Astro.props;
         width="160"
         height="160"
         loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
+        fetchpriority={eager ? 'high' : 'auto'}
+        decoding={eager ? 'sync' : 'async'}
         class="w-full h-full object-cover object-top"
       />
     ) : (
