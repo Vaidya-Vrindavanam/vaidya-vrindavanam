@@ -7,7 +7,7 @@ const client = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID as string,
   dataset: (import.meta.env.SANITY_DATASET as string | undefined) ?? 'production',
   apiVersion: '2024-01-01',
-  useCdn: true,
+  useCdn: false,
   token: import.meta.env.SANITY_API_TOKEN as string | undefined,
 })
 
