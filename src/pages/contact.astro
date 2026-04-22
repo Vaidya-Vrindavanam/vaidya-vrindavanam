@@ -84,18 +84,21 @@ const schema = {
 
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="name">Your Name</label>
-            <input type="text" id="name" name="name" required autocomplete="name" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-error" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <span id="name-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
           </div>
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="phone">Phone / WhatsApp</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <input type="tel" id="phone" name="phone" autocomplete="tel" aria-describedby="phone-error" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <span id="phone-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
           </div>
           <div>
             <!-- name="email" tells Formspree to use this as the reply-to address -->
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="email">
               Email Address <span class="text-brand-gold normal-case tracking-normal">(required for overseas enquiries)</span>
             </label>
-            <input type="email" id="email" name="email" autocomplete="email" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <span id="email-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
           </div>
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="message">Message</label>
@@ -126,6 +129,70 @@ const schema = {
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
   </section>
+
+  <script>
+    (function () {
+      const form = document.querySelector('form[action*="formspree"]');
+      if (!form) return;
+
+      const GOLD_DIM = 'var(--color-brand-gold-dim, #6b5a2e)';
+      const ERROR_COLOR = '#f87171';
+
+      function validate(id) {
+        const field = form.querySelector('#' + id);
+        if (!field) return '';
+        const val = field.value.trim();
+
+        if (id === 'name') {
+          if (!val) return 'Please enter your name.';
+        }
+        if (id === 'phone') {
+          if (val && !/^[+\d][\d\s\-()+]{5,}$/.test(val))
+            return 'Please enter a valid phone number.';
+        }
+        if (id === 'email') {
+          if (val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))
+            return 'Please enter a valid email address.';
+        }
+        if (id === 'phone' || id === 'email') {
+          const phone = (form.querySelector('#phone')).value.trim();
+          const email = (form.querySelector('#email')).value.trim();
+          if (!phone && !email)
+            return 'Please provide at least a phone number or email address.';
+        }
+        return '';
+      }
+
+      function applyError(id, msg) {
+        const field = form.querySelector('#' + id);
+        const errEl = document.getElementById(id + '-error');
+        if (!field || !errEl) return;
+        errEl.textContent = msg;
+        errEl.hidden = !msg;
+        field.setAttribute('aria-invalid', msg ? 'true' : 'false');
+        field.style.borderColor = msg ? ERROR_COLOR : '';
+      }
+
+      ['name', 'phone', 'email'].forEach(function (id) {
+        const field = form.querySelector('#' + id);
+        if (!field) return;
+        field.addEventListener('blur', function () { applyError(id, validate(id)); });
+        field.addEventListener('input', function () {
+          if (field.getAttribute('aria-invalid') === 'true') applyError(id, validate(id));
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        var blocked = false;
+        ['name', 'phone', 'email'].forEach(function (id) {
+          var msg = validate(id);
+          applyError(id, msg);
+          if (msg) blocked = true;
+        });
+        if (blocked) { e.preventDefault(); form.querySelector('[aria-invalid="true"]').focus(); }
+      });
+    })();
+  </script>
 
   <!-- FAQ -->
   <section class="py-16 px-6 bg-brand-bg">
