@@ -14,13 +14,13 @@ const schema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": c.name,
-    "url": `https://vaidyavrindavanam.com/conditions/${c.slug}`
+    "url": `https://vaidyavrindavanam.com/conditions/${c.slug}/`
   }))
 };
 ---
 
 <BaseLayout
-  title="Conditions Treated with Ayurveda in Kerala"
+  title="Conditions We Treat — Haripad, Kerala"
   description="Ayurvedic treatment for arthritis, asthma, diabetes, skin disorders, infertility, obesity, stress, and more at Vaidya Vrindavanam, Haripad, Kerala."
   schema={schema}
 >
@@ -34,7 +34,7 @@ const schema = {
   <section class="py-12 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
       {conditions.map(c => (
-        <a href={`/conditions/${c.slug}`} class="border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
+        <a href={`/conditions/${c.slug}/`} class="border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
           <h2 class="text-lg text-text-primary font-display group-hover:text-brand-gold transition-colors">{c.name}</h2>
           <p class="text-sm text-text-secondary mt-2 leading-relaxed">{c.shortDescription}</p>
           <span class="inline-block mt-3 text-brand-gold text-xs tracking-widest">LEARN MORE →</span>

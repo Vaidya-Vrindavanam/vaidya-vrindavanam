@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { name, slug } = Astro.props;
-const href = slug ? `/conditions/${slug}` : undefined;
+const href = slug ? `/conditions/${slug}/` : undefined;
 ---
 
 {href ? (

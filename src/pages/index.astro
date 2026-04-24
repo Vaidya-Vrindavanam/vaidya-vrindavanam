@@ -14,56 +14,79 @@ const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 const featuredTreatments = treatments.slice(0, 5);
 const conditions = (await getConditions()).sort((a, b) => a.order - b.order);
 
+const ORG_ID = "https://vaidyavrindavanam.com/#organization";
+const HOSPITAL_ID = "https://vaidyavrindavanam.com/#hospital";
+
 const schema = {
   "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
-  "name": "Vaidya Vrindavanam Ayurveda Hospital",
-  "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ traditional treatments with residential care.",
-  "url": "https://vaidyavrindavanam.com",
-  "telephone": `+${PHONE_PRIMARY_RAW}`,
-  "email": "ayurvv@gmail.com",
-  "image": "https://vaidyavrindavanam.com/og-default.jpg",
-  "priceRange": "₹₹",
-  "sameAs": ["https://share.google/7sp4iCnGkZaIpZ53O", "https://share.google/I4QmgMsvhuEOC37ry"],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Near RK Junction, NH-66",
-    "addressLocality": "Haripad",
-    "addressRegion": "Kerala",
-    "postalCode": "690514",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 9.2711918,
-    "longitude": 76.4608952
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.2",
-    "reviewCount": "5",
-    "bestRating": "5"
-  },
-  "openingHoursSpecification": [
+  "@graph": [
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      "opens": "09:00",
-      "closes": "12:00"
+      "@type": "Organization",
+      "@id": ORG_ID,
+      "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "url": "https://vaidyavrindavanam.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vaidyavrindavanam.com/og-default.jpg"
+      },
+      "sameAs": [
+        "https://www.facebook.com/people/Vaidya-Vrindavanam/100034507068925/",
+        "https://www.google.com/maps/place/Vaidya+Vrindavanam+Ayurveda+Hospital+Haripad/@9.2711918,76.4608952,17z"
+      ]
     },
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      "opens": "16:00",
-      "closes": "19:00"
+      "@type": "Hospital",
+      "@id": HOSPITAL_ID,
+      "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ traditional treatments with residential care.",
+      "url": "https://vaidyavrindavanam.com/",
+      "telephone": `+${PHONE_PRIMARY_RAW}`,
+      "email": "ayurvv@gmail.com",
+      "image": "https://vaidyavrindavanam.com/og-default.jpg",
+      "priceRange": "₹₹",
+      "medicalSpecialty": "Ayurveda",
+      "parentOrganization": { "@id": ORG_ID },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Near RK Junction, NH-66",
+        "addressLocality": "Haripad",
+        "addressRegion": "Kerala",
+        "postalCode": "690514",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 9.2711918,
+        "longitude": 76.4608952
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "5",
+        "bestRating": "5"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "12:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "16:00",
+          "closes": "19:00"
+        }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Dr. Jayakrishnan T J",
+        "jobTitle": "Consultant Physician",
+        "description": "BAMS, MD (Ayurveda)"
+      }
     }
-  ],
-  "founder": {
-    "@type": "Person",
-    "name": "Dr. Jayakrishnan T J",
-    "jobTitle": "Consultant Physician",
-    "description": "BAMS, MD (Ayurveda)"
-  }
+  ]
 };
 ---
 
@@ -94,7 +117,7 @@ const schema = {
         >
           BOOK VIA WHATSAPP
         </a>
-        <a href="/treatments" class="border border-brand-gold text-brand-gold px-7 py-3 text-xs tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors">
+        <a href="/treatments/" class="border border-brand-gold text-brand-gold px-7 py-3 text-xs tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors">
           EXPLORE TREATMENTS
         </a>
       </div>
@@ -119,7 +142,7 @@ const schema = {
         <DoctorProfile name="Dr. Ganga SS" qualification="BAMS" title="Consultant Physician" image="/dr-ganga.webp" />
       </div>
       <div class="text-center mt-8">
-        <a href="/about" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">LEARN MORE ABOUT US →</a>
+        <a href="/about/" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">LEARN MORE ABOUT US →</a>
       </div>
     </div>
   </section>
@@ -132,7 +155,7 @@ const schema = {
         {featuredTreatments.map(t => (
           <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} imageUrl={t.imageUrl} />
         ))}
-        <a href="/treatments" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
+        <a href="/treatments/" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
           <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
           <div class="text-xs text-brand-gold mt-1">View All Treatments →</div>
         </a>
@@ -160,7 +183,7 @@ const schema = {
         <PackageCard name="Relaxation" duration="10 – 20 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Relaxation package. Please share details and pricing." />
       </div>
       <div class="text-center mt-6">
-        <a href="/packages" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">VIEW ALL PACKAGES →</a>
+        <a href="/packages/" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">VIEW ALL PACKAGES →</a>
       </div>
     </div>
   </section>

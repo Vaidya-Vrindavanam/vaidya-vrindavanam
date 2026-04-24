@@ -39,9 +39,9 @@ const schema = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://vaidyavrindavanam.com/blog" },
-        { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://vaidyavrindavanam.com/blog/${post.slug}` }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://vaidyavrindavanam.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://vaidyavrindavanam.com/blog/${post.slug}/` }
       ]
     }
   ]
@@ -72,7 +72,7 @@ const schema = {
   </section>
 
   <section class="py-8 px-6 bg-brand-bg text-center">
-    <a href="/blog" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">← BACK TO BLOG</a>
+    <a href="/blog/" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">← BACK TO BLOG</a>
   </section>
 
   <CTABanner />

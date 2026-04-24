@@ -9,7 +9,7 @@ interface Props {
 const { title, excerpt, date, slug } = Astro.props;
 ---
 
-<a href={`/blog/${slug}`} class="block border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
+<a href={`/blog/${slug}/`} class="block border border-brand-gold-dim p-6 hover:border-brand-gold transition-colors group">
   <div class="text-[10px] text-text-muted tracking-wider uppercase">{date}</div>
   <h3 class="text-lg text-text-primary font-display mt-2 group-hover:text-brand-gold transition-colors">{title}</h3>
   <p class="text-sm text-text-secondary mt-2 leading-relaxed">{excerpt}</p>

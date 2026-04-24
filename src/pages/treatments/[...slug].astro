@@ -35,9 +35,9 @@ const schema = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com" },
-        { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments" },
-        { "@type": "ListItem", "position": 3, "name": treatment.name, "item": `https://vaidyavrindavanam.com/treatments/${treatment.slug}` }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments/" },
+        { "@type": "ListItem", "position": 3, "name": treatment.name, "item": `https://vaidyavrindavanam.com/treatments/${treatment.slug}/` }
       ]
     }
   ]
@@ -45,7 +45,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${treatment.name} Treatment`}
+  title={`${treatment.name} Treatment in Haripad, Kerala`}
   description={`${treatment.shortDescription} — Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
   schema={schema}
 >

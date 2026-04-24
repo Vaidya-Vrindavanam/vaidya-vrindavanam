@@ -40,9 +40,9 @@ const schema = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com" },
-        { "@type": "ListItem", "position": 2, "name": "Conditions", "item": "https://vaidyavrindavanam.com/conditions" },
-        { "@type": "ListItem", "position": 3, "name": condition.name, "item": `https://vaidyavrindavanam.com/conditions/${condition.slug}` }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Conditions", "item": "https://vaidyavrindavanam.com/conditions/" },
+        { "@type": "ListItem", "position": 3, "name": condition.name, "item": `https://vaidyavrindavanam.com/conditions/${condition.slug}/` }
       ]
     }
   ]
@@ -50,7 +50,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`Ayurvedic Treatment for ${condition.name}`}
+  title={`Ayurveda for ${condition.name}`}
   description={`${condition.shortDescription} — Ayurvedic treatment at Vaidya Vrindavanam, Haripad, Kerala.`}
   schema={schema}
 >

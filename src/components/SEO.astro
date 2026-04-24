@@ -12,7 +12,7 @@ interface Props {
 
 const { title, description, canonical, ogImage, ogType = 'website', articlePublishedTime, articleAuthor, schema } = Astro.props;
 
-const fullTitle = `${title} | Vaidya Vrindavanam Ayurveda Hospital, Haripad`;
+const fullTitle = `${title} | Vaidya Vrindavanam`;
 const siteUrl = 'https://vaidyavrindavanam.com';
 const canonicalUrl = canonical ?? Astro.url.href;
 const ogImageUrl = ogImage ?? `${siteUrl}/og-default.jpg`;
