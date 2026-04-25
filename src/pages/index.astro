@@ -94,6 +94,7 @@ const schema = {
   title="Ayurveda Hospital in Haripad, Kerala"
   description="Vaidya Vrindavanam Ayurveda Hospital in Haripad, Kerala — authentic Panchakarma, Marma Chikitsa with chiropractic care, 20+ treatments, residential packages. Book via WhatsApp."
   schema={schema}
+  lcpImage={featuredTreatments[0]?.imageUrl}
 >
   <!-- HERO -->
   <section class="relative bg-gradient-to-br from-brand-bg via-brand-bg-alt to-brand-bg min-h-[80vh] flex items-center justify-center text-center px-6 py-20">
@@ -152,8 +153,8 @@ const schema = {
     <div class="max-w-4xl mx-auto">
       <SectionHeader label="Treatments & Conditions" heading="Our Healing Therapies" subtitle="Authentic Panchakarma & Kerala Ayurvedic treatments" />
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-        {featuredTreatments.map(t => (
-          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} imageUrl={t.imageUrl} />
+        {featuredTreatments.map((t, i) => (
+          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} imageUrl={t.imageUrl} eager={i === 0} />
         ))}
         <a href="/treatments/" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
           <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
