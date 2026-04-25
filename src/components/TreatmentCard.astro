@@ -9,12 +9,13 @@ interface Props {
 
 const { name, description, slug, imageUrl, eager = false } = Astro.props;
 
-// Sanity CDN image transforms: explicit WebP, responsive srcset
+// Sanity CDN image transforms: AVIF/WebP via auto=format, responsive srcset.
+// Sizes target ~200px mobile (50vw) and ~280px desktop (33vw); cap at 720w for DPR 2.
 const optimizedUrl = imageUrl
-  ? `${imageUrl}?w=600&h=400&fit=crop&fm=webp&q=75`
+  ? `${imageUrl}?w=480&h=320&fit=crop&auto=format&q=65`
   : undefined;
 const srcset = imageUrl
-  ? `${imageUrl}?w=300&h=200&fit=crop&fm=webp&q=75 300w, ${imageUrl}?w=600&h=400&fit=crop&fm=webp&q=75 600w`
+  ? `${imageUrl}?w=240&h=160&fit=crop&auto=format&q=65 240w, ${imageUrl}?w=480&h=320&fit=crop&auto=format&q=65 480w, ${imageUrl}?w=720&h=480&fit=crop&auto=format&q=65 720w`
   : undefined;
 ---
 

@@ -13,9 +13,14 @@ interface Props {
   ogType?: string;
   articlePublishedTime?: string;
   articleAuthor?: string;
+  lcpImage?: string;
 }
 
-const { title, description, schema, ogType, articlePublishedTime, articleAuthor } = Astro.props;
+const { title, description, schema, ogType, articlePublishedTime, articleAuthor, lcpImage } = Astro.props;
+
+const lcpSrcset = lcpImage
+  ? `${lcpImage}?w=240&h=160&fit=crop&auto=format&q=65 240w, ${lcpImage}?w=480&h=320&fit=crop&auto=format&q=65 480w, ${lcpImage}?w=720&h=480&fit=crop&auto=format&q=65 720w`
+  : undefined;
 ---
 
 <!DOCTYPE html>
@@ -27,6 +32,15 @@ const { title, description, schema, ogType, articlePublishedTime, articleAuthor 
     <!-- Preconnect to Sanity CDN for faster image loads -->
     <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    {lcpSrcset && (
+      <link
+        rel="preload"
+        as="image"
+        imagesrcset={lcpSrcset}
+        imagesizes="(max-width: 640px) 50vw, 33vw"
+        fetchpriority="high"
+      />
+    )}
     <SEO
       title={title}
       description={description}
