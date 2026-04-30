@@ -59,9 +59,24 @@
 @tailwind utilities;
 
 :root {
+  /* Surfaces */
+  --color-bg: #0f1a0a;
+  --color-bg-alt: #162210;
+
+  /* Text */
+  --color-text-primary: #e8e0d0;
+  --color-text-secondary: #a09080;
+  --color-text-muted: #8b8070;
+  --color-text-em: #c0b090;
+
+  /* Brand accent — keep in sync with brand.gold in tailwind.config.mjs */
   --color-gold: #c8a96e;
   --color-gold-dark: #a07840;
   --color-gold-light: #dfc080;
+  --color-gold-border: rgba(200, 169, 110, 0.2);
+
+  /* CTA */
+  --color-whatsapp: #25D366;
 }
 
 @layer base {
