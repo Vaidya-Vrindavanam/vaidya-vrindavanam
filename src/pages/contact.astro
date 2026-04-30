@@ -77,8 +77,8 @@ const schema = {
       <div>
         <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6">Send a Message</h2>
         <form action="https://formspree.io/f/mgoreanz" method="POST" class="space-y-4">
-          <!-- Honeypot — hidden from real users, catches bots -->
-          <input type="text" name="_honey" style="display:none" />
+          <!-- Formspree honeypot: submissions with _gotcha filled are silently dropped -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
           <!-- Subject line in the notification email -->
           <input type="hidden" name="_subject" value="New Enquiry — Vaidya Vrindavanam" />
 
