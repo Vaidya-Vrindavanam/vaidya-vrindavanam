@@ -62,7 +62,46 @@ const ALLOWED_ATTRS: sanitizeHtml.IOptions['allowedAttributes'] = {
   a: ['href', 'title', 'target', 'rel'],
 }
 
-type PTBlock = { _type: string; style?: string; listItem?: string; children?: Array<{ _type: string; text?: string }> }
+type PTBlock = { _type: string; style?: string; listItem?: string; level?: number; children?: Array<{ _type: string; text?: string }> }
+
+// Some Sanity entries author a whole bulleted list as a SINGLE block whose text concatenates
+// items with " - " separators (either as a normal paragraph starting with "- " or as a single
+// bullet listItem block). Split those into individual bullet blocks so the renderer emits one
+// <li> per item. Conservative: only split when 3+ parts result, to avoid mangling legitimately
+// hyphenated phrases like "Mon - Sat" or "Stage 1 - Initial".
+function splitBulletBlocks(blocks: PTBlock[]): PTBlock[] {
+  const out: PTBlock[] = []
+  for (const block of blocks) {
+    if (
+      block._type === 'block' &&
+      block.children &&
+      block.children.length > 0
+    ) {
+      const text = block.children.map(c => c.text ?? '').join('').trim()
+      const startsWithBullet = /^-\s+/.test(text)
+      const isBulletBlock = block.listItem === 'bullet'
+
+      if (isBulletBlock || startsWithBullet) {
+        const stripped = text.replace(/^-\s+/, '')
+        const parts = stripped.split(/\s+-\s+/).map(s => s.trim()).filter(Boolean)
+        if (parts.length >= 3) {
+          for (const part of parts) {
+            out.push({
+              _type: 'block',
+              style: 'normal',
+              listItem: 'bullet',
+              level: block.level ?? 1,
+              children: [{ _type: 'span', text: part }],
+            })
+          }
+          continue
+        }
+      }
+    }
+    out.push(block)
+  }
+  return out
+}
 
 function hasMarkdownSyntax(blocks: PTBlock[]): boolean {
   for (const block of blocks) {
@@ -74,14 +113,27 @@ function hasMarkdownSyntax(blocks: PTBlock[]): boolean {
 }
 
 function blocksToMarkdown(blocks: PTBlock[]): string {
-  return blocks
-    .filter(b => b._type === 'block')
-    .map(b => {
-      const text = (b.children ?? []).map(c => c.text ?? '').join('')
-      if (b.listItem === 'bullet') return `- ${text}`
-      return text
-    })
-    .join('\n\n')
+  // Join consecutive bullet items with a single newline (tight list — no <p> wrapper),
+  // and use blank lines only between non-bullet blocks or when transitioning into/out of a list.
+  const lines: string[] = []
+  let prevWasBullet = false
+  for (const b of blocks) {
+    if (b._type !== 'block') continue
+    const text = (b.children ?? []).map(c => c.text ?? '').join('')
+    const isBullet = b.listItem === 'bullet'
+    if (lines.length > 0) {
+      lines.push(prevWasBullet && isBullet ? '' : '\n')
+    }
+    lines.push(isBullet ? `- ${text}` : text)
+    prevWasBullet = isBullet
+  }
+  return lines.join('\n')
+}
+
+// Marked emits <li><p>text</p></li> for any list following the GFM loose-list rules.
+// Our list items are always single-line content, so unwrap the inner <p> for tight rendering.
+function unwrapListItemParagraphs(html: string): string {
+  return html.replace(/<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>/g, '<li>$1</li>')
 }
 
 function portableTextToHTML(content: unknown): string {
@@ -92,12 +144,14 @@ function portableTextToHTML(content: unknown): string {
       allowedAttributes: ALLOWED_ATTRS,
       allowedSchemes: ['https', 'mailto', 'tel'],
     }
-    if (hasMarkdownSyntax(content as PTBlock[])) {
-      const markdown = blocksToMarkdown(content as PTBlock[])
-      return sanitizeHtml(marked.parse(markdown) as string, sanitizeOpts)
+    const normalized = splitBulletBlocks(content as PTBlock[])
+    if (hasMarkdownSyntax(normalized)) {
+      const markdown = blocksToMarkdown(normalized)
+      const rendered = marked.parse(markdown) as string
+      return sanitizeHtml(unwrapListItemParagraphs(rendered), sanitizeOpts)
     }
-    const raw = toHTML(content as Parameters<typeof toHTML>[0])
-    return sanitizeHtml(raw, sanitizeOpts)
+    const raw = toHTML(normalized as Parameters<typeof toHTML>[0])
+    return sanitizeHtml(unwrapListItemParagraphs(raw), sanitizeOpts)
   } catch {
     return ''
   }
