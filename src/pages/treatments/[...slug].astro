@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import CTABanner from '../../components/CTABanner.astro';
 import { getTreatments } from '../../lib/sanity';
 import type { Treatment } from '../../lib/sanity';
+import { PHONE_PRIMARY_RAW } from '../../config/contact';
 
 export async function getStaticPaths() {
   const treatments = await getTreatments();
@@ -13,6 +13,15 @@ export async function getStaticPaths() {
 }
 
 const { treatment } = Astro.props as { treatment: Treatment };
+
+const waMessage = encodeURIComponent(`Hi, I'd like to book a ${treatment.name} treatment at Vaidya Vrindavanam`);
+const waLink = `https://wa.me/${PHONE_PRIMARY_RAW}?text=${waMessage}`;
+
+const categoryLabels: Record<string, string> = {
+  panchakarma: 'Panchakarma',
+  massage: 'Massage Therapy',
+  speciality: 'Speciality Treatment',
+};
 
 const schema = {
   "@context": "https://schema.org",
@@ -49,34 +58,495 @@ const schema = {
   description={`${treatment.shortDescription} — Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
   schema={schema}
 >
+  <!-- Hero image: full-bleed, gradient fades into page background -->
   {treatment.imageUrl && (
-    <div class="w-full" style="max-height: 480px; overflow: hidden;">
+    <div class="relative w-full overflow-hidden hero-image-container">
       <img
-        src={treatment.imageUrl}
-        alt={`${treatment.name} treatment at Vaidya Vrindavanam`}
-        class="w-full object-cover"
-        style="max-height: 480px; object-position: center;"
+        src={`${treatment.imageUrl}?w=1600&h=700&fit=crop&auto=format&q=75`}
+        alt={`${treatment.name} Ayurvedic treatment at Vaidya Vrindavanam, Haripad`}
+        class="w-full h-full object-cover object-center"
+        loading="eager"
+        fetchpriority="high"
       />
+      <!-- Gradient: transparent top → brand-bg at bottom so image melts into page -->
+      <div class="absolute inset-0 hero-gradient"></div>
+      <!-- Breadcrumb over the image -->
+      <div class="absolute bottom-0 left-0 right-0 outer-pad pb-7">
+        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">—</span>
+          <a href="/treatments/">Treatments</a>
+          <span aria-hidden="true">—</span>
+          <span class="breadcrumb-current">{treatment.name}</span>
+        </nav>
+      </div>
     </div>
   )}
 
-  <section class="pt-12 pb-6 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
-    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">{treatment.category.replace(/-/g, ' ')}</p>
-    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{treatment.name}</h1>
-    {treatment.malayalam && (
-      <p class="text-sm text-text-muted mt-2">{treatment.malayalam}</p>
-    )}
-    <div class="w-8 h-px bg-brand-gold mx-auto mt-5"></div>
-    {treatment.duration && (
-      <p class="text-xs text-text-muted mt-4">Duration: {treatment.duration}</p>
-    )}
-  </section>
-
-  <section class="pt-6 pb-12 px-6 bg-brand-bg">
-    <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
-      <div set:html={treatment.contentHTML}></div>
+  <!-- No-image breadcrumb fallback -->
+  {!treatment.imageUrl && (
+    <div class="bg-brand-bg-alt pt-8 outer-pad pb-0">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">—</span>
+        <a href="/treatments/">Treatments</a>
+        <span aria-hidden="true">—</span>
+        <span class="breadcrumb-current">{treatment.name}</span>
+      </nav>
     </div>
-  </section>
+  )}
 
-  <CTABanner />
+  <!-- Document body -->
+  <div class="bg-brand-bg">
+    <div class="outer-pad doc-container">
+      <div class="doc-grid">
+
+        <!-- ── Content column ── -->
+        <article class="content-col">
+          <header class="doc-header">
+            <p class="category-label">{categoryLabels[treatment.category] ?? treatment.category.replace(/-/g, ' ')}</p>
+            <h1 class="doc-title">{treatment.name}</h1>
+            {(treatment.sanskrit || treatment.malayalam) && (
+              <p class="alt-names">
+                {treatment.sanskrit && <span>{treatment.sanskrit}</span>}
+                {treatment.sanskrit && treatment.malayalam && <span class="alt-sep">·</span>}
+                {treatment.malayalam && <span>{treatment.malayalam}</span>}
+              </p>
+            )}
+            {treatment.duration && (
+              <p class="duration-label">Duration: {treatment.duration}</p>
+            )}
+          </header>
+
+          <!-- Prose content from Sanity -->
+          <div class="treatment-prose" set:html={treatment.contentHTML}></div>
+
+          <!-- Mobile booking panel (visible only on small screens) -->
+          <div class="mobile-cta">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp to Book
+            </a>
+            <a href="tel:+919074848705" class="btn-call">Call Us</a>
+          </div>
+
+          <div class="back-link-row">
+            <a href="/treatments/" class="back-link">← All Treatments</a>
+          </div>
+        </article>
+
+        <!-- ── Sticky booking sidebar (desktop only) ── -->
+        <aside class="booking-aside" aria-label="Book this treatment">
+          <div class="booking-card">
+            <p class="booking-card-label">Book This Treatment</p>
+
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp to Book
+            </a>
+
+            <a href="tel:+919074848705" class="btn-call">Call Us</a>
+
+            <hr class="card-divider" />
+
+            <div class="info-block">
+              <p class="info-label">Clinic Hours</p>
+              <div class="hours-row"><span>Mon – Sat</span><span>9 am – 12 pm</span></div>
+              <div class="hours-row"><span>Mon – Sat</span><span>4 pm – 7 pm</span></div>
+              <div class="hours-row hours-row--closed"><span>Sunday</span><span>Closed</span></div>
+            </div>
+
+            <hr class="card-divider" />
+
+            <div class="info-block">
+              <p class="info-label">Location</p>
+              <p class="info-text">
+                Haripad, Alappuzha<br />
+                Kerala — 690514
+              </p>
+              <p class="info-note">Residential care available 24/7</p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  /* ── Layout ── */
+  .outer-pad {
+    padding-left: clamp(1.25rem, 4vw, 4rem);
+    padding-right: clamp(1.25rem, 4vw, 4rem);
+  }
+
+  .hero-image-container {
+    height: clamp(280px, 48vw, 560px);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(to bottom, transparent 35%, oklch(14% 0.025 145) 100%);
+  }
+
+  .doc-container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+  }
+
+  .doc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .doc-grid {
+      grid-template-columns: 1fr 300px;
+      gap: 4rem;
+    }
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: oklch(71% 0.09 80 / 0.6);
+  }
+  .breadcrumb-nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .breadcrumb-nav a:hover {
+    color: oklch(71% 0.09 80);
+  }
+  .breadcrumb-nav span[aria-hidden] {
+    opacity: 0.35;
+  }
+  .breadcrumb-current {
+    color: oklch(71% 0.09 80);
+  }
+
+  /* ── Content header ── */
+  .doc-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .category-label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 1rem;
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+  }
+
+  .doc-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: #e8e0d0;
+    line-height: 1.1;
+    letter-spacing: 0.015em;
+    font-size: clamp(2rem, 5.5vw, 3.25rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .alt-names {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    color: #a09080;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .alt-sep {
+    opacity: 0.35;
+    font-style: normal;
+  }
+
+  .duration-label {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8b8070;
+    margin-top: 1rem;
+  }
+
+  /* ── Prose (content from Sanity) ── */
+  .treatment-prose :global(h2) {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: #c8a96e;
+    letter-spacing: 0.02em;
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    line-height: 1.25;
+  }
+
+  .treatment-prose :global(h3) {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: #c8a96e;
+    margin-top: 2rem;
+    margin-bottom: 0.6rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.3;
+  }
+
+  .treatment-prose :global(p) {
+    color: #a09080;
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+    max-width: 66ch;
+  }
+
+  .treatment-prose :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    max-width: 66ch;
+  }
+
+  .treatment-prose :global(ul li) {
+    color: #a09080;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+  }
+
+  .treatment-prose :global(ul li)::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: oklch(71% 0.09 80 / 0.45);
+    font-size: 0.75rem;
+    top: 0.125em;
+  }
+
+  .treatment-prose :global(ol) {
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+    max-width: 66ch;
+  }
+
+  .treatment-prose :global(ol li) {
+    color: #a09080;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    margin-bottom: 0.35rem;
+    list-style-type: decimal;
+    padding-left: 0.25rem;
+  }
+
+  .treatment-prose :global(strong) {
+    color: #e8e0d0;
+    font-weight: 600;
+  }
+
+  .treatment-prose :global(em) {
+    color: #c0b090;
+    font-style: italic;
+  }
+
+  .treatment-prose :global(a) {
+    color: #c8a96e;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200, 169, 110, 0.3);
+    transition: border-color 0.2s;
+  }
+
+  .treatment-prose :global(a:hover) {
+    border-bottom-color: #c8a96e;
+  }
+
+  .treatment-prose :global(blockquote) {
+    border: none;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    background: oklch(17% 0.028 145);
+    color: #e8e0d0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.65;
+    max-width: 66ch;
+  }
+
+  /* ── Mobile CTA (hidden on desktop) ── */
+  .mobile-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-cta {
+      display: none;
+    }
+  }
+
+  /* ── Back link ── */
+  .back-link-row {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(200, 169, 110, 0.2);
+  }
+
+  .back-link {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.625rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: #e8e0d0;
+  }
+
+  /* ── Buttons (shared) ── */
+  .btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: #25D366;
+    color: #fff;
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.875rem 1.25rem;
+    margin-bottom: 0.625rem;
+    transition: filter 0.2s;
+  }
+
+  .btn-whatsapp:hover {
+    filter: brightness(1.08);
+  }
+
+  .btn-call {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #c8a96e;
+    color: #c8a96e;
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.875rem 1.25rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-call:hover {
+    background: #c8a96e;
+    color: #0f1a0a;
+  }
+
+  /* ── Sidebar ── */
+  .booking-aside {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .booking-aside {
+      display: block;
+      position: sticky;
+      top: 5.5rem;
+    }
+  }
+
+  .booking-card {
+    background: #162210;
+    border: 1px solid rgba(200, 169, 110, 0.2);
+    padding: 1.75rem;
+  }
+
+  .booking-card-label {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.5625rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-divider {
+    border: none;
+    border-top: 1px solid rgba(200, 169, 110, 0.18);
+    margin: 1.375rem 0;
+  }
+
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .info-label {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.5625rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 0.5rem;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #a09080;
+  }
+
+  .hours-row--closed {
+    color: #8b8070;
+  }
+
+  .info-text {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: #a09080;
+    line-height: 1.6;
+  }
+
+  .info-note {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.6875rem;
+    color: #8b8070;
+    margin-top: 0.25rem;
+  }
+</style>
