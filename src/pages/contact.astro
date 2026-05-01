@@ -13,12 +13,65 @@ const faqs = [
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(f => ({
-    "@type": "Question",
-    "name": f.question,
-    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
-  }))
+  "@graph": [
+    {
+      "@type": "MedicalClinic",
+      "@id": "https://vaidyavrindavanam.com/#clinic",
+      "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "alternateName": "Vaidya Vrindavanam Panchakarma Centre",
+      "url": "https://vaidyavrindavanam.com/",
+      "image": "https://vaidyavrindavanam.com/og-default.jpg",
+      "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ classical treatments with residential care.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Near RK Junction, NH-66",
+        "addressLocality": "Haripad",
+        "addressRegion": "Kerala",
+        "postalCode": "690513",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 9.2333,
+        "longitude": 76.4608
+      },
+      "telephone": `+${PHONE_PRIMARY_RAW}`,
+      "email": EMAIL,
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "09:00",
+          "closes": "12:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "16:00",
+          "closes": "19:00"
+        }
+      ],
+      "medicalSpecialty": "Ayurveda",
+      "availableService": [
+        { "@type": "MedicalTherapy", "name": "Panchakarma" },
+        { "@type": "MedicalTherapy", "name": "Marma Chikitsa" },
+        { "@type": "MedicalTherapy", "name": "Shirodhara" },
+        { "@type": "MedicalTherapy", "name": "Njavara Kizhi" },
+        { "@type": "MedicalTherapy", "name": "Abhyangam" }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/people/Vaidya-Vrindavanam/100034507068925/"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+      }))
+    }
+  ]
 };
 ---
 

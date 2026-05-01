@@ -5,6 +5,7 @@ import FAQAccordion from '../../components/FAQAccordion.astro';
 import { getConditions, getTreatments } from '../../lib/sanity';
 import type { Condition, Treatment } from '../../lib/sanity';
 import { conditionDetails } from '../../data/conditionDetails';
+import { conditionSeoDescriptions } from '../../data/seoDescriptions';
 
 export async function getStaticPaths() {
   const [conditions, allTreatments] = await Promise.all([
@@ -72,7 +73,7 @@ const schema = {
 
 <BaseLayout
   title={`Ayurveda for ${condition.name}`}
-  description={`${condition.shortDescription} — Ayurvedic treatment at Vaidya Vrindavanam, Haripad, Kerala.`}
+  description={conditionSeoDescriptions[condition.slug] ?? `${condition.shortDescription} — Ayurvedic treatment at Vaidya Vrindavanam, Haripad, Kerala.`}
   schema={schema}
 >
   <section class="pt-12 md:pt-16 pb-16 md:pb-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg">

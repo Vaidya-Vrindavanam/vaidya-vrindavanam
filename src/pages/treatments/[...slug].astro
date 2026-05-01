@@ -4,6 +4,7 @@ import TreatmentCard from '../../components/TreatmentCard.astro';
 import { getTreatments } from '../../lib/sanity';
 import type { Treatment } from '../../lib/sanity';
 import { PHONE_PRIMARY_RAW } from '../../config/contact';
+import { treatmentSeoDescriptions } from '../../data/seoDescriptions';
 
 export async function getStaticPaths() {
   const treatments = await getTreatments();
@@ -68,7 +69,7 @@ const schema = {
 
 <BaseLayout
   title={`${treatment.name} Treatment in Haripad, Kerala`}
-  description={`${treatment.shortDescription} — Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
+  description={treatmentSeoDescriptions[treatment.slug] ?? `${treatment.shortDescription} — Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
   schema={schema}
 >
   <!-- Hero image: full-bleed, gradient fades into page background -->
@@ -184,7 +185,7 @@ const schema = {
               <p class="info-label">Location</p>
               <p class="info-text">
                 Haripad, Alappuzha<br />
-                Kerala — 690514
+                Kerala — 690513
               </p>
               <p class="info-note">Residential care available 24/7</p>
             </div>
