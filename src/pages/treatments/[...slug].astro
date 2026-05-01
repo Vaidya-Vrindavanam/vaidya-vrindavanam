@@ -1,18 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TreatmentCard from '../../components/TreatmentCard.astro';
 import { getTreatments } from '../../lib/sanity';
 import type { Treatment } from '../../lib/sanity';
 import { PHONE_PRIMARY_RAW } from '../../config/contact';
 
 export async function getStaticPaths() {
   const treatments = await getTreatments();
-  return treatments.map(treatment => ({
-    params: { slug: treatment.slug },
-    props: { treatment },
-  }));
+  return treatments.map(treatment => {
+    // Up to 3 sibling treatments from the same category, ordered by `order`
+    const related = treatments
+      .filter(t => t.category === treatment.category && t.slug !== treatment.slug)
+      .slice(0, 3);
+    return {
+      params: { slug: treatment.slug },
+      props: { treatment, related },
+    };
+  });
 }
 
-const { treatment } = Astro.props as { treatment: Treatment };
+const { treatment, related } = Astro.props as { treatment: Treatment; related: Treatment[] };
 
 const waMessage = encodeURIComponent(`Hi, I'd like to book a ${treatment.name} treatment at Vaidya Vrindavanam`);
 const waLink = `https://wa.me/${PHONE_PRIMARY_RAW}?text=${waMessage}`;
@@ -21,6 +28,12 @@ const categoryLabels: Record<string, string> = {
   panchakarma: 'Panchakarma',
   massage: 'Massage Therapy',
   speciality: 'Speciality Treatment',
+};
+
+const relatedHeading: Record<string, string> = {
+  panchakarma: 'More Panchakarma Therapies',
+  massage: 'More Massage Therapies',
+  speciality: 'More Speciality Treatments',
 };
 
 const schema = {
@@ -140,10 +153,6 @@ const schema = {
             </a>
             <a href="tel:+919074848705" class="btn-call">Call Us</a>
           </div>
-
-          <div class="back-link-row">
-            <a href="/treatments/" class="back-link">← All Treatments</a>
-          </div>
         </article>
 
         <!-- ── Sticky booking sidebar (desktop only) ── -->
@@ -183,6 +192,31 @@ const schema = {
         </aside>
 
       </div>
+    </div>
+
+    {related.length > 0 && (
+      <section class="related-section outer-pad" aria-labelledby="related-heading">
+        <div class="related-inner">
+          <hr class="related-rule" aria-hidden="true" />
+          <h2 id="related-heading" class="related-heading">
+            {relatedHeading[treatment.category] ?? 'More Treatments'}
+          </h2>
+          <div class="related-grid">
+            {related.map(t => (
+              <TreatmentCard
+                name={t.name}
+                description={t.shortDescription}
+                imageUrl={t.imageUrl}
+                slug={t.slug}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <div class="outer-pad back-link-row">
+      <a href="/treatments/" class="back-link">← All Treatments</a>
     </div>
   </div>
 </BaseLayout>
@@ -418,10 +452,52 @@ const schema = {
   }
 
   /* ── Back link ── */
+  /* ── Related Treatments section ── */
+  .related-section {
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .related-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .related-rule {
+    border: 0;
+    height: 1px;
+    width: 56px;
+    background: var(--color-gold);
+    opacity: 0.7;
+    margin: 0 0 1.5rem 0;
+  }
+  .related-heading {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+    color: var(--color-text-primary);
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+    letter-spacing: -0.005em;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .related-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
   .back-link-row {
-    margin-top: 3rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
     padding-top: 1.5rem;
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
     border-top: 1px solid var(--color-gold-border);
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .back-link {
