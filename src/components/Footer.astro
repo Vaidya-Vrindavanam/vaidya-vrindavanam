@@ -17,59 +17,58 @@ const year = new Date().getFullYear();
   <div class="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
 
     <!-- Col 1: Clinic Info -->
-    <div>
-      <h3 class="font-display text-xl text-brand-gold tracking-wide mb-4">Vaidya Vrindavanam</h3>
-      <p class="text-sm text-text-secondary leading-relaxed mb-4">
-        Authentic Ayurvedic healing rooted in Kerala's ancient traditions.<br />
-        Haripad, Alappuzha, Kerala — 690513
-      </p>
-      <ul class="space-y-2 text-sm">
-        <li>
-          <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="text-text-secondary hover:text-brand-gold transition-colors">
-            📞 {PHONE_PRIMARY}
-          </a>
-        </li>
-        <li>
-          <a href={`tel:+${PHONE_SECONDARY_RAW}`} class="text-text-secondary hover:text-brand-gold transition-colors">
-            📞 {PHONE_SECONDARY}
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${EMAIL}`} class="text-text-secondary hover:text-brand-gold transition-colors">
-            ✉ {EMAIL}
-          </a>
-        </li>
-      </ul>
-    </div>
+    <section aria-labelledby="footer-contact-heading">
+      <h2 id="footer-contact-heading" class="sr-only">Contact</h2>
+      <p class="font-display text-xl text-brand-gold tracking-wide mb-4">Vaidya Vrindavanam</p>
+      <address class="not-italic text-sm text-text-secondary leading-relaxed">
+        <p class="mb-4">
+          Authentic Ayurvedic healing rooted in Kerala's ancient traditions.<br />
+          Haripad, Alappuzha, Kerala — 690513
+        </p>
+        <ul class="space-y-1 -my-1.5">
+          <li>
+            <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
+              {PHONE_PRIMARY}
+            </a>
+          </li>
+          <li>
+            <a href={`tel:+${PHONE_SECONDARY_RAW}`} class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
+              {PHONE_SECONDARY}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${EMAIL}`} class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
+              {EMAIL}
+            </a>
+          </li>
+        </ul>
+      </address>
+    </section>
 
     <!-- Col 2: Navigate -->
-    <div>
-      <h3 class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Navigate</h3>
-      <ul class="space-y-2">
+    <nav aria-labelledby="footer-nav-heading">
+      <h2 id="footer-nav-heading" class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Navigate</h2>
+      <ul class="space-y-1 -my-1.5">
         {navLinks.map((link) => (
           <li>
             <a
               href={link.href}
-              class="text-sm text-text-secondary hover:text-brand-gold transition-colors"
+              class="block py-1.5 text-sm text-text-secondary hover:text-brand-gold transition-colors"
             >
               {link.label}
             </a>
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
 
     <!-- Col 3: Clinic Hours -->
-    <div>
-      <h3 class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Clinic Hours</h3>
+    <section aria-labelledby="footer-hours-heading">
+      <h2 id="footer-hours-heading" class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Clinic Hours</h2>
       <ul class="space-y-3 text-sm text-text-secondary">
         <li class="flex justify-between gap-4 border-b border-brand-gold-border pb-2">
           <span>Monday – Saturday</span>
-          <span class="text-text-primary">9AM–12PM</span>
-        </li>
-        <li class="flex justify-between gap-4 border-b border-brand-gold-border pb-2">
-          <span>Monday – Saturday</span>
-          <span class="text-text-primary">4PM–7PM</span>
+          <span class="text-text-primary">9AM–12PM, 4PM–7PM</span>
         </li>
         <li class="flex justify-between gap-4">
           <span>Sunday</span>
@@ -79,7 +78,7 @@ const year = new Date().getFullYear();
       <p class="mt-5 text-xs text-text-muted">
         Residential care available 24/7 for in-patients.
       </p>
-    </div>
+    </section>
 
   </div>
 
