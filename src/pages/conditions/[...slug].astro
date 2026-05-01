@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import TreatmentCard from '../../components/TreatmentCard.astro';
 import CTABanner from '../../components/CTABanner.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import { getConditions, getTreatments } from '../../lib/sanity';
@@ -76,65 +75,145 @@ const schema = {
   description={`${condition.shortDescription} — Ayurvedic treatment at Vaidya Vrindavanam, Haripad, Kerala.`}
   schema={schema}
 >
-  <section class="py-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg text-center">
-    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Conditions We Treat</p>
-    <h1 class="text-3xl md:text-4xl font-display font-light text-text-primary tracking-wide">{condition.name}</h1>
-    <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+  <section class="pt-12 md:pt-16 pb-16 md:pb-20 px-6 bg-gradient-to-b from-brand-bg-alt to-brand-bg">
+    <div class="max-w-5xl mx-auto">
+      <nav aria-label="Breadcrumb" class="text-[11px] tracking-[2px] uppercase text-text-muted mb-8">
+        <a href="/" class="hover:text-brand-gold transition-colors">Home</a>
+        <span class="mx-2 text-brand-gold-border">/</span>
+        <a href="/conditions/" class="hover:text-brand-gold transition-colors">Conditions</a>
+        <span class="mx-2 text-brand-gold-border">/</span>
+        <span class="text-text-secondary">{condition.name}</span>
+      </nav>
+
+      <div class="grid md:grid-cols-[1fr_auto] gap-10 md:gap-16 items-end">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-display font-light text-text-primary tracking-wide leading-[1.1]">
+            {condition.name}
+          </h1>
+          <p class="mt-6 text-base md:text-lg text-text-secondary leading-relaxed max-w-2xl">
+            {condition.shortDescription}
+          </p>
+        </div>
+
+        {detail && (
+          <dl class="md:border-l md:border-brand-gold-border md:pl-8 grid grid-cols-2 md:grid-cols-1 gap-6 md:gap-5 md:min-w-[160px]">
+            <div>
+              <dt class="text-[10px] tracking-[2px] uppercase text-text-muted mb-1">Phases</dt>
+              <dd class="font-display text-2xl text-brand-gold font-light">{detail.treatmentProtocol.length}</dd>
+            </div>
+            <div>
+              <dt class="text-[10px] tracking-[2px] uppercase text-text-muted mb-1">Therapies</dt>
+              <dd class="font-display text-2xl text-brand-gold font-light">{relatedTreatments.length}</dd>
+            </div>
+          </dl>
+        )}
+      </div>
+    </div>
   </section>
 
   {detail && (
+    <nav aria-label="On this page" class="sticky top-0 z-30 bg-brand-bg/95 backdrop-blur supports-[backdrop-filter]:bg-brand-bg/80 border-y border-brand-gold-border">
+      <div class="max-w-5xl mx-auto px-6">
+        <ul class="flex gap-1 md:gap-2 overflow-x-auto whitespace-nowrap text-[11px] tracking-[2px] uppercase">
+          <li><a href="#overview" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">Overview</a></li>
+          <li><a href="#ayurvedic" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">Ayurvedic View</a></li>
+          <li><a href="#protocol" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">Protocol</a></li>
+          <li><a href="#outcomes" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">Outcomes</a></li>
+          {relatedTreatments.length > 0 && <li><a href="#treatments" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">Treatments</a></li>}
+          <li><a href="#faq" class="inline-flex items-center min-h-[44px] px-3 text-text-secondary hover:text-brand-gold transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+    </nav>
+  )}
+
+  {detail && (
     <>
-      <section class="py-14 px-6 bg-brand-bg">
-        <div class="max-w-3xl mx-auto">
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">Overview</p>
-          <h2 class="text-xl font-display font-light text-text-primary tracking-wide mb-6">{`Understanding ${condition.name}`}</h2>
-          <p class="text-sm text-text-secondary leading-relaxed mb-8">{detail.overview}</p>
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mt-10 mb-3">Common Symptoms</p>
-          <ul class="space-y-2 text-sm text-text-secondary leading-relaxed list-disc pl-5 marker:text-brand-gold">
-            {detail.symptoms.map(s => <li>{s}</li>)}
-          </ul>
+      <section id="overview" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-[200px_1fr] gap-6 md:gap-12">
+          <div>
+            <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">Overview</p>
+          </div>
+          <div class="max-w-2xl">
+            <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide mb-6 leading-[1.2]">
+              {`Understanding ${condition.name}`}
+            </h2>
+            <p class="text-[15px] text-text-secondary leading-[1.75]">{detail.overview}</p>
+          </div>
         </div>
-      </section>
 
-      <section class="py-14 px-6 bg-brand-bg-alt">
-        <div class="max-w-3xl mx-auto">
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">Ayurvedic Perspective</p>
-          <h2 class="text-xl font-display font-light text-text-primary tracking-wide mb-6">The Classical View</h2>
-          <p class="text-sm text-text-secondary leading-relaxed mb-10">{detail.ayurvedicView}</p>
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mt-10 mb-3">Conventional vs Ayurvedic Approach</p>
-          <p class="text-sm text-text-secondary leading-relaxed">{detail.approachComparison}</p>
-        </div>
-      </section>
-
-      <section class="py-14 px-6 bg-brand-bg">
-        <div class="max-w-3xl mx-auto">
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">How We Treat</p>
-          <h2 class="text-xl font-display font-light text-text-primary tracking-wide mb-8">Treatment Protocol</h2>
-          <ol class="space-y-6">
-            {detail.treatmentProtocol.map((p, i) => (
-              <li class="border-l border-brand-gold-border pl-5">
-                <div class="flex items-baseline gap-3 mb-1">
-                  <span class="text-[9px] tracking-[4px] uppercase text-brand-gold shrink-0">Phase {i + 1}</span>
-                  <span class="text-sm font-semibold text-text-primary">{p.phase}</span>
-                </div>
-                <p class="text-sm text-text-secondary leading-relaxed">{p.description}</p>
+        <div class="max-w-5xl mx-auto grid md:grid-cols-[200px_1fr] gap-6 md:gap-12 mt-14 md:mt-20">
+          <div>
+            <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">Common Symptoms</p>
+          </div>
+          <ol class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
+            {detail.symptoms.map((s, i) => (
+              <li class="flex gap-4">
+                <span class="font-display text-brand-gold text-sm tabular-nums shrink-0 pt-[2px]">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-[15px] text-text-secondary leading-[1.7]">{s}</span>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section class="py-14 px-6 bg-brand-bg-alt">
-        <div class="max-w-3xl mx-auto">
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">Expected Outcomes</p>
-          <h2 class="text-xl font-display font-light text-text-primary tracking-wide mb-6">What Patients Can Expect</h2>
-          <p class="text-sm text-text-secondary leading-relaxed">{detail.expectedOutcomes}</p>
+      <section id="ayurvedic" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg-alt">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-display font-light text-text-primary tracking-wide leading-[1.2] max-w-3xl mb-10">
+            The Classical View
+          </h2>
+          <div class="grid md:grid-cols-12 gap-8 md:gap-12">
+            <p class="md:col-span-7 font-display text-xl md:text-2xl font-light text-text-primary leading-[1.5] tracking-wide">
+              {detail.ayurvedicView}
+            </p>
+            <div class="md:col-span-5 md:border-l md:border-brand-gold-border md:pl-8">
+              <p class="text-[11px] tracking-[3px] uppercase text-brand-gold mb-4">Conventional vs Ayurvedic</p>
+              <p class="text-[15px] text-text-secondary leading-[1.75]">{detail.approachComparison}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="protocol" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg">
+        <div class="max-w-5xl mx-auto">
+          <div class="grid md:grid-cols-[200px_1fr] gap-6 md:gap-12 mb-10 md:mb-14">
+            <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">How We Treat</p>
+            <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide leading-[1.2]">
+              Treatment Protocol
+            </h2>
+          </div>
+          <ol>
+            {detail.treatmentProtocol.map((p, i) => (
+              <li class="grid md:grid-cols-[120px_1fr] gap-3 md:gap-12 py-8 border-t border-brand-gold-border last:border-b">
+                <span class="font-display text-3xl md:text-4xl font-light text-brand-gold tabular-nums leading-none">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div class="max-w-3xl">
+                  <h3 class="text-lg md:text-xl font-display font-light text-text-primary tracking-wide mb-3">{p.phase}</h3>
+                  <p class="text-[15px] text-text-secondary leading-[1.75]">{p.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="outcomes" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg-alt">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-[200px_1fr] gap-6 md:gap-12">
+          <div>
+            <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">Expected Outcomes</p>
+          </div>
+          <div class="max-w-3xl">
+            <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide leading-[1.2] mb-8">
+              What to Expect
+            </h2>
+            <p class="text-[15px] text-text-secondary leading-[1.75]">{detail.expectedOutcomes}</p>
+          </div>
         </div>
       </section>
     </>
   )}
 
-  {condition.contentHTML && condition.contentHTML.trim() !== '' && (
+  {!detail && condition.contentHTML && condition.contentHTML.trim() !== '' && (
     <section class="py-12 px-6 bg-brand-bg">
       <div class="max-w-3xl mx-auto prose prose-invert prose-sm prose-headings:font-display prose-headings:text-brand-gold prose-headings:font-light prose-headings:tracking-wide prose-p:text-text-secondary prose-p:leading-relaxed prose-li:text-text-secondary prose-strong:text-text-primary prose-a:text-brand-gold prose-a:no-underline">
         <div set:html={condition.contentHTML}></div>
@@ -143,26 +222,59 @@ const schema = {
   )}
 
   {relatedTreatments.length > 0 && (
-    <section class="py-12 px-6 bg-brand-bg-alt">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-xl font-display text-brand-gold tracking-wide mb-6 text-center">Recommended Treatments</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {relatedTreatments.map(t => (
-            <TreatmentCard name={t.name} description={t.shortDescription} imageUrl={t.imageUrl} slug={t.slug} />
-          ))}
+    <section id="treatments" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-[200px_1fr] gap-6 md:gap-12 mb-8 md:mb-12">
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">Recommended</p>
+          <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide leading-[1.2]">
+            Therapies for {condition.name}
+          </h2>
         </div>
+        <ul class="divide-y divide-brand-gold-border border-y border-brand-gold-border">
+          {relatedTreatments.map(t => (
+            <li>
+              <a href={`/treatments/${t.slug}/`} class="group flex items-center gap-4 md:gap-6 py-5 md:py-6 hover:bg-brand-bg-alt/40 transition-colors">
+                {t.imageUrl && (
+                  <img
+                    src={`${t.imageUrl}?w=160&h=160&fit=crop&auto=format&q=65`}
+                    alt=""
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-16 h-16 md:w-20 md:h-20 object-cover shrink-0"
+                  />
+                )}
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-display text-lg md:text-xl font-light text-text-primary group-hover:text-brand-gold transition-colors tracking-wide">{t.name}</h3>
+                  <p class="text-sm text-text-muted mt-1 line-clamp-2 leading-relaxed">{t.shortDescription}</p>
+                </div>
+                <span class="text-brand-gold text-lg md:text-xl shrink-0 group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )}
 
   {detail && (
-    <section class="py-14 px-6 bg-brand-bg">
-      <div class="max-w-2xl mx-auto mb-8 text-center">
-        <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">Frequently Asked</p>
-        <h2 class="text-xl font-display font-light text-text-primary tracking-wide">Questions Patients Ask</h2>
-        <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
+    <section id="faq" class="scroll-mt-20 py-16 md:py-20 px-6 bg-brand-bg-alt">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-[200px_1fr] gap-6 md:gap-12">
+        <div>
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold md:mt-2">FAQ</p>
+        </div>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide leading-[1.2] mb-8">
+            Common Questions
+          </h2>
+          {/* Override the component's built-in `max-w-2xl mx-auto` so the FAQ aligns flush
+              with the H2 above it inside this section's right column. */}
+          <div class="[&>div]:!mx-0 [&>div]:!max-w-none">
+            <FAQAccordion items={detail.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+          </div>
+        </div>
       </div>
-      <FAQAccordion items={detail.faqs.map(f => ({ question: f.q, answer: f.a }))} />
     </section>
   )}
 

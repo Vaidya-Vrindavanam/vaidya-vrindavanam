@@ -59,21 +59,24 @@
 @tailwind utilities;
 
 :root {
+  /* OKLCH-based palette. Surfaces sit in the forest-green hue (~140°) at low chroma;
+     text neutrals tint toward the antique-gold hue (~80°) for cross-token cohesion. */
+
   /* Surfaces */
-  --color-bg: #0f1a0a;
-  --color-bg-alt: #162210;
+  --color-bg: oklch(0.20 0.028 140);
+  --color-bg-alt: oklch(0.24 0.028 140);
 
   /* Text */
-  --color-text-primary: #e8e0d0;
-  --color-text-secondary: #a09080;
-  --color-text-muted: #8b8070;
-  --color-text-em: #c0b090;
+  --color-text-primary: oklch(0.90 0.025 85);
+  --color-text-secondary: oklch(0.78 0.025 80); /* ≥7:1 against --color-bg (was #a09080 ≈5.6:1) */
+  --color-text-muted: oklch(0.62 0.020 80);
+  --color-text-em: oklch(0.78 0.030 80);
 
   /* Brand accent — keep in sync with brand.gold in tailwind.config.mjs */
-  --color-gold: #c8a96e;
-  --color-gold-dark: #a07840;
-  --color-gold-light: #dfc080;
-  --color-gold-border: rgba(200, 169, 110, 0.2);
+  --color-gold: oklch(0.74 0.085 80);
+  --color-gold-dark: oklch(0.58 0.105 60);
+  --color-gold-light: oklch(0.81 0.085 80);
+  --color-gold-border: oklch(0.74 0.085 80 / 0.20);
 
   /* CTA */
   --color-whatsapp: #25D366;
@@ -94,5 +97,21 @@
     outline: 2px solid var(--color-gold);
     outline-offset: 3px;
     border-radius: 2px;
+  }
+
+  /* Honour the OS-level motion preference. Neutralises transitions, animations,
+     and smooth scrolling for users who opted out (vestibular conditions, etc.). */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

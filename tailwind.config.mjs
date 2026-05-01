@@ -4,20 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Surfaces sit in the forest-green hue (~140°) at low chroma; text neutrals
+        // tint toward the antique-gold hue (~80°) so accents and prose feel related.
+        // Keep these in sync with :root in src/styles/global.css.
         brand: {
-          bg: '#0f1a0a',
-          'bg-alt': '#162210',
-          'bg-footer': '#080e05',
-          gold: '#c8a96e',
-          'gold-dim': 'rgba(200,169,110,0.15)',
-          'gold-border': 'rgba(200,169,110,0.2)',
+          bg: 'oklch(0.20 0.028 140)',
+          'bg-alt': 'oklch(0.24 0.028 140)',
+          'bg-footer': 'oklch(0.13 0.022 140)',
+          gold: 'oklch(0.74 0.085 80)',
+          'gold-dim': 'oklch(0.74 0.085 80 / 0.15)',
+          'gold-border': 'oklch(0.74 0.085 80 / 0.20)',
           whatsapp: '#25D366',
         },
         text: {
-          primary: '#e8e0d0',
-          secondary: '#a09080',
-          muted: '#8b8070',
-          subtle: '#8b8070',
+          primary: 'oklch(0.90 0.025 85)',
+          secondary: 'oklch(0.78 0.025 80)', // lifted to ≥7:1 on bg (was #a09080 ≈5.6:1)
+          muted: 'oklch(0.62 0.020 80)',
+          subtle: 'oklch(0.62 0.020 80)',
         },
       },
       fontFamily: {
