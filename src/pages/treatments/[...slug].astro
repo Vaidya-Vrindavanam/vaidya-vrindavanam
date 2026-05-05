@@ -1,13 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
-import { getTreatments } from '../../lib/sanity';
-import type { Treatment } from '../../lib/sanity';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+import { getTreatments, getConditions } from '../../lib/sanity';
+import type { Treatment, Condition } from '../../lib/sanity';
 import { PHONE_PRIMARY_RAW } from '../../config/contact';
 import { treatmentSeoDescriptions } from '../../data/seoDescriptions';
+import { treatmentDetails } from '../../data/treatmentDetails';
 
 export async function getStaticPaths() {
-  const treatments = await getTreatments();
+  const [treatments, conditions] = await Promise.all([
+    getTreatments(),
+    getConditions(),
+  ]);
   return treatments.map(treatment => {
     // Up to 3 sibling treatments from the same category, ordered by `order`
     const related = treatments
@@ -15,12 +20,21 @@ export async function getStaticPaths() {
       .slice(0, 3);
     return {
       params: { slug: treatment.slug },
-      props: { treatment, related },
+      props: { treatment, related, allConditions: conditions },
     };
   });
 }
 
-const { treatment, related } = Astro.props as { treatment: Treatment; related: Treatment[] };
+const { treatment, related, allConditions } = Astro.props as { treatment: Treatment; related: Treatment[]; allConditions: Condition[] };
+const detail = treatmentDetails[treatment.slug];
+
+// Cross-link section: filter the curated `helpsConditions` slugs to ones we
+// actually have on the site, then resolve names from the conditions collection.
+const linkedConditions = detail
+  ? detail.helpsConditions
+      .map(slug => allConditions.find(c => c.slug === slug))
+      .filter((c): c is Condition => Boolean(c))
+  : [];
 
 const waMessage = encodeURIComponent(`Hi, I'd like to book a ${treatment.name} treatment at Vaidya Vrindavanam`);
 const waLink = `https://wa.me/${PHONE_PRIMARY_RAW}?text=${waMessage}`;
@@ -37,33 +51,49 @@ const relatedHeading: Record<string, string> = {
   speciality: 'More Speciality Treatments',
 };
 
+const schemaGraph: Record<string, unknown>[] = [
+  {
+    "@type": "MedicalTherapy",
+    "name": treatment.name,
+    "description": treatment.shortDescription,
+    "provider": {
+      "@type": "MedicalBusiness",
+      "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Haripad",
+        "addressRegion": "Kerala",
+        "addressCountry": "IN"
+      }
+    }
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments/" },
+      { "@type": "ListItem", "position": 3, "name": treatment.name, "item": `https://vaidyavrindavanam.com/treatments/${treatment.slug}/` }
+    ]
+  }
+];
+
+if (detail) {
+  schemaGraph.push({
+    "@type": "FAQPage",
+    "mainEntity": detail.faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a,
+      },
+    })),
+  });
+}
+
 const schema = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "MedicalTherapy",
-      "name": treatment.name,
-      "description": treatment.shortDescription,
-      "provider": {
-        "@type": "MedicalBusiness",
-        "name": "Vaidya Vrindavanam Ayurveda Hospital",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Haripad",
-          "addressRegion": "Kerala",
-          "addressCountry": "IN"
-        }
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments/" },
-        { "@type": "ListItem", "position": 3, "name": treatment.name, "item": `https://vaidyavrindavanam.com/treatments/${treatment.slug}/` }
-      ]
-    }
-  ]
+  "@graph": schemaGraph,
 };
 ---
 
@@ -143,6 +173,89 @@ const schema = {
 
           <!-- Prose content from Sanity -->
           <div class="treatment-prose" set:html={treatment.contentHTML}></div>
+
+          {detail && (
+            <>
+              <!-- Overview / clinical context -->
+              <section id="overview" class="detail-section scroll-mt-20">
+                <p class="detail-eyebrow">Overview</p>
+                <h2 class="detail-h2">Clinical Context</h2>
+                <p class="detail-paragraph">{detail.overview}</p>
+              </section>
+
+              <!-- Procedure / how it works -->
+              <section id="procedure" class="detail-section scroll-mt-20">
+                <p class="detail-eyebrow">How It Works</p>
+                <h2 class="detail-h2">Procedure</h2>
+                <ol class="procedure-list">
+                  {detail.procedure.map((p, i) => (
+                    <li class="procedure-item">
+                      <span class="procedure-num">{String(i + 1).padStart(2, '0')}</span>
+                      <div class="procedure-body">
+                        <h3 class="procedure-phase">{p.phase}</h3>
+                        <p class="procedure-desc">{p.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+
+              <!-- Session details -->
+              <section id="session" class="detail-section scroll-mt-20">
+                <p class="detail-eyebrow">Session Details</p>
+                <h2 class="detail-h2">What to Expect</h2>
+                <dl class="session-grid">
+                  <div class="session-item">
+                    <dt class="session-term">Duration</dt>
+                    <dd class="session-desc">{detail.sessionDetails.duration}</dd>
+                  </div>
+                  <div class="session-item">
+                    <dt class="session-term">Frequency</dt>
+                    <dd class="session-desc">{detail.sessionDetails.frequency}</dd>
+                  </div>
+                  <div class="session-item">
+                    <dt class="session-term">During & After</dt>
+                    <dd class="session-desc">{detail.sessionDetails.whatToExpect}</dd>
+                  </div>
+                  <div class="session-item">
+                    <dt class="session-term">Contraindications</dt>
+                    <dd class="session-desc">{detail.sessionDetails.contraindications}</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <!-- Conditions this treatment helps -->
+              {linkedConditions.length > 0 && (
+                <section id="conditions" class="detail-section scroll-mt-20">
+                  <p class="detail-eyebrow">Indications</p>
+                  <h2 class="detail-h2">Conditions This Treatment Helps</h2>
+                  <p class="detail-paragraph">
+                    {treatment.name} is part of our protocol for the conditions below. Each linked page describes the full clinical approach for that condition, including how this and complementary therapies are sequenced.
+                  </p>
+                  <ul class="conditions-link-list">
+                    {linkedConditions.map(c => (
+                      <li>
+                        <a href={`/conditions/${c.slug}/`} class="condition-link">
+                          <span class="condition-link-name">{c.name}</span>
+                          <span class="condition-link-desc">{c.shortDescription}</span>
+                          <span class="condition-link-arrow" aria-hidden="true">→</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              <!-- FAQ -->
+              <section id="faq" class="detail-section scroll-mt-20">
+                <p class="detail-eyebrow">FAQ</p>
+                <h2 class="detail-h2">Common Questions</h2>
+                <div class="[&>div]:!mx-0 [&>div]:!max-w-none">
+                  <FAQAccordion items={detail.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+                </div>
+              </section>
+            </>
+          )}
 
           <!-- Mobile booking panel (visible only on small screens) -->
           <div class="mobile-cta">
@@ -634,5 +747,181 @@ const schema = {
     font-size: 0.6875rem;
     color: var(--color-text-muted);
     margin-top: 0.25rem;
+  }
+
+  /* ── Treatment detail sections (Overview / Procedure / Session / Conditions / FAQ) ── */
+  .detail-section {
+    padding-top: 3rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--color-gold-border);
+  }
+
+  .detail-section:first-of-type {
+    margin-top: 3rem;
+  }
+
+  .detail-eyebrow {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: var(--color-text-primary);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-paragraph {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    max-width: 66ch;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Procedure list */
+  .procedure-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .procedure-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid color-mix(in oklab, var(--color-gold) 15%, transparent);
+    max-width: 70ch;
+  }
+
+  .procedure-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .procedure-num {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: var(--color-gold);
+    font-size: 1.75rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .procedure-phase {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .procedure-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+
+  /* Session details */
+  .session-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 70ch;
+  }
+
+  @media (min-width: 640px) {
+    .session-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .session-item {
+    border-left: 1px solid var(--color-gold-border);
+    padding-left: 1rem;
+  }
+
+  .session-term {
+    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .session-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Conditions cross-link list */
+  .conditions-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0 0;
+    border-top: 1px solid var(--color-gold-border);
+  }
+
+  .condition-link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'name arrow' 'desc arrow';
+    gap: 0.25rem 1rem;
+    align-items: center;
+    padding: 1.125rem 0;
+    border-bottom: 1px solid var(--color-gold-border);
+    text-decoration: none;
+    transition: background 0.2s, padding 0.2s;
+  }
+
+  .condition-link:hover {
+    background: color-mix(in oklab, var(--color-gold) 4%, transparent);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .condition-link-name {
+    grid-area: name;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+    transition: color 0.2s;
+  }
+
+  .condition-link:hover .condition-link-name {
+    color: var(--color-gold);
+  }
+
+  .condition-link-desc {
+    grid-area: desc;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .condition-link-arrow {
+    grid-area: arrow;
+    color: var(--color-gold);
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+  }
+
+  .condition-link:hover .condition-link-arrow {
+    transform: translateX(4px);
   }
 </style>
