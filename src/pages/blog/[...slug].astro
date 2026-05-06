@@ -284,12 +284,16 @@ const schema = {
   }
 
   .article-prose :global(ul li)::before {
-    content: '—';
+    /* Small gold dot as a list marker — see treatments/[...slug].astro for
+       rationale. */
+    content: '';
     position: absolute;
-    left: 0;
-    color: oklch(71% 0.09 80 / 0.4);
-    font-size: 0.75rem;
-    top: 0.15em;
+    left: 0.125rem;
+    top: 0.7em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-gold);
   }
 
   .article-prose :global(ol) {

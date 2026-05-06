@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
+import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
 import { getTreatments, getConditions } from '../../lib/sanity';
 import type { Treatment, Condition } from '../../lib/sanity';
 import { PHONE_PRIMARY_RAW } from '../../config/contact';
@@ -51,11 +52,25 @@ const relatedHeading: Record<string, string> = {
   speciality: 'More Speciality Treatments',
 };
 
+// Sidebar table of contents — only render the entries whose sections actually
+// exist for this treatment (detail block is optional, conditions list may be
+// empty). Mirrors the section IDs declared in the article below.
+const tocItems = detail
+  ? [
+      { id: 'overview', label: 'Overview' },
+      { id: 'procedure', label: 'Procedure' },
+      { id: 'session', label: 'Session Details' },
+      ...(linkedConditions.length > 0 ? [{ id: 'conditions', label: 'Conditions It Helps' }] : []),
+      { id: 'faq', label: 'FAQ' },
+    ]
+  : [];
+
 const schemaGraph: Record<string, unknown>[] = [
   {
     "@type": "MedicalTherapy",
     "name": treatment.name,
     "description": treatment.shortDescription,
+    "medicineSystem": "Ayurveda",
     "provider": {
       "@type": "MedicalBusiness",
       "name": "Vaidya Vrindavanam Ayurveda Hospital",
@@ -106,12 +121,12 @@ const schema = {
   {treatment.imageUrl && (
     <div class="relative w-full overflow-hidden hero-image-container">
       <img
-        src={`${treatment.imageUrl}?w=1600&h=700&fit=crop&auto=format&q=75`}
+        src={`${treatment.imageUrl}?w=1600&h=700&fit=crop&auto=format&q=80`}
         srcset={[
           `${treatment.imageUrl}?w=640&h=280&fit=crop&auto=format&q=80 640w`,
           `${treatment.imageUrl}?w=960&h=420&fit=crop&auto=format&q=78 960w`,
-          `${treatment.imageUrl}?w=1280&h=560&fit=crop&auto=format&q=75 1280w`,
-          `${treatment.imageUrl}?w=1600&h=700&fit=crop&auto=format&q=75 1600w`,
+          `${treatment.imageUrl}?w=1280&h=560&fit=crop&auto=format&q=78 1280w`,
+          `${treatment.imageUrl}?w=1600&h=700&fit=crop&auto=format&q=80 1600w`,
         ].join(', ')}
         sizes="100vw"
         width="1600"
@@ -170,6 +185,17 @@ const schema = {
               <p class="duration-label">Duration: {treatment.duration}</p>
             )}
           </header>
+
+          <!-- Mobile CTA — surfaced above the long content so first-scroll users
+               reach booking without scrolling past Overview/Procedure/Session/FAQ.
+               Hidden ≥1024px where the sticky sidebar takes over. -->
+          <div class="mobile-cta mobile-cta--top">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+              <WhatsAppIcon size={16} />
+              WhatsApp to Book
+            </a>
+            <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="btn-call">Call Us</a>
+          </div>
 
           <!-- Prose content from Sanity -->
           <div class="treatment-prose" set:html={treatment.contentHTML}></div>
@@ -250,9 +276,7 @@ const schema = {
               <section id="faq" class="detail-section scroll-mt-20">
                 <p class="detail-eyebrow">FAQ</p>
                 <h2 class="detail-h2">Common Questions</h2>
-                <div class="[&>div]:!mx-0 [&>div]:!max-w-none">
-                  <FAQAccordion items={detail.faqs.map(f => ({ question: f.q, answer: f.a }))} />
-                </div>
+                <FAQAccordion fullWidth items={detail.faqs.map(f => ({ question: f.q, answer: f.a }))} />
               </section>
             </>
           )}
@@ -260,30 +284,37 @@ const schema = {
           <!-- Mobile booking panel (visible only on small screens) -->
           <div class="mobile-cta">
             <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
+              <WhatsAppIcon size={16} />
               WhatsApp to Book
             </a>
-            <a href="tel:+919074848705" class="btn-call">Call Us</a>
+            <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="btn-call">Call Us</a>
           </div>
         </article>
 
         <!-- ── Sticky booking sidebar (desktop only) ── -->
         <aside class="booking-aside" aria-label="Book this treatment">
+          {tocItems.length > 0 && (
+            <nav class="toc-card" aria-label="On this page">
+              <p class="toc-label">On This Page</p>
+              <ul class="toc-list">
+                {tocItems.map(t => (
+                  <li><a href={`#${t.id}`} class="toc-link">{t.label}</a></li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
           <div class="booking-card">
             <p class="booking-card-label">Book This Treatment</p>
 
             <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
+              <WhatsAppIcon size={16} />
               WhatsApp to Book
             </a>
 
-            <a href="tel:+919074848705" class="btn-call">Call Us</a>
+            <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="btn-call">Call Us</a>
 
-            <hr class="card-divider" />
+            <hr class="card-divider" aria-hidden="true" />
 
             <div class="info-block">
               <p class="info-label">Clinic Hours</p>
@@ -292,7 +323,7 @@ const schema = {
               <div class="hours-row hours-row--closed"><span>Sunday</span><span>Closed</span></div>
             </div>
 
-            <hr class="card-divider" />
+            <hr class="card-divider" aria-hidden="true" />
 
             <div class="info-block">
               <p class="info-label">Location</p>
@@ -347,7 +378,16 @@ const schema = {
   }
 
   .hero-gradient {
-    background: linear-gradient(to bottom, transparent 35%, oklch(14% 0.025 145) 100%);
+    /* Three-stop fade: transparent up top, ~75% scrim by the breadcrumb band, full
+       page-bg at the very bottom so the image melts into the page below. The
+       opaque lower band guarantees ≥4.5:1 for the breadcrumb regardless of the
+       underlying photo. */
+    background: linear-gradient(
+      to bottom,
+      transparent 30%,
+      color-mix(in oklab, var(--color-bg) 75%, transparent) 75%,
+      var(--color-bg) 100%
+    );
   }
 
   .doc-container {
@@ -408,11 +448,11 @@ const schema = {
     text-transform: uppercase;
     color: var(--color-gold);
     margin-bottom: 1rem;
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
   }
 
   .doc-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     color: var(--color-text-primary);
     line-height: 1.1;
@@ -422,7 +462,7 @@ const schema = {
   }
 
   .alt-names {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-style: italic;
     color: var(--color-text-secondary);
     font-size: clamp(1rem, 2.5vw, 1.2rem);
@@ -438,7 +478,7 @@ const schema = {
   }
 
   .duration-label {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -448,7 +488,7 @@ const schema = {
 
   /* ── Prose (content from Sanity) ── */
   .treatment-prose :global(h2) {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     color: var(--color-gold);
     letter-spacing: 0.02em;
@@ -459,7 +499,7 @@ const schema = {
   }
 
   .treatment-prose :global(h3) {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     color: var(--color-gold);
     margin-top: 2rem;
@@ -493,12 +533,18 @@ const schema = {
   }
 
   .treatment-prose :global(ul li)::before {
-    content: '—';
+    /* Small gold dot as a list marker. Em-dashes were typographically wrong
+       (em-dash = parenthetical, not bullet) and a hairline rule looked
+       indistinguishable from a dash. A 4px filled dot reads unambiguously as
+       a bullet without visual weight. */
+    content: '';
     position: absolute;
-    left: 0;
-    color: color-mix(in oklab, var(--color-gold) 45%, transparent);
-    font-size: 0.75rem;
-    top: 0.125em;
+    left: 0.125rem;
+    top: 0.7em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-gold);
   }
 
   .treatment-prose :global(ol) {
@@ -541,9 +587,9 @@ const schema = {
     border: none;
     padding: 1.25rem 1.5rem;
     margin: 2rem 0;
-    background: oklch(17% 0.028 145);
+    background: color-mix(in oklab, var(--color-bg) 80%, black);
     color: var(--color-text-primary);
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-style: italic;
     line-height: 1.65;
@@ -557,6 +603,15 @@ const schema = {
     gap: 0.75rem;
     margin-top: 2.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  /* Top variant: tighter to the header, with a separator below to mark the
+     transition into the long-form prose. */
+  .mobile-cta--top {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--color-gold-border);
   }
 
   @media (min-width: 1024px) {
@@ -584,7 +639,7 @@ const schema = {
     margin: 0 0 1.5rem 0;
   }
   .related-heading {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     font-size: clamp(1.5rem, 3vw, 2rem);
     line-height: 1.2;
@@ -605,17 +660,17 @@ const schema = {
   }
 
   .back-link-row {
-    margin-top: clamp(2rem, 4vw, 3rem);
+    /* margin shorthand sets all four sides at once so a later `margin-left: auto`
+       doesn't silently reset margin-top to 0. */
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
     padding-top: 1.5rem;
     padding-bottom: clamp(2.5rem, 5vw, 4rem);
     border-top: 1px solid var(--color-gold-border);
     max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .back-link {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -637,7 +692,7 @@ const schema = {
     width: 100%;
     background: var(--color-whatsapp);
     color: #fff;
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.6875rem;
     letter-spacing: 0.2em;
@@ -659,7 +714,7 @@ const schema = {
     width: 100%;
     border: 1px solid var(--color-gold);
     color: var(--color-gold);
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.6875rem;
     letter-spacing: 0.2em;
@@ -693,8 +748,49 @@ const schema = {
     padding: 1.75rem;
   }
 
+  /* Table of contents — sits above the booking card on desktop only. */
+  .toc-card {
+    padding: 0 0.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .toc-label {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.875rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--color-gold-border);
+  }
+
+  .toc-link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 0.4rem 0 0.4rem 0.875rem;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .toc-link:hover {
+    color: var(--color-gold);
+    border-left-color: var(--color-gold);
+  }
+
   .booking-card-label {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -715,7 +811,7 @@ const schema = {
   }
 
   .info-label {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -726,7 +822,7 @@ const schema = {
   .hours-row {
     display: flex;
     justify-content: space-between;
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     color: var(--color-text-secondary);
   }
@@ -736,14 +832,14 @@ const schema = {
   }
 
   .info-text {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     color: var(--color-text-secondary);
     line-height: 1.6;
   }
 
   .info-note {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     color: var(--color-text-muted);
     margin-top: 0.25rem;
@@ -761,7 +857,7 @@ const schema = {
   }
 
   .detail-eyebrow {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -770,7 +866,7 @@ const schema = {
   }
 
   .detail-h2 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     color: var(--color-text-primary);
     letter-spacing: 0.01em;
@@ -809,7 +905,7 @@ const schema = {
   }
 
   .procedure-num {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 300;
     color: var(--color-gold);
     font-size: 1.75rem;
@@ -818,7 +914,7 @@ const schema = {
   }
 
   .procedure-phase {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: 1.15rem;
     color: var(--color-text-primary);
@@ -848,12 +944,12 @@ const schema = {
   }
 
   .session-item {
-    border-left: 1px solid var(--color-gold-border);
-    padding-left: 1rem;
+    /* No accent rail — the gold uppercase eyebrow + grid gap already separate
+       cells. Floating short borders looked decorative without grouping anything. */
   }
 
   .session-term {
-    font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 0.6875rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -882,21 +978,23 @@ const schema = {
     grid-template-areas: 'name arrow' 'desc arrow';
     gap: 0.25rem 1rem;
     align-items: center;
-    padding: 1.125rem 0;
+    /* Reserve the hover inset in the resting state so the background-on-hover
+       lights up flush with the row without shifting layout. */
+    padding: 1.125rem 0.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
     border-bottom: 1px solid var(--color-gold-border);
     text-decoration: none;
-    transition: background 0.2s, padding 0.2s;
+    transition: background 0.2s;
   }
 
   .condition-link:hover {
     background: color-mix(in oklab, var(--color-gold) 4%, transparent);
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
   }
 
   .condition-link-name {
     grid-area: name;
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: 1.15rem;
     color: var(--color-text-primary);

@@ -1,12 +1,15 @@
 ---
 interface Props {
   items: { question: string; answer: string }[];
+  /** When true, the accordion fills its parent (no centered max-width). */
+  fullWidth?: boolean;
 }
 
-const { items } = Astro.props;
+const { items, fullWidth = false } = Astro.props;
+const wrapperClass = fullWidth ? 'space-y-2' : 'space-y-2 max-w-2xl mx-auto';
 ---
 
-<div class="space-y-2 max-w-2xl mx-auto">
+<div class={wrapperClass}>
   {items.map((item) => (
     <details class="group border border-brand-gold-dim bg-brand-bg">
       <summary class="flex justify-between items-center gap-4 cursor-pointer list-none px-5 py-4 text-sm font-semibold text-text-primary">
