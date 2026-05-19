@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TreatmentCard from '../../components/TreatmentCard.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
@@ -66,7 +66,7 @@ const relatedHeading: Record<string, string> = {
   speciality: 'More Speciality Treatments',
 };
 
-// Sidebar table of contents — only render the entries whose sections actually
+// Sidebar table of contents, only render the entries whose sections actually
 // exist for this treatment (detail block is optional, conditions list may be
 // empty). Mirrors the section IDs declared in the article below.
 const tocItems = detail
@@ -128,7 +128,7 @@ const schema = {
 
 <BaseLayout
   title={`${treatment.name} Treatment in Haripad, Kerala`}
-  description={treatmentSeoDescriptions[treatment.slug] ?? `${treatment.shortDescription} — Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
+  description={treatmentSeoDescriptions[treatment.slug] ?? `${treatment.shortDescription}, Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
   schema={schema}
 >
   <!-- Hero image: full-bleed, gradient fades into page background -->
@@ -156,9 +156,9 @@ const schema = {
       <div class="absolute bottom-0 left-0 right-0 outer-pad pb-7">
         <nav class="breadcrumb-nav" aria-label="Breadcrumb">
           <a href="/">Home</a>
-          <span aria-hidden="true">—</span>
+          <span aria-hidden="true">/</span>
           <a href="/treatments/">Treatments</a>
-          <span aria-hidden="true">—</span>
+          <span aria-hidden="true">/</span>
           <span class="breadcrumb-current" aria-current="page">{treatment.name}</span>
         </nav>
       </div>
@@ -200,7 +200,7 @@ const schema = {
             )}
           </header>
 
-          <!-- Mobile CTA — surfaced above the long content so first-scroll users
+          <!-- Mobile CTA, surfaced above the long content so first-scroll users
                reach booking without scrolling past Overview/Procedure/Session/FAQ.
                Hidden ≥1024px where the sticky sidebar takes over. -->
           <div class="mobile-cta mobile-cta--top">
@@ -291,10 +291,10 @@ const schema = {
                   <div class="border border-brand-gold p-6 bg-brand-bg/60">
                     <p class="text-[9px] tracking-[5px] uppercase text-brand-gold">Seasonal · Karkidakam 2026</p>
                     <h3 class="text-lg md:text-xl font-display text-text-primary mt-2">Part of our Karkidaka Chikitsa Programme</h3>
-                    <p class="text-sm text-text-secondary leading-relaxed mt-2">{treatment.name} is one of the core therapies of <a href="/karkidaka-chikitsa/" class="text-brand-gold underline">Karkidaka Chikitsa</a> — the classical Kerala monsoon Ayurveda treatment performed each year from 17 July to 16 August. Read the full guide, or skip ahead to the 2026 package details.</p>
+                    <p class="text-sm text-text-secondary leading-relaxed mt-2">{treatment.name} is one of the core therapies of <a href="/karkidaka-chikitsa/" class="text-brand-gold underline">Karkidaka Chikitsa</a>, the classical Kerala monsoon Ayurveda treatment performed each year from 17 July to 16 August. Read the full guide, or skip ahead to the 2026 package details.</p>
                     <div class="flex flex-wrap gap-3 mt-4">
-                      <a href="/karkidaka-chikitsa/" class="inline-block text-[10px] tracking-widest uppercase border border-brand-gold text-brand-gold px-4 py-2 hover:bg-brand-gold hover:text-brand-bg transition-colors">Read the Full Guide</a>
-                      <a href="/packages/karkidaka-chikitsa/" class="inline-block text-[10px] tracking-widest uppercase bg-brand-gold text-brand-bg px-4 py-2">View 2026 Package →</a>
+                      <a href="/karkidaka-chikitsa/" class="inline-flex items-center min-h-[44px] text-[10px] tracking-widest uppercase border border-brand-gold text-brand-gold px-4 py-2 hover:bg-brand-gold hover:text-brand-bg transition-colors">Read the Full Guide</a>
+                      <a href="/packages/karkidaka-chikitsa/" class="inline-flex items-center min-h-[44px] text-[10px] tracking-widest uppercase bg-brand-gold text-brand-bg px-4 py-2">View 2026 Package →</a>
                     </div>
                   </div>
                 </section>
@@ -357,7 +357,7 @@ const schema = {
               <p class="info-label">Location</p>
               <p class="info-text">
                 Haripad, Alappuzha<br />
-                Kerala — 690513
+                Kerala, 690513
               </p>
               <p class="info-note">Residential care available 24/7</p>
             </div>
@@ -718,6 +718,7 @@ const schema = {
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
+    min-height: 44px;
     background: var(--color-whatsapp);
     color: #fff;
     font-family: var(--font-body);
@@ -740,6 +741,7 @@ const schema = {
     align-items: center;
     justify-content: center;
     width: 100%;
+    min-height: 44px;
     border: 1px solid var(--color-gold);
     color: var(--color-gold);
     font-family: var(--font-body);
@@ -776,7 +778,7 @@ const schema = {
     padding: 1.75rem;
   }
 
-  /* Table of contents — sits above the booking card on desktop only. */
+  /* Table of contents, sits above the booking card on desktop only. */
   .toc-card {
     padding: 0 0.25rem;
     margin-bottom: 1.25rem;
@@ -972,7 +974,7 @@ const schema = {
   }
 
   .session-item {
-    /* No accent rail — the gold uppercase eyebrow + grid gap already separate
+    /* No accent rail, the gold uppercase eyebrow + grid gap already separate
        cells. Floating short borders looked decorative without grouping anything. */
   }
 

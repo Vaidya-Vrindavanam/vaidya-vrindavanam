@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getBlogPosts } from '../../lib/sanity';
 import type { BlogPost } from '../../lib/sanity';
@@ -77,7 +77,7 @@ const schema = {
     <div class="outer-pad">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
-        <span aria-hidden="true">—</span>
+        <span aria-hidden="true">/</span>
         <a href="/blog/">Blog</a>
       </nav>
 
@@ -106,7 +106,7 @@ const schema = {
         <div class="consult-cta-inner">
           <p class="consult-cta-eyebrow">Vaidya Vrindavanam · Haripad, Kerala</p>
           <p class="consult-cta-heading">Ready to begin your healing?</p>
-          <p class="consult-cta-sub">Book a personalised Ayurvedic consultation via WhatsApp — Mon to Sat, 9 am to 7 pm.</p>
+          <p class="consult-cta-sub">Book a personalised Ayurvedic consultation via WhatsApp, Mon to Sat, 9 am to 7 pm.</p>
           <div class="consult-cta-actions">
             <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -176,14 +176,14 @@ const schema = {
     font-size: 0.5625rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #c8a96e;
+    color: var(--color-gold);
     margin-bottom: 1rem;
   }
 
   .article-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 300;
-    color: #e8e0d0;
+    color: var(--color-text-primary);
     line-height: 1.15;
     letter-spacing: 0.01em;
     font-size: clamp(1.75rem, 5vw, 3rem);
@@ -193,7 +193,7 @@ const schema = {
   .article-excerpt {
     font-family: 'Inter Variable', Inter, system-ui, sans-serif;
     font-size: 0.9375rem;
-    color: #a09080;
+    color: var(--color-text-secondary);
     line-height: 1.7;
     max-width: 60ch;
     margin-bottom: 1.5rem;
@@ -208,17 +208,17 @@ const schema = {
   }
 
   .byline-author {
-    color: #c8a96e;
+    color: var(--color-gold);
     letter-spacing: 0.04em;
   }
 
   .byline-sep {
-    color: #8b8070;
+    color: var(--color-text-muted);
     opacity: 0.5;
   }
 
   .byline-date {
-    color: #8b8070;
+    color: var(--color-text-muted);
   }
 
   /* ── Article body container ── */
@@ -243,7 +243,7 @@ const schema = {
   .article-prose :global(h2) {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 300;
-    color: #c8a96e;
+    color: var(--color-gold);
     letter-spacing: 0.02em;
     margin-top: 3rem;
     margin-bottom: 0.75rem;
@@ -254,7 +254,7 @@ const schema = {
   .article-prose :global(h3) {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 300;
-    color: #c8a96e;
+    color: var(--color-gold);
     margin-top: 2.25rem;
     margin-bottom: 0.6rem;
     font-size: clamp(1.05rem, 2.5vw, 1.25rem);
@@ -262,7 +262,7 @@ const schema = {
   }
 
   .article-prose :global(p) {
-    color: #a09080;
+    color: var(--color-text-secondary);
     font-size: 0.9375rem;
     line-height: 1.85;
     margin-bottom: 1.25rem;
@@ -275,7 +275,7 @@ const schema = {
   }
 
   .article-prose :global(ul li) {
-    color: #a09080;
+    color: var(--color-text-secondary);
     font-size: 0.9375rem;
     line-height: 1.75;
     padding-left: 1.25rem;
@@ -284,7 +284,7 @@ const schema = {
   }
 
   .article-prose :global(ul li)::before {
-    /* Small gold dot as a list marker — see treatments/[...slug].astro for
+    /* Small gold dot as a list marker, see treatments/[...slug].astro for
        rationale. */
     content: '';
     position: absolute;
@@ -302,7 +302,7 @@ const schema = {
   }
 
   .article-prose :global(ol li) {
-    color: #a09080;
+    color: var(--color-text-secondary);
     font-size: 0.9375rem;
     line-height: 1.75;
     margin-bottom: 0.4rem;
@@ -311,32 +311,32 @@ const schema = {
   }
 
   .article-prose :global(strong) {
-    color: #e8e0d0;
+    color: var(--color-text-primary);
     font-weight: 600;
   }
 
   .article-prose :global(em) {
-    color: #c0b090;
+    color: var(--color-text-em);
     font-style: italic;
   }
 
   .article-prose :global(a) {
-    color: #c8a96e;
+    color: var(--color-gold);
     text-decoration: none;
-    border-bottom: 1px solid rgba(200, 169, 110, 0.3);
+    border-bottom: 1px solid oklch(0.74 0.085 80 / 0.30);
     transition: border-color 0.2s;
   }
 
   .article-prose :global(a:hover) {
-    border-bottom-color: #c8a96e;
+    border-bottom-color: var(--color-gold);
   }
 
   .article-prose :global(blockquote) {
     border: none;
     padding: 1.25rem 1.75rem;
     margin: 2.5rem 0;
-    background: oklch(17% 0.028 145);
-    color: #e8e0d0;
+    background: oklch(0.17 0.028 140);
+    color: var(--color-text-primary);
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(1.05rem, 2.5vw, 1.25rem);
     font-style: italic;
@@ -350,8 +350,8 @@ const schema = {
   }
 
   .consult-cta-inner {
-    background: oklch(17% 0.028 145);
-    border: 1px solid rgba(200, 169, 110, 0.2);
+    background: oklch(0.17 0.028 140);
+    border: 1px solid var(--color-gold-border);
     padding: clamp(1.5rem, 4vw, 2.25rem);
   }
 
@@ -360,14 +360,14 @@ const schema = {
     font-size: 0.5625rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #c8a96e;
+    color: var(--color-gold);
     margin-bottom: 0.75rem;
   }
 
   .consult-cta-heading {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 300;
-    color: #e8e0d0;
+    color: var(--color-text-primary);
     font-size: clamp(1.35rem, 3vw, 1.75rem);
     line-height: 1.2;
     margin-bottom: 0.625rem;
@@ -377,7 +377,7 @@ const schema = {
   .consult-cta-sub {
     font-family: 'Inter Variable', Inter, system-ui, sans-serif;
     font-size: 0.8125rem;
-    color: #a09080;
+    color: var(--color-text-secondary);
     line-height: 1.65;
     margin-bottom: 1.5rem;
     max-width: 52ch;
@@ -394,7 +394,8 @@ const schema = {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #25D366;
+    min-height: 44px;
+    background: var(--color-whatsapp);
     color: #fff;
     font-family: 'Inter Variable', Inter, system-ui, sans-serif;
     font-weight: 600;
@@ -414,8 +415,9 @@ const schema = {
   .btn-call {
     display: inline-flex;
     align-items: center;
-    border: 1px solid #c8a96e;
-    color: #c8a96e;
+    min-height: 44px;
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
     font-family: 'Inter Variable', Inter, system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.6875rem;
@@ -428,8 +430,8 @@ const schema = {
   }
 
   .btn-call:hover {
-    background: #c8a96e;
-    color: #0f1a0a;
+    background: var(--color-gold);
+    color: var(--color-bg-deep);
   }
 
   /* ── Article footer nav ── */
@@ -441,7 +443,7 @@ const schema = {
     gap: 1rem;
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(200, 169, 110, 0.18);
+    border-top: 1px solid var(--color-gold-border);
   }
 
   .back-link,
@@ -455,18 +457,18 @@ const schema = {
   }
 
   .back-link {
-    color: #c8a96e;
+    color: var(--color-gold);
   }
 
   .back-link:hover {
-    color: #e8e0d0;
+    color: var(--color-text-primary);
   }
 
   .treatments-link {
-    color: #8b8070;
+    color: var(--color-text-muted);
   }
 
   .treatments-link:hover {
-    color: #c8a96e;
+    color: var(--color-gold);
   }
 </style>

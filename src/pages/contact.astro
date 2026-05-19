@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
@@ -76,7 +76,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Contact & Directions — Haripad, Kerala"
+  title="Contact & Directions, Haripad, Kerala"
   description={`Visit or contact Vaidya Vrindavanam Ayurveda Hospital, near RK Junction, NH-66, Haripad, Alappuzha, Kerala. Call ${PHONE_PRIMARY} or WhatsApp us.`}
   schema={schema}
 >
@@ -116,11 +116,11 @@ const schema = {
             href={WA_DEFAULT}
             target="_blank"
             rel="noopener noreferrer"
-            class="bg-brand-whatsapp text-white px-6 py-2.5 text-xs font-bold tracking-widest"
+            class="inline-flex items-center justify-center min-h-[44px] bg-brand-whatsapp text-white px-6 py-2.5 text-xs font-bold tracking-widest"
           >
             WHATSAPP
           </a>
-          <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest">
+          <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest">
             CALL
           </a>
         </div>
@@ -133,7 +133,7 @@ const schema = {
           <!-- Formspree honeypot: submissions with _gotcha filled are silently dropped -->
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
           <!-- Subject line in the notification email -->
-          <input type="hidden" name="_subject" value="New Enquiry — Vaidya Vrindavanam" />
+          <input type="hidden" name="_subject" value="New Enquiry, Vaidya Vrindavanam" />
 
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="name">Your Name</label>
@@ -157,7 +157,7 @@ const schema = {
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="message">Message</label>
             <textarea id="message" name="message" rows="4" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none resize-none"></textarea>
           </div>
-          <button type="submit" class="bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest w-full">
+          <button type="submit" class="flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-6 py-2.5 text-xs font-bold tracking-widest w-full">
             SEND MESSAGE
           </button>
           <p class="text-xs text-text-subtle mt-3">

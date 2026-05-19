@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StatsBar from '../components/StatsBar.astro';
 import SectionHeader from '../components/SectionHeader.astro';
@@ -61,8 +61,8 @@ const schema = {
       },
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.2",
-        "reviewCount": "5",
+        "ratingValue": "4.3",
+        "reviewCount": "6",
         "bestRating": "5"
       },
       "openingHoursSpecification": [
@@ -101,10 +101,10 @@ const schema = {
     <div class="absolute top-10 left-1/2 -translate-x-1/2 text-[120px] opacity-[0.03] text-brand-gold select-none">☘</div>
     <div class="relative z-10 max-w-xl">
       <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-4">Authentic Kerala Ayurveda · Est. 2014</p>
-      <h1 class="sr-only">Ayurveda Hospital in Haripad, Kerala — Vaidya Vrindavanam</h1>
-      <p class="text-4xl md:text-5xl font-display font-light text-text-primary leading-tight tracking-wide" aria-hidden="true">
+      <h1 class="text-4xl md:text-5xl font-display font-light text-text-primary leading-tight tracking-wide">
         Heal. Renew.<br /><em class="font-normal">Flourish.</em>
-      </p>
+        <span class="sr-only">, Ayurveda Hospital in Haripad, Kerala</span>
+      </h1>
       <div class="w-10 h-px bg-brand-gold mx-auto my-6"></div>
       <p class="text-sm text-text-secondary leading-relaxed font-light max-w-md mx-auto">
         Where ancient Marma wisdom meets modern healing. Residential Panchakarma, personalised treatments, and holistic recovery in the heart of Kerala.
@@ -114,11 +114,11 @@ const schema = {
           href={WA_DEFAULT}
           target="_blank"
           rel="noopener noreferrer"
-          class="bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
+          class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
         >
           BOOK VIA WHATSAPP
         </a>
-        <a href="/treatments/" class="border border-brand-gold text-brand-gold px-7 py-3 text-xs tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors">
+        <a href="/treatments/" class="inline-flex items-center justify-center min-h-[44px] border border-brand-gold text-brand-gold px-7 py-3 text-xs tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors">
           EXPLORE TREATMENTS
         </a>
       </div>
@@ -135,7 +135,7 @@ const schema = {
       <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-10 font-light">
         Since 2014, Vaidya Vrindavanam has been Haripad's trusted centre for authentic Ayurvedic healing.
         We uniquely combine traditional <strong class="text-brand-gold">Marma Chikitsa</strong> with
-        <strong class="text-brand-gold">modern chiropractic treatment</strong> — alongside a full range
+        <strong class="text-brand-gold">modern chiropractic treatment</strong>, alongside a full range
         of Panchakarma therapies, residential care, and an in-house dispensary.
       </p>
       <div class="flex gap-10 justify-center flex-wrap">
@@ -154,7 +154,7 @@ const schema = {
       <SectionHeader label="Treatments & Conditions" heading="Our Healing Therapies" subtitle="Authentic Panchakarma & Kerala Ayurvedic treatments" />
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
         {featuredTreatments.map((t, i) => (
-          <TreatmentCard name={t.name} description={t.shortDescription} icon={t.icon} slug={t.slug} imageUrl={t.imageUrl} eager={i === 0} />
+          <TreatmentCard name={t.name} description={t.shortDescription} slug={t.slug} imageUrl={t.imageUrl} eager={i === 0} />
         ))}
         <a href="/treatments/" class="bg-brand-gold/10 border border-brand-gold-border p-5 text-center flex flex-col items-center justify-center hover:border-brand-gold transition-colors">
           <div class="text-2xl font-display font-light text-brand-gold">{treatments.length - 5}+</div>
@@ -178,11 +178,11 @@ const schema = {
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Seasonal · Karkidakam 17 July – 16 August 2026</p>
       <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide">
-        Karkidaka Chikitsa Package — Monsoon Ayurveda
+        Karkidaka Chikitsa Package, Monsoon Ayurveda
       </h2>
       <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
       <p class="text-sm text-text-secondary mt-4 max-w-xl mx-auto leading-relaxed">
-        Authentic 7, 14 and 21-day monsoon Panchakarma programmes — supervised in person by our Vaidyas in Haripad. Limited slots; bookings open from 1 June.
+        Authentic 7, 14 and 21-day monsoon Panchakarma programmes, supervised in person by our Vaidyas in Haripad. Limited slots; bookings open from 1 June.
       </p>
       <div class="flex gap-3 justify-center flex-wrap mt-6">
         <a
@@ -224,18 +224,18 @@ const schema = {
 
       <!-- Google Rating Summary -->
       <div class="flex items-center justify-center gap-3 mb-10">
-        <span class="font-display text-4xl font-light text-brand-gold">4.2</span>
+        <span class="font-display text-4xl font-light text-brand-gold">4.3</span>
         <div>
           <div class="flex gap-0.5">
             {[1,2,3,4].map(() => (
               <svg width="16" height="16" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
             <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="half"><stop offset="42%" stop-color="var(--color-gold)"/><stop offset="42%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
+              <defs><linearGradient id="half"><stop offset="43%" stop-color="var(--color-gold)"/><stop offset="43%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
               <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z" fill="url(#half)"/>
             </svg>
           </div>
-          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">5 Google Reviews</p>
+          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">6 Google Reviews</p>
         </div>
       </div>
 
@@ -249,7 +249,7 @@ const schema = {
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"Very good — a genuinely positive experience at the clinic."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"Very good, a genuinely positive experience at the clinic."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
             <span class="text-xs text-text-primary font-body">Shephy Rustham</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
@@ -263,7 +263,7 @@ const schema = {
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"A trusted Ayurvedic clinic in Haripad — recommended for anyone seeking authentic treatment."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"A trusted Ayurvedic clinic in Haripad, recommended for anyone seeking authentic treatment."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
             <span class="text-xs text-text-primary font-body">Karundas Das</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
