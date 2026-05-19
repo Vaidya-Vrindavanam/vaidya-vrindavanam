@@ -10,11 +10,12 @@ export default {
         brand: {
           bg: 'oklch(0.20 0.028 140)',
           'bg-alt': 'oklch(0.24 0.028 140)',
+          'bg-elevated': 'oklch(0.27 0.030 140)',
           'bg-footer': 'oklch(0.13 0.022 140)',
           gold: 'oklch(0.74 0.085 80)',
           'gold-dim': 'oklch(0.74 0.085 80 / 0.15)',
           'gold-border': 'oklch(0.74 0.085 80 / 0.20)',
-          whatsapp: '#25D366',
+          whatsapp: 'oklch(0.72 0.185 152)',
         },
         text: {
           primary: 'oklch(0.90 0.025 85)',

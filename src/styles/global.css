@@ -82,7 +82,7 @@
   --color-gold-watermark: oklch(0.74 0.085 80 / 0.04); /* subtle, for oversized decorative glyphs */
 
   /* CTA */
-  --color-whatsapp: #25D366;
+  --color-whatsapp: oklch(0.72 0.185 152);
 
   /* Type stacks — keep in sync with fontFamily in tailwind.config.mjs.
      Use these in scoped <style> blocks instead of repeating the full stack. */
