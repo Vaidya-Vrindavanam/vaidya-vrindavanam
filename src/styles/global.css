@@ -65,6 +65,8 @@
   /* Surfaces */
   --color-bg: oklch(0.20 0.028 140);
   --color-bg-alt: oklch(0.24 0.028 140);
+  --color-bg-elevated: oklch(0.27 0.030 140); /* hero gradient highlight */
+  --color-bg-deep: oklch(0.13 0.022 140);     /* text-on-gold, deepest surface (matches brand-bg-footer in tailwind) */
 
   /* Text */
   --color-text-primary: oklch(0.90 0.025 85);
@@ -77,6 +79,7 @@
   --color-gold-dark: oklch(0.58 0.105 60);
   --color-gold-light: oklch(0.81 0.085 80);
   --color-gold-border: oklch(0.74 0.085 80 / 0.20);
+  --color-gold-watermark: oklch(0.74 0.085 80 / 0.04); /* subtle, for oversized decorative glyphs */
 
   /* CTA */
   --color-whatsapp: #25D366;

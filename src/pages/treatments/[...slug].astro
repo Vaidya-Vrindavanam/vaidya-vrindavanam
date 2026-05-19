@@ -40,6 +40,20 @@ const linkedConditions = detail
 const waMessage = encodeURIComponent(`Hi, I'd like to book a ${treatment.name} treatment at Vaidya Vrindavanam`);
 const waLink = `https://wa.me/${PHONE_PRIMARY_RAW}?text=${waMessage}`;
 
+// Treatments that are part of the seasonal Karkidaka Chikitsa package.
+// When the current slug is in this list, render a seasonal callout linking
+// to /packages/karkidaka-chikitsa/.
+const KARKIDAKA_PACKAGE_TREATMENTS = new Set([
+  'abhyangam-swedam',
+  'pizhichil',
+  'njavara-kizhi',
+  'shirodhara',
+  'vasthi',
+  'nasyam',
+  'marma-chikitsa',
+]);
+const isKarkidakaTherapy = KARKIDAKA_PACKAGE_TREATMENTS.has(treatment.slug);
+
 const categoryLabels: Record<string, string> = {
   panchakarma: 'Panchakarma',
   massage: 'Massage Therapy',
@@ -269,6 +283,20 @@ const schema = {
                       </li>
                     ))}
                   </ul>
+                </section>
+              )}
+
+              {isKarkidakaTherapy && (
+                <section class="detail-section scroll-mt-20">
+                  <div class="border border-brand-gold p-6 bg-brand-bg/60">
+                    <p class="text-[9px] tracking-[5px] uppercase text-brand-gold">Seasonal · Karkidakam 2026</p>
+                    <h3 class="text-lg md:text-xl font-display text-text-primary mt-2">Part of our Karkidaka Chikitsa Programme</h3>
+                    <p class="text-sm text-text-secondary leading-relaxed mt-2">{treatment.name} is one of the core therapies of <a href="/karkidaka-chikitsa/" class="text-brand-gold underline">Karkidaka Chikitsa</a> — the classical Kerala monsoon Ayurveda treatment performed each year from 17 July to 16 August. Read the full guide, or skip ahead to the 2026 package details.</p>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                      <a href="/karkidaka-chikitsa/" class="inline-block text-[10px] tracking-widest uppercase border border-brand-gold text-brand-gold px-4 py-2 hover:bg-brand-gold hover:text-brand-bg transition-colors">Read the Full Guide</a>
+                      <a href="/packages/karkidaka-chikitsa/" class="inline-block text-[10px] tracking-widest uppercase bg-brand-gold text-brand-bg px-4 py-2">View 2026 Package →</a>
+                    </div>
+                  </div>
                 </section>
               )}
 

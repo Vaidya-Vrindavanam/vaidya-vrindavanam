@@ -1,16 +1,38 @@
 ---
 interface Props {
-  label: string;
+  label?: string;
   heading: string;
   subtitle?: string;
+  align?: 'left' | 'center';
+  /** Optional Roman-numeral chapter glyph (e.g. "I", "VII", "IX") for signature deep-dive sections. */
+  chapterNumeral?: string;
 }
 
-const { label, heading, subtitle } = Astro.props;
+const { label, heading, subtitle, align = 'center', chapterNumeral } = Astro.props;
+const isLeft = align === 'left';
+const standardWrap = isLeft ? 'mb-8 max-w-2xl' : 'text-center mb-8';
+const standardLine = isLeft ? 'w-8 h-px bg-brand-gold mt-4' : 'w-8 h-px bg-brand-gold mx-auto mt-4';
+const chapterWrap = `flex items-baseline gap-5 md:gap-8 mb-8 ${isLeft ? '' : 'justify-center text-left'}`;
 ---
 
-<div class="text-center mb-8">
-  <div class="text-[8px] tracking-[4px] uppercase text-brand-gold">{label}</div>
-  <h2 class="text-2xl md:text-3xl text-text-primary font-display font-light mt-2 tracking-wide">{heading}</h2>
-  {subtitle && <p class="text-sm text-text-muted mt-2">{subtitle}</p>}
-  <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
-</div>
+{chapterNumeral ? (
+  <div class={chapterWrap}>
+    <span
+      aria-hidden="true"
+      class="font-display font-light text-brand-gold leading-none tabular-nums opacity-60 shrink-0"
+      style="font-size: clamp(3.5rem, 8vw, 6rem);"
+    >{chapterNumeral}</span>
+    <div class="max-w-xl">
+      {label && <div class="text-[11px] tracking-[3px] uppercase text-brand-gold mb-2">{label}</div>}
+      <h2 class="text-2xl md:text-3xl text-text-primary font-display font-light tracking-wide leading-[1.15]">{heading}</h2>
+      {subtitle && <p class="text-sm text-text-muted mt-3 leading-relaxed">{subtitle}</p>}
+    </div>
+  </div>
+) : (
+  <div class={standardWrap}>
+    {label && <div class="text-[11px] tracking-[3px] uppercase text-brand-gold">{label}</div>}
+    <h2 class:list={["text-2xl md:text-3xl text-text-primary font-display font-light tracking-wide", label ? "mt-2" : ""]}>{heading}</h2>
+    {subtitle && <p class="text-sm text-text-muted mt-2 leading-relaxed">{subtitle}</p>}
+    <div class={standardLine}></div>
+  </div>
+)}

@@ -1,0 +1,569 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { whatsappLink, PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL } from '../config/contact';
+import '../styles/hero-animations.css';
+
+const pageUrl = 'https://vaidyavrindavanam.com/karkidaka-chikitsa/';
+const waLink = whatsappLink("Hi, I'd like to learn more about Karkidaka Chikitsa at Vaidya Vrindavanam.");
+
+const therapies = [
+  { slug: 'abhyangam-swedam', name: 'Abhyangam', role: 'Preparatory full-body warm-oil massage. Opens the channels (srotas) and prepares deeper tissues to receive medicated decoctions.', when: 'Every day of the programme' },
+  { slug: 'pizhichil', name: 'Pizhichil', role: 'The royal oil-bath therapy of Kerala — continuous warm medicated oil poured across the body. The defining luxury of Karkidakam.', when: 'Days 3–7 typically' },
+  { slug: 'njavara-kizhi', name: 'Navarakizhi', role: 'Warm Njavara rice bolus massage. Deeply nourishes muscles and joints; nervine tonic for paralysis and atrophy.', when: 'Days 5–10' },
+  { slug: 'shirodhara', name: 'Shirodhara', role: 'Continuous oil stream on the forehead. The signature therapy for stress, anxiety, insomnia and migraines.', when: 'Daily or alternate days' },
+  { slug: 'vasthi', name: 'Karkidaka Vasthi', role: 'Medicated enema — the most powerful Panchakarma therapy for Vata disorders, sciatica, IBS and chronic constipation.', when: 'Mid-programme onwards' },
+  { slug: 'nasyam', name: 'Nasyam', role: 'Nasal oil therapy for sinusitis, migraines, cervical spondylosis and chronic post-monsoon congestion.', when: 'Final week' },
+  { slug: 'marma-chikitsa', name: 'Marma Chikitsa', role: 'Vital-energy point therapy — Vaidya Vrindavanam\'s signature combination with modern chiropractic correction.', when: 'Throughout, as indicated' },
+];
+
+const conditionLinks = [
+  { slug: 'arthritis', name: 'Arthritis & joint pain', why: 'Cool monsoon + Pizhichil and Navarakizhi pacify Vata at the joints — the classical Karkidaka indication.' },
+  { slug: 'stress-anxiety', name: 'Stress, anxiety & insomnia', why: 'Daily Shirodhara and Sirovasti calm an overworked nervous system. The monsoon\'s natural cool dampness amplifies the effect.' },
+  { slug: 'skin-disorders', name: 'Skin disorders (psoriasis, eczema)', why: 'Karkidakam is the recommended window for blood-purifying Panchakarma — Vamanam and Raktamoksham work fastest in this season.' },
+  { slug: 'asthma', name: 'Asthma & respiratory conditions', why: 'Pre-winter immunity build with Rasayana herbs, Nasyam and Karkidaka Kanji to fortify the lungs.' },
+  { slug: 'geriatric-care', name: 'Healthy ageing & Rasayana', why: 'Annual Karkidaka Rasayana is the traditional Kerala approach to slowing biological ageing — recommended from age 50 onward.' },
+  { slug: 'womens-health', name: 'Women\'s health & PCOS', why: 'Hormonal balancing through gentle Snehapanam, women-specific Vasthi protocols and Rasayana ghritam — supervised by Dr. Ganga S S.' },
+  { slug: 'hypertension', name: 'Hypertension (modified)', why: 'A milder Karkidaka protocol with Shirodhara, Thalam and cooling oils — without aggressive Shodhana — supports natural BP management.' },
+  { slug: 'infertility', name: 'Infertility & reproductive health', why: 'Classically, the months following Karkidaka Shodhana are considered the most fertile — many couples plan conception after a monsoon detox.' },
+];
+
+const faqs = [
+  {
+    question: 'What is Karkidaka Chikitsa?',
+    answer: 'Karkidaka Chikitsa is the traditional Ayurvedic seasonal treatment performed during the Malayalam month of Karkidakam (mid-July to mid-August). It combines Panchakarma cleansing, Rasayana rejuvenation, the medicinal porridge Karkidaka Kanji, and a calming diet to detoxify the body, rebalance the doshas and rebuild immunity before the post-monsoon season. The Ashtanga Hridayam and Charaka Samhita both describe this window as the year\'s ideal time for deep cleansing because the channels are open, agni is at its weakest, and the tissues respond unusually quickly to medicines.',
+  },
+  {
+    question: 'What does the word "Karkidaka" mean?',
+    answer: 'Karkidakam (കർക്കടകം) is the last month of the Malayalam calendar — corresponding to the zodiac sign Cancer (Karkata in Sanskrit, the crab). It falls roughly between 17 July and 16 August in the Gregorian calendar and marks the peak of the south-west monsoon in Kerala. Because crops are scarce in this month, it is also traditionally called "Panja Masam" — and turning attention inward to the body\'s detoxification was historically how Kerala households used the time.',
+  },
+  {
+    question: 'When does Karkidakam 2026 fall?',
+    answer: 'Karkidakam 1201 (Malayalam Era) runs from 17 July 2026 to 16 August 2026. Karkidaka Vavu — the new moon (Amavasi) of the month — falls on 12 August 2026 and is considered an especially auspicious day for ancestor remembrance and resolve-strengthening rituals. Most clinics open Karkidaka Chikitsa bookings from 1 June.',
+  },
+  {
+    question: 'Why is the monsoon the best season for Ayurvedic treatment?',
+    answer: 'In Ayurveda, the year is divided into six Ritus (seasons). Karkidakam sits inside Varsha Ritu — the rainy season — when Vata is naturally aggravated and Pitta begins to accumulate. The body\'s agni (digestive fire) is at its weakest, the skin pores are open, and the channels of circulation are soft. This physiological state is precisely what makes Panchakarma succeed: toxins move easily, medicines absorb deeply, and tissues respond to nourishment with unusual speed. The Ashtanga Hridayam (Sutrasthana 3) explicitly recommends Sodhana (cleansing) and Snehapanam (internal oleation) during this window.',
+  },
+  {
+    question: 'What is Karkidaka Kanji?',
+    answer: 'Karkidaka Kanji is a medicinal rice porridge taken on an empty stomach throughout the month of Karkidakam. It is made from Njavara or red matta rice, fenugreek, cumin, ajwain, dried ginger, jaggery, coconut milk and a Karkidaka herbal mix (the marunnu) that can include 10–22 herbs depending on the family recipe. Its job is to kindle the weak monsoon agni, gently scrape Ama (toxin) from the gut, and prepare the body to absorb each day\'s oils and decoctions. Even people who do not undertake a full Panchakarma programme often take Karkidaka Kanji at home as a minimum seasonal practice.',
+  },
+  {
+    question: 'Can I do Karkidaka Chikitsa at home?',
+    answer: 'Three elements can be done at home with guidance: (1) Karkidaka Kanji every morning on an empty stomach, (2) a daily self-Abhyangam with sesame or Dhanwantaram oil followed by a warm bath, and (3) a Karkidaka diet that avoids cold, raw, fermented and reheated foods. The deeper Panchakarma therapies — Pizhichil, Navarakizhi, Karkidaka Vasthi, Shirodhara, Sirovasti — require trained therapists, sterile preparation and daily doctor monitoring, and should be done at a clinic. We can also prescribe a take-home protocol after your clinic stay so the benefits extend through the rest of the season.',
+  },
+  {
+    question: 'Who should NOT take Karkidaka Chikitsa?',
+    answer: 'Classical Karkidaka Chikitsa is broadly safe but is not recommended during pregnancy or breastfeeding, active fevers or infections, immediately after major surgery, in severe uncontrolled diabetes or hypertension, or in advanced cardiac disease. Some asthmatic patients tolerate the humidity of monsoon less well and are offered a modified protocol. Every guest at Vaidya Vrindavanam is screened by Dr. Jayakrishnan T J or Dr. Ganga S S before therapy begins.',
+  },
+  {
+    question: 'How long should a Karkidaka programme run?',
+    answer: 'The classical recommendation is the full Malayalam month of Karkidakam (about 30 days). In a modern clinical setting we offer 7-day, 14-day and 21-day tiers. A 7-day retreat is a gentle reset and minimum effective dose. The 14-day programme is the minimum for a complete Panchakarma sequence — preparation (Poorvakarma), main therapy (Pradhanakarma) and post-care (Paschatkarma). The 21-day programme is recommended for chronic conditions, NRI patients and anyone seeking deep, long-lasting rejuvenation.',
+  },
+  {
+    question: 'Is Karkidaka Chikitsa only for sick people?',
+    answer: 'No. Karkidaka Chikitsa has two equally important purposes: (1) Chikitsa — treating chronic conditions like arthritis, skin disorders, sinusitis, stress and infertility, and (2) Rasayana — rejuvenation and disease prevention for healthy individuals. The classical texts consider this annual seasonal correction one reason traditional Kerala households experienced fewer chronic illnesses. Many of our healthy guests take a Karkidaka programme each year as their primary preventive health investment.',
+  },
+  {
+    question: 'How is Karkidaka Chikitsa different from regular Panchakarma?',
+    answer: 'Regular Panchakarma can be done at any time of year, customised to the patient\'s condition. Karkidaka Chikitsa is specifically the monsoon-season version: it leans heavily on warming, oil-based therapies (Pizhichil, Navarakizhi) to counter the dampness, builds in Karkidaka Kanji and Karkidaka Rasayana herbs, and follows the diet and lifestyle prescriptions classically reserved for this month. The result is faster, deeper response than the same therapies done out of season.',
+  },
+  {
+    question: 'How is Karkidaka Chikitsa connected to Karkidaka Ramayana Parayanam?',
+    answer: 'In Kerala households, the month of Karkidakam is also when the Ramayana is read aloud daily — the "Ramayana Maasam." Spiritually, the practice is meant to clear mental impurities just as Karkidaka Chikitsa clears physical ones. Both are paired: cleansing the body through Panchakarma and Kanji, and clearing the mind through scripture reading and devotion. Many Kerala families still observe both side by side.',
+  },
+  {
+    question: 'Where can I take Karkidaka Chikitsa in Kerala?',
+    answer: `Vaidya Vrindavanam in Haripad (Alappuzha district, Kerala) offers 7, 14 and 21-day Karkidaka Chikitsa packages, supervised in person by Dr. Jayakrishnan T J and Dr. Ganga S S. We are about 1 hour from Kochi airport, 1 hour 15 minutes from Trivandrum airport, and 45 minutes from Kollam. Airport pickup is available. WhatsApp ${PHONE_PRIMARY} or call ${PHONE_SECONDARY} for the 2026 schedule.`,
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: 'Karkidaka Chikitsa: The Complete Guide to Monsoon Ayurveda in Kerala',
+      description: 'A clinical guide to Karkidaka Chikitsa — the classical Kerala monsoon Ayurveda treatment. Origins, therapies, Karkidaka Kanji, who benefits and how to begin.',
+      inLanguage: ['en-IN'],
+      about: { '@type': 'MedicalCondition', name: 'Seasonal monsoon detoxification and rejuvenation in Ayurveda' },
+      audience: { '@type': 'PeopleAudience', geographicArea: { '@type': 'Country', name: 'India' } },
+      lastReviewed: '2026-05-19',
+      reviewedBy: { '@type': 'Physician', name: 'Dr. Jayakrishnan T J' },
+      mainContentOfPage: { '@type': 'WebPageElement', cssSelector: 'main' },
+    },
+    {
+      '@type': 'Article',
+      '@id': `${pageUrl}#article`,
+      headline: 'Karkidaka Chikitsa: The Complete Guide to Monsoon Ayurveda in Kerala',
+      description: 'Karkidaka Chikitsa is the classical Kerala monsoon-season Ayurveda treatment. This guide covers its origins, the therapies involved, Karkidaka Kanji, the conditions it helps, and how to take it at home or at a clinic.',
+      url: pageUrl,
+      datePublished: '2026-05-19',
+      dateModified: '2026-05-19',
+      inLanguage: 'en-IN',
+      author: [
+        { '@type': 'Person', name: 'Dr. Jayakrishnan T J', jobTitle: 'BAMS, Ayurveda' },
+        { '@type': 'Person', name: 'Dr. Ganga S S', jobTitle: 'BAMS, Ayurveda' },
+      ],
+      publisher: {
+        '@type': 'MedicalBusiness',
+        '@id': 'https://vaidyavrindavanam.com/#organization',
+        name: 'Vaidya Vrindavanam Ayurveda Hospital',
+        logo: { '@type': 'ImageObject', url: 'https://vaidyavrindavanam.com/og-default.jpg' },
+      },
+      about: { '@type': 'Thing', name: 'Karkidaka Chikitsa' },
+      mainEntityOfPage: { '@id': `${pageUrl}#webpage` },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${pageUrl}#faq`,
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${pageUrl}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vaidyavrindavanam.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Karkidaka Chikitsa', item: pageUrl },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Karkidaka Chikitsa — Kerala Monsoon Ayurveda Guide"
+  description="Karkidaka Chikitsa — the classical Kerala monsoon Ayurveda treatment. Panchakarma, Karkidaka Kanji and Rasayana, explained by practising Vaidyas in Haripad."
+  schema={schema}
+>
+  <!-- HERO — editorial / asymmetric / Malayalam glyph watermark -->
+  <section class="hero relative px-6 pt-20 pb-24 md:pt-28 md:pb-32 overflow-hidden isolate">
+    <!-- Radial gradient ground -->
+    <div aria-hidden="true" class="absolute inset-0 -z-10" style="background: radial-gradient(ellipse 90% 60% at 30% 30%, var(--color-bg-elevated) 0%, var(--color-bg) 60%);"></div>
+    <!-- Oversize Malayalam glyph watermark — the character for "Ka" (ക).
+         Opacity is set via inline oklch alpha because Tailwind's /opacity modifier
+         silently fails on custom OKLCH colors (the brand handles this elsewhere
+         with separate tokens like gold-dim / gold-border).
+         Mobile: small, bottom-right, partly off-canvas.
+         Desktop: large editorial accent, top-right. -->
+    <div
+      aria-hidden="true"
+      lang="ml"
+      class="hero-glyph absolute select-none pointer-events-none font-display leading-none -z-0
+             text-[9rem] right-[-1.5rem] bottom-[-2rem] translate-x-4
+             md:text-[26rem] md:right-10 md:top-0 md:bottom-auto md:translate-x-0"
+      style="color: var(--color-gold-watermark);"
+    >ക</div>
+    <div class="relative z-10 max-w-3xl mx-auto" style="position: relative; z-index: 10;">
+      <p class="hero-eyebrow text-[11px] tracking-[5px] uppercase text-brand-gold mb-6">A Field Guide · Karkidakam 2026</p>
+      <h1 class="hero-heading font-display font-light text-text-primary leading-[0.95] tracking-tight" style="font-size: clamp(2.5rem, 6vw + 1rem, 5.5rem);">
+        Karkidaka<br /><em class="font-normal text-brand-gold not-italic">Chikitsa</em>
+      </h1>
+      <div class="hero-line w-12 h-px bg-brand-gold mt-8 origin-left"></div>
+      <p class="hero-sub text-base md:text-lg text-text-secondary mt-8 leading-relaxed font-light max-w-xl">
+        Kerala's classical monsoon Ayurveda — every section of the practice, explained by practising Vaidyas. Origins, the seven therapies, Karkidaka Kanji, contraindications, and how to begin.
+      </p>
+      <div class="hero-cta mt-10">
+        <a href="/packages/karkidaka-chikitsa/" class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-7 py-4 text-xs font-bold tracking-widest">
+          View Karkidaka Chikitsa Package →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <nav aria-label="Breadcrumb" class="px-6 py-4 bg-brand-bg border-b border-brand-gold-dim">
+    <ol class="max-w-4xl mx-auto flex flex-wrap items-center gap-2 text-xs text-text-muted">
+      <li><a href="/" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Home</a></li>
+      <li aria-hidden="true">›</li>
+      <li aria-current="page" class="text-text-secondary">Karkidaka Chikitsa</li>
+    </ol>
+  </nav>
+
+  <!-- TABLE OF CONTENTS -->
+  <section id="table-of-contents" class="py-10 px-6 bg-brand-bg-alt border-y border-brand-gold-dim">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-[11px] tracking-[3px] uppercase text-brand-gold mb-4 text-center">On This Page</p>
+      <ol class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-text-secondary list-decimal pl-5">
+        <li><a href="#what-is" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">What is Karkidaka Chikitsa?</a></li>
+        <li><a href="#classical-references" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Classical references &amp; tradition</a></li>
+        <li><a href="#why-monsoon" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Why monsoon for Panchakarma?</a></li>
+        <li><a href="#three-pillars" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">The three pillars</a></li>
+        <li><a href="#therapies" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Seven core therapies</a></li>
+        <li><a href="#karkidaka-kanji" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Karkidaka Kanji explained</a></li>
+        <li><a href="#conditions" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Conditions it helps</a></li>
+        <li><a href="#at-home" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Doing Karkidaka at home</a></li>
+        <li><a href="#diet-lifestyle" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Diet &amp; lifestyle in Karkidakam</a></li>
+        <li><a href="#contraindications" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Who should avoid it</a></li>
+        <li><a href="#how-to-begin" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">How to begin</a></li>
+        <li><a href="#faq" class="inline-flex items-center min-h-[44px] hover:text-brand-gold">Frequently asked questions</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 1. WHAT IS — left-aligned, generous breathing room -->
+  <section id="what-is" class="py-24 md:py-28 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader label="The Practice" heading="What is Karkidaka Chikitsa?" align="left" chapterNumeral="I" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>
+          <strong class="text-text-primary">Karkidaka Chikitsa</strong> (Malayalam: <span lang="ml">കർക്കടക ചികിത്സ</span>) — also called <em>Karkidaka Chikitsa treatment</em>, <em>Karkidakam treatment</em>, <em>Karkidaka Vavu Chikitsa</em>, or simply <em>monsoon Ayurveda</em> — is the classical Ayurvedic regimen performed during the Malayalam month of <em>Karkidakam</em>, roughly 17 July to 16 August. For more than a thousand years, Kerala households have observed this month as the body's annual reset. The Sanskrit term is <em>Karkata Masa Chikitsa</em>; in the classics it appears as <em>Varsha Ritucharya</em> — "the regimen for the rainy season."
+        </p>
+        <p>
+          If you are searching for <strong class="text-text-primary">Karkidaka Chikitsa in Ayurveda</strong>, looking for a <em>Karkidaka Chikitsa article</em> or <em>Karkidaka Chikitsa PDF</em> to understand the practice, reading about <strong class="text-text-primary">Karkidaka Chikitsa in Malayalam</strong> (<span lang="ml">കർക്കടക ചികിത്സ മലയാളത്തിൽ</span>), or trying to find <em>Karkidaka Chikitsa near you</em> in Kerala — this guide is the comprehensive clinical reference, written by practising Vaidyas at Vaidya Vrindavanam in Haripad, Alappuzha.
+        </p>
+        <p>
+          At its core, Karkidaka Chikitsa is a structured combination of three Ayurvedic disciplines done together: <strong>Shodhana</strong> (cleansing through Panchakarma — Vamanam, Virechanam, Vasthi, Nasyam, Raktamoksham), <strong>Rasayana</strong> (rejuvenation through medicated ghritam, lehyam and herbal decoctions), and <strong>Pathya</strong> (the seasonal diet centred on the medicinal porridge <em>Karkidaka Kanji</em>). Done in the right season, with the right sequence, the three reinforce each other — which is why Karkidakam produces results that the same therapies done in March or October simply cannot match.
+        </p>
+        <p>
+          A practical Karkidaka programme today runs 7, 14 or 21 days at a clinic or hospital — though the classical recommendation is the full month. Outside the clinic, families still observe a lighter version at home: daily Karkidaka Kanji, a Karkidaka diet that avoids cold and fermented food, daily self-Abhyangam (oil massage), and rest. Both versions count.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CLASSICAL REFERENCES — kept eyebrow, left-aligned -->
+  <section id="classical-references" class="py-20 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader label="The Sources" heading="Classical References" align="left" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>
+          Karkidaka Chikitsa does not appear in the classics under that exact regional name — but its prescriptions are everywhere in the texts under the heading <strong class="text-text-primary">Varsha Ritucharya</strong> (regimen for the rainy season). The two most cited authorities are:
+        </p>
+        <p>
+          <strong class="text-text-primary">Ashtanga Hridayam, Sutrasthana 3</strong> (Ritucharya Adhyaya) — Vagbhata describes the rainy season as the time when Vata is provoked and the digestive fire (<em>agni</em>) is at its weakest. He prescribes <em>Sodhana</em> (cleansing), <em>Snehapanam</em> (internal oleation with ghee), warm and easily digested food, and avoidance of curds, cold drinks and day sleep. These are precisely the inputs a modern Karkidaka programme is built on.
+        </p>
+        <p>
+          <strong class="text-text-primary">Charaka Samhita, Sutrasthana 6</strong> — Charaka echoes the same instructions and adds the principle of <em>Sodhana</em> as the only reliable way to prevent the chronic accumulation of <em>Ama</em> (metabolic toxin) that, year after year, becomes chronic disease. Karkidaka Chikitsa, in other words, is not a treatment for any single disease — it is the annual maintenance the texts assume every healthy person will undertake.
+        </p>
+        <p>
+          The regional Kerala practice — Karkidaka Kanji, the specific herbal <em>marunnu</em> mixes, the bolus-based oil therapies — is documented in <em>Sahasrayogam</em>, the 16th-century Kerala Ayurvedic compendium, and refined over generations of practising Vaidya families.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WHY MONSOON — no eyebrow, left-aligned -->
+  <section id="why-monsoon" class="py-20 px-6 bg-brand-bg-alt scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader heading="Why the Monsoon Is Ideal for Panchakarma" align="left" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>The Ayurvedic physiology of Karkidakam is what makes the therapies work so well:</p>
+        <ul class="space-y-3 pl-1">
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Channels are open.</strong> Constant exposure to warm dampness keeps the <em>srotas</em> (microcirculatory channels) dilated. Medicated oils and decoctions penetrate to a depth that is impossible in dry, hot weather.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Agni is weak.</strong> The digestive fire is at its lowest of the year. The body is therefore unusually receptive to medicines but cannot handle heavy, complex food — which is why a simple, warm, Kanji-centred diet is non-negotiable.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Vata is provoked, Pitta accumulates.</strong> Vata aggravation explains the joint, nerve and anxiety conditions that flare in monsoon. Pitta starts accumulating quietly — it will only manifest in autumn — making Karkidakam the time to clear it pre-emptively.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">The mind is still.</strong> Rain keeps people indoors. Activity is low. This is one of the underrated reasons Karkidaka therapies feel so deep — there are no external demands competing for the body's resources.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. THREE PILLARS — kept eyebrow, centered (structural overview) -->
+  <section id="three-pillars" class="py-20 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader label="The Structure" heading="The Three Pillars of Karkidaka Chikitsa" />
+      <div class="grid md:grid-cols-3 gap-5 mt-8">
+        <div class="border border-brand-gold-border p-6 bg-brand-bg/60">
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold">Pillar 1</p>
+          <h3 class="text-lg font-display text-text-primary mt-2">Shodhana — Cleansing</h3>
+          <div class="w-5 h-px bg-brand-gold my-3"></div>
+          <p class="text-sm text-text-secondary leading-relaxed">The Panchakarma core — Vamanam, Virechanam, Vasthi, Nasyam and (selectively) Raktamoksham. Sequenced after preparatory oleation (Snehapanam) and steam (Swedanam) so the toxins move out without disturbing the body.</p>
+        </div>
+        <div class="border border-brand-gold-border p-6 bg-brand-bg/60">
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold">Pillar 2</p>
+          <h3 class="text-lg font-display text-text-primary mt-2">Rasayana — Rejuvenation</h3>
+          <div class="w-5 h-px bg-brand-gold my-3"></div>
+          <p class="text-sm text-text-secondary leading-relaxed">After cleansing, the body is unusually receptive to nourishment. Medicated ghritams, herbal lehyams, Karkidaka herbal mixes and a personalised Rasayana protocol rebuild the tissues, strengthen Ojas (vital essence) and slow biological ageing.</p>
+        </div>
+        <div class="border border-brand-gold-border p-6 bg-brand-bg/60">
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold">Pillar 3</p>
+          <h3 class="text-lg font-display text-text-primary mt-2">Pathya — Diet &amp; Lifestyle</h3>
+          <div class="w-5 h-px bg-brand-gold my-3"></div>
+          <p class="text-sm text-text-secondary leading-relaxed">Karkidaka Kanji every morning, warm cooked food, no curds, no cold drinks, no day sleep, early rest. The most overlooked pillar — and the single biggest determinant of how well the cleansing and rejuvenation work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. THERAPIES — chronological vertical timeline (different rhythm from the grids above and below) -->
+  <section id="therapies" class="py-16 px-6 bg-brand-bg-alt scroll-mt-20">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader heading="Seven Core Therapies of a Karkidaka Programme" subtitle="Listed in the order they typically enter the protocol — click any therapy for its full treatment page" align="left" />
+      <ol class="relative mt-10 pl-14 md:pl-20 space-y-9">
+        <div aria-hidden="true" class="absolute left-4 md:left-7 top-3 bottom-3 w-px bg-brand-gold-border"></div>
+        {therapies.map((t, i) => (
+          <li class="relative">
+            <span
+              aria-hidden="true"
+              class="absolute -left-14 md:-left-20 top-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-brand-gold bg-brand-bg flex items-center justify-center font-display text-[13px] md:text-sm text-brand-gold tabular-nums"
+            >{String(i + 1).padStart(2, '0')}</span>
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 class="text-lg font-display text-text-primary">{t.name}</h3>
+              <span class="text-[11px] tracking-[3px] uppercase text-brand-gold">{t.when}</span>
+            </div>
+            <p class="text-sm text-text-secondary leading-relaxed mt-2">{t.role}</p>
+            <a href={`/treatments/${t.slug}/`} class="inline-flex items-center min-h-[44px] mt-1 text-[11px] tracking-widest uppercase text-brand-gold hover:text-text-primary transition-colors">
+              Read full treatment page →
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p class="text-xs text-text-muted italic mt-10 max-w-2xl">
+        Final therapy mix is decided by the consulting Vaidya after pulse and prakriti reading — never from a fixed brochure.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. KARKIDAKA KANJI — kept eyebrow, left-aligned, signature deep-dive with extra room -->
+  <section id="karkidaka-kanji" class="py-24 md:py-28 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader label="The Recipe" heading="Karkidaka Kanji — The Medicinal Porridge" align="left" chapterNumeral="VII" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>
+          No Karkidaka Chikitsa is complete without <strong class="text-text-primary">Karkidaka Kanji</strong> (<span lang="ml">കർക്കടക കഞ്ഞി</span>) — a medicinal rice porridge taken on an empty stomach each morning through the month. It is, in practice, the most important single element of the whole programme: people who do nothing else but take Karkidaka Kanji daily through the month still report visible improvement.
+        </p>
+        <p>
+          The recipe varies by family but the core is consistent. <strong class="text-text-primary">Base:</strong> Njavara rice or red matta rice. <strong class="text-text-primary">Carriers:</strong> coconut milk and jaggery. <strong class="text-text-primary">Digestive spices:</strong> fenugreek, cumin, ajwain, dried ginger, black pepper. <strong class="text-text-primary">Herbal mix (the marunnu):</strong> a powdered blend of 10–22 herbs including Ashwagandha, Sathavari, Bala, Vidari, Karpooravalli, Dasamoolam and others — composed differently by each Vaidya family.
+        </p>
+        <p>
+          The porridge is cooked slowly until the rice breaks down, the spices and herbs are added in the final ten minutes, jaggery and coconut milk are stirred in at the end, and the whole thing is eaten warm, ideally before 9 AM, on an empty stomach. Nothing else for the next two hours.
+        </p>
+        <p class="border-l border-brand-gold pl-4 text-sm text-text-muted italic">
+          What it does: kindles the weakened monsoon agni, gently scrapes Ama from the gut, builds Ojas (vital essence), prepares the body to absorb the day's oils and decoctions, and provides easy, deeply nourishing calories during a season when complex food is hard to digest.
+        </p>
+        <p>
+          Every guest at Vaidya Vrindavanam receives freshly prepared Karkidaka Kanji each morning of their stay, along with a recipe and a small jar of the herbal marunnu to continue the practice through the rest of the season.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CONDITIONS — editorial definition list (different from the grids above) -->
+  <section id="conditions" class="py-16 px-6 bg-brand-bg-alt scroll-mt-20">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader heading="Conditions Karkidaka Chikitsa Helps" subtitle="Each links to its dedicated clinical page" align="left" />
+      <dl class="mt-10 divide-y divide-brand-gold-border">
+        {conditionLinks.map((c) => (
+          <div class="grid md:grid-cols-[12rem_1fr] gap-y-2 md:gap-x-10 py-6 group">
+            <dt class="md:pt-1">
+              <a href={`/conditions/${c.slug}/`} class="inline-flex flex-col gap-1 min-h-[44px] justify-center">
+                <span class="text-base font-display text-text-primary group-hover:text-brand-gold transition-colors">{c.name}</span>
+                <span class="text-[11px] tracking-[3px] uppercase text-brand-gold opacity-70 group-hover:opacity-100 transition-opacity">Clinical detail →</span>
+              </a>
+            </dt>
+            <dd class="text-sm text-text-secondary leading-relaxed">{c.why}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- 9. AT HOME — left-aligned, important practical section, generous space -->
+  <section id="at-home" class="py-24 md:py-28 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader label="At Home" heading="Doing Karkidaka Chikitsa at Home" align="left" chapterNumeral="IX" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>
+          Not everyone can take a month off for a residential programme. Fortunately, much of the classical Karkidaka regimen translates well to home practice. The three components below cover roughly 60% of the benefit — and the deeper Panchakarma therapies can be added at a clinic for one of the weekends within the month.
+        </p>
+        <ol class="mt-10 space-y-10">
+          {[
+            { n: '01', title: 'Karkidaka Kanji every morning', body: 'Take a small bowl on an empty stomach by 9 AM. Nothing else for two hours. Continue for the full month if possible; minimum 21 days. If you cannot source the herbal marunnu locally, a simpler version with ginger, cumin, ajwain and fenugreek alone is still meaningfully effective.' },
+            { n: '02', title: 'Daily self-Abhyangam', body: 'A few minutes of warm sesame oil massage before your bath — head, ears, soles of the feet at minimum, full body if you have time. For chronic Vata complaints, switch to Dhanwantaram or Mahanarayana oil. Soft, slow strokes; the goal is not pressure but absorption.' },
+            { n: '03', title: 'The Karkidaka diet', body: 'Warm, cooked, freshly prepared, simple. Cooked grains (rice, barley, kanji), well-cooked vegetables, mung dal, ghee, small amounts of black pepper and ginger. Avoid curds, cold drinks, raw salads, leftovers, fried food and meat. Sleep early; no day sleep.' },
+          ].map((step) => (
+            <li class="grid grid-cols-[auto_1fr] gap-6 items-baseline">
+              <span class="font-display text-4xl md:text-5xl text-brand-gold/60 leading-none tabular-nums">{step.n}</span>
+              <div>
+                <h3 class="text-lg font-display text-text-primary">{step.title}</h3>
+                <p class="text-sm mt-2 text-text-secondary leading-relaxed">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="text-xs text-text-muted italic mt-5">
+          For Snehapanam (internal oleation with medicated ghritam), Vasthi (medicated enema), Shirodhara, Pizhichil and other classical Panchakarma — see your Vaidya. These are not safely done at home.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. DIET & LIFESTYLE — no eyebrow, centered grid -->
+  <section id="diet-lifestyle" class="py-20 px-6 bg-brand-bg-alt scroll-mt-20">
+    <div class="max-w-4xl mx-auto">
+      <SectionHeader heading="Diet &amp; Lifestyle in Karkidakam" />
+      <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div class="border border-brand-gold-border p-6 bg-brand-bg">
+          <h3 class="text-sm font-semibold text-brand-gold uppercase tracking-widest mb-4">Recommended (Pathya)</h3>
+          <ul class="space-y-2">
+            {[
+              'Warm, freshly cooked food eaten warm',
+              'Karkidaka Kanji on empty stomach in the morning',
+              'Old rice, mung dal, barley, ghee',
+              'Cooked vegetables — ash gourd, bitter gourd, drumstick, snake gourd',
+              'Black pepper, ginger, cumin, ajwain, fenugreek',
+              'Honey in small quantities (not heated)',
+              'Boiled drinking water (cooled to lukewarm)',
+              'Early sleep, full night\'s rest',
+              'Daily self-Abhyangam before bath',
+              'Indoor activity, scripture reading, family time',
+            ].map((i) => (
+              <li class="text-sm text-text-secondary flex items-start gap-2 leading-relaxed">
+                <span aria-hidden="true" class="text-brand-gold text-xs mt-1">✦</span><span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="border border-brand-gold-border p-6 bg-brand-bg">
+          <h3 class="text-sm font-semibold text-text-muted uppercase tracking-widest mb-4">Avoid (Apathya)</h3>
+          <ul class="space-y-2">
+            {[
+              'Curds, cold milk, ice cream',
+              'Cold drinks and cold water',
+              'Raw salads and uncooked food',
+              'Reheated and leftover food',
+              'Heavy non-vegetarian food',
+              'Deep-fried snacks and bakery food',
+              'Day sleep (the single most common mistake)',
+              'Late nights and screen time before bed',
+              'Strenuous outdoor exercise',
+              'Travel and long road journeys',
+            ].map((i) => (
+              <li class="text-sm text-text-secondary flex items-start gap-2 leading-relaxed">
+                <span aria-hidden="true" class="text-text-muted text-xs mt-1">◦</span><span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. CONTRAINDICATIONS — denser, no eyebrow, left-aligned -->
+  <section id="contraindications" class="py-12 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader heading="Who Should Avoid Karkidaka Chikitsa" align="left" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>Classical Karkidaka Chikitsa is broadly safe, but the deeper Panchakarma elements are not for everyone. The following are absolute or relative contraindications:</p>
+        <ul class="space-y-2 pl-1">
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Pregnancy or active breastfeeding — modified protocol only</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Active fevers, acute infections, recent surgery</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Severe uncontrolled diabetes or hypertension — modified protocol only</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Advanced cardiac disease, recent cardiac event</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Active cancer treatment (chemotherapy or radiation) — consult oncologist</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Some forms of asthma poorly tolerant to monsoon humidity</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-text-muted shrink-0">◦</span><span>Children under 12 — light at-home Pathya is fine; clinical Panchakarma is not</span></li>
+        </ul>
+        <p class="text-xs text-text-muted italic mt-4">
+          In all of these cases a gentler, individualised protocol — usually limited to Pathya, mild Abhyangam and seasonal Rasayana — can still be safely beneficial. Every guest at Vaidya Vrindavanam is screened before therapy begins.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. HOW TO BEGIN — no eyebrow, left-aligned -->
+  <section id="how-to-begin" class="py-20 px-6 bg-brand-bg scroll-mt-20">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader heading="How to Begin Your Karkidaka Chikitsa" align="left" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>If you are considering a 2026 Karkidaka programme, here is a practical sequence:</p>
+        <ol class="space-y-3 pl-5 list-decimal">
+          <li><strong class="text-text-primary">Decide the duration</strong> — 7, 14 or 21 days. As a rule of thumb: 7 days for a gentle reset, 14 days for the minimum complete Panchakarma sequence, 21 days for chronic conditions or annual deep rejuvenation.</li>
+          <li><strong class="text-text-primary">Book early</strong> — bookings for Karkidakam 2026 open from 1 June. The 14 and 21-day tiers fill first because they require longer rooms.</li>
+          <li><strong class="text-text-primary">Consultation</strong> — share your medical history and current complaints by WhatsApp. We respond with an indicative protocol and quote within a few hours.</li>
+          <li><strong class="text-text-primary">Pre-programme preparation</strong> — for the 7–10 days before arrival, shift to simple cooked food, avoid heavy meals at night, and start a light morning Kanji at home if possible. This makes the first three days of the programme much easier.</li>
+          <li><strong class="text-text-primary">Arrival and screening</strong> — pulse and prakriti reading on day 1; the final therapy mix is decided then. Treatments begin the same evening or the following morning.</li>
+          <li><strong class="text-text-primary">Post-programme</strong> — we send you home with a Karkidaka diet plan, take-home Rasayana herbs and the marunnu mix to continue Karkidaka Kanji through the rest of the month.</li>
+        </ol>
+      </div>
+      <div class="mt-10 border border-brand-gold p-6 bg-brand-bg/60 text-center">
+        <p class="text-[11px] tracking-[3px] uppercase text-brand-gold">Ready to begin?</p>
+        <h3 class="text-xl md:text-2xl font-display text-text-primary mt-2">See our Karkidaka Chikitsa Package</h3>
+        <p class="text-sm text-text-secondary mt-3 max-w-xl mx-auto">7, 14 and 21-day tiers — supervised in person by Dr. Jayakrishnan T J. Bookings for Karkidakam 2026 open from 1 June.</p>
+        <a href="/packages/karkidaka-chikitsa/" class="inline-block mt-5 bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest">VIEW PACKAGE DETAILS →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. FAQ — kept eyebrow, centered, generous -->
+  <section id="faq" class="py-24 md:py-28 px-6 bg-brand-bg-alt scroll-mt-20">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Common Questions" heading="Frequently Asked Questions" />
+      <FAQAccordion items={faqs} />
+    </div>
+  </section>
+
+  <!-- AUTHORS -->
+  <section class="py-12 px-6 bg-brand-bg border-t border-brand-gold-dim">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-[11px] tracking-[3px] uppercase text-brand-gold text-center mb-4">Written &amp; Medically Reviewed By</p>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="border border-brand-gold-border p-5 bg-brand-bg/60">
+          <h3 class="font-display text-text-primary">Dr. Jayakrishnan T J</h3>
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold mt-1">BAMS · Ayurveda &amp; Marma Chikitsa</p>
+          <p class="text-xs text-text-secondary leading-relaxed mt-3">Founder of Vaidya Vrindavanam, practising since 2014. Senior consultant for Karkidaka Chikitsa programmes; specialises in classical Panchakarma with Marma and chiropractic correction.</p>
+        </div>
+        <div class="border border-brand-gold-border p-5 bg-brand-bg/60">
+          <h3 class="font-display text-text-primary">Dr. Ganga S S</h3>
+          <p class="text-[11px] tracking-[3px] uppercase text-brand-gold mt-1">BAMS · Ayurveda &amp; Women's Health</p>
+          <p class="text-xs text-text-secondary leading-relaxed mt-3">Resident Vaidya at Vaidya Vrindavanam. Specialises in women's health, PCOS, menstrual disorders, postnatal Rasayana and personalised Karkidaka protocols for female guests.</p>
+        </div>
+      </div>
+      <p class="text-[11px] text-text-muted text-center italic mt-5">Last reviewed: 19 May 2026 · Vaidya Vrindavanam Ayurveda Hospital, Haripad, Alappuzha, Kerala — operating since 2014.</p>
+    </div>
+  </section>
+
+  <!-- WHERE-TO-TAKE — geo/near-me coverage, no eyebrow, left-aligned -->
+  <section class="py-20 px-6 bg-brand-bg-alt">
+    <div class="max-w-prose mx-auto">
+      <SectionHeader heading="Karkidaka Chikitsa Near You" subtitle="Authentic monsoon Ayurveda in central Kerala" align="left" />
+      <div class="text-text-secondary leading-relaxed space-y-4 text-base">
+        <p>
+          Most patients searching for <strong class="text-text-primary">Karkidaka Chikitsa near me</strong> in Kerala find that the strongest concentration of authentic clinics sits along the central Travancore belt — Alappuzha, Kollam, Pathanamthitta and Ernakulam districts. Vaidya Vrindavanam is in <strong class="text-text-primary">Haripad, Alappuzha district</strong>, well within drive range of every major Kerala city:
+        </p>
+        <ul class="space-y-2 pl-1">
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Karkidaka Chikitsa in Trivandrum:</strong> Vaidya Vrindavanam is approximately 1 hr 15 min by road from Trivandrum (TRV) airport — Karkidaka Chikitsa Trivandrum patients regularly travel here for the personalised supervision unavailable at larger resort clinics.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Karkidaka Chikitsa in Kochi:</strong> Approximately 1 hr from Kochi (COK) airport — convenient for Karkidaka Chikitsa Kochi patients who prefer to fly in.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Karkidaka Chikitsa in Alappuzha &amp; Haripad:</strong> 35 minutes from Alappuzha town; our hospital is the resident clinical practice for the Haripad region.</span></li>
+          <li class="flex gap-3"><span aria-hidden="true" class="text-brand-gold shrink-0">✦</span><span><strong class="text-text-primary">Karkidaka Chikitsa in Kollam:</strong> 45 minutes by road.</span></li>
+        </ul>
+        <p>
+          Many patients also compare us against the well-known <strong class="text-text-primary">Karkidaka Chikitsa Kottakkal</strong> centre in Malappuram. Both Karkidaka Chikitsa Kerala practitioners follow classical protocols; the difference is scale and personalisation — see our FAQ below for a detailed comparison. The importance of Karkidaka Chikitsa is the same whichever clinic you choose: it remains the single most effective annual Ayurvedic intervention in the Kerala calendar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS - EXACT-MATCH KEYWORD HEADING -->
+  <section class="py-12 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-[11px] tracking-[3px] uppercase text-brand-gold text-center mb-3">Summary</p>
+      <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide text-center">Karkidaka Chikitsa Benefits — at a glance</h2>
+      <div class="w-8 h-px bg-brand-gold mx-auto mt-4 mb-6"></div>
+      <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto">
+        The benefits of Karkidaka Chikitsa accumulate across three areas: deeper detoxification than off-season Panchakarma, stronger Rasayana absorption thanks to open channels, and the immunity-building effect of Karkidaka Kanji and herbal Rasayana. Most guests report visibly better joint comfort, sleep quality, skin clarity and digestion within two weeks; chronic conditions improve over three to six months of consistent annual practice.
+      </p>
+    </div>
+  </section>
+
+  <!-- BROADER CLUSTER ANCHOR -->
+  <section class="py-10 px-6 bg-brand-bg-alt border-t border-brand-gold-dim">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-sm text-text-secondary leading-relaxed">
+        Karkidaka Chikitsa is one of several <a href="/packages/" class="text-brand-gold underline">Ayurvedic treatment packages</a> we offer in Kerala — alongside Rejuvenation, Detox, Weight Loss and Relaxation programmes. Explore our full range of <a href="/packages/" class="text-brand-gold underline">Ayurvedic packages in Kerala</a>, or jump straight to the <a href="/packages/karkidaka-chikitsa/" class="text-brand-gold underline">2026 Karkidaka Chikitsa Package details</a>.
+      </p>
+    </div>
+  </section>
+
+  <CTABanner />
+</BaseLayout>

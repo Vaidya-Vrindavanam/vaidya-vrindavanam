@@ -46,6 +46,11 @@ export const treatmentSeoDescriptions: Record<string, string> = {
     'Vasthi medicated enema — the most powerful Panchakarma therapy for Vata disorders, sciatica, constipation & IBS at Vaidya Vrindavanam, Haripad.',
 };
 
+export const packageSeoDescriptions: Record<string, string> = {
+  'karkidaka-chikitsa':
+    'Authentic Karkidaka Chikitsa packages in Haripad, Kerala. 7/14/21-day monsoon Ayurveda detox by certified Vaidyas. Operating since 2014. WhatsApp to book.',
+};
+
 export const conditionSeoDescriptions: Record<string, string> = {
   'arthritis':
     'Ayurvedic treatment for arthritis & joint pain in Kerala — osteoarthritis, rheumatoid arthritis. Personalised Panchakarma at Vaidya Vrindavanam, Haripad.',

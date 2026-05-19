@@ -74,6 +74,23 @@ const schema = {
     <p class="text-sm text-text-secondary mt-4 max-w-lg mx-auto">Comprehensive treatment programs with accommodation, meals, and personalised Ayurvedic care.</p>
   </section>
 
+  <!-- FEATURED: KARKIDAKA SEASONAL PACKAGE -->
+  <section class="py-10 px-6 bg-brand-bg">
+    <div class="max-w-4xl mx-auto">
+      <a href="/packages/karkidaka-chikitsa/" class="block border border-brand-gold p-8 bg-gradient-to-r from-brand-bg-alt via-brand-bg to-brand-bg-alt hover:border-brand-gold transition-colors relative group">
+        <div class="absolute top-4 right-4 bg-brand-gold text-brand-bg text-[7px] font-bold tracking-widest px-3 py-1">SEASONAL 2026</div>
+        <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-2">Karkidakam 17 July – 16 August 2026</p>
+        <h2 class="text-2xl md:text-3xl font-display text-text-primary group-hover:text-brand-gold transition-colors">Karkidaka Chikitsa Package</h2>
+        <p class="text-sm text-brand-gold mt-1 italic font-display">Authentic monsoon Ayurveda — 7, 14 &amp; 21-day tiers</p>
+        <div class="w-8 h-px bg-brand-gold my-4"></div>
+        <p class="text-sm text-text-secondary leading-relaxed max-w-2xl">
+          The classical Kerala monsoon Panchakarma — Pizhichil, Navarakizhi, Shirodhara, Karkidaka Vasthi, Karkidaka Kanji and personalised Rasayana herbs, supervised in person by Dr. Jayakrishnan T J. Bookings open from 1 June; 14 and 21-day tiers fill first.
+        </p>
+        <span class="inline-block mt-5 text-xs tracking-widest uppercase text-brand-gold">View Package Details →</span>
+      </a>
+    </div>
+  </section>
+
   <section class="py-12 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto space-y-6">
       {packages.map(pkg => {
@@ -92,7 +109,7 @@ const schema = {
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 {pkg.includes.map(item => (
                   <li class="text-sm text-text-secondary flex items-center gap-2">
-                    <span class="text-brand-gold text-xs">✦</span> {item}
+                    <span aria-hidden="true" class="text-brand-gold text-xs">✦</span> {item}
                   </li>
                 ))}
               </ul>

@@ -124,6 +124,8 @@ Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel das
 - **Implementation plan:** `docs/superpowers/plans/2026-03-31-vaidya-vrindavanam-website.md`
 - **Deployment guide:** `PAYLOAD_DEPLOY.md` — Neon + Railway + Vercel setup
 - **TODO tracker:** `TODO.md`
+- **SEO Audit (live data):** `../FULL-AUDIT-REPORT-2026-05-18.md` — DataForSEO audit, score 63/100
+- **SEO Action Plan:** `../ACTION-PLAN-2026-05-18.md` — prioritised fix list with 30-day roadmap
 
 ## SEO Requirements
 
@@ -131,6 +133,39 @@ Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel das
 - Unique title/description per page (format: `{title} | Vaidya Vrindavanam Ayurveda Hospital, Haripad`)
 - Sitemap auto-generated via `@astrojs/sitemap` (site: `https://vaidyavrindavanam.com`)
 - Image alt text must include location + treatment keywords
+
+## SEO Status (as of 2026-05-18)
+
+**Overall score: 63/100** (DataForSEO live audit — up from 62/100 on 2026-05-17)
+
+### Live Rankings (verified via DataForSEO SERP)
+- "panchakarma haripad kerala" → **Organic #2** + **Local Pack #3**
+- "ayurvedic treatment back pain haripad" → **Organic #9** (`/treatments/katee-greeva-vasthi/`)
+- "ayurvedic hospital haripad" → **Not in Local Pack or organic top 10**
+- "ayurvedic treatment kerala" (3,600/mo) → Not ranking
+
+### Lighthouse Scores (desktop, live)
+- Performance: **100/100**, Accessibility: 95/100, Best Practices: 100/100, SEO: 100/100
+- LCP: 535ms, CLS: 0.003, Server response: 13ms — all excellent
+
+### Critical Gaps (fix in priority order)
+1. **6 Google reviews (4.3★)** — competitors have 76–235; blocks Local Pack entry
+2. **No LocalBusiness / MedicalOrganization schema** — `BaseLayout.astro` passes `schema` prop but homepage may not be populating it correctly; verify and fix
+3. **Not listed on JustDial** — JustDial ranks #1–4 for every Haripad Ayurveda SERP
+4. **Treatment pages are thin** (< 300 words each) — Week 2 sub-task #7 still queued
+5. **No package pricing** — all 4 packages show "Contact for pricing"
+
+### Pending Week 2 Sub-tasks (from SEO-Audit-2026-04-22.md plan)
+- [ ] #7 Expand each treatment page to 900+ words + FAQ schema (20 treatments)
+- [ ] #9 Build individual package landing pages (`/packages/rejuvenation/`, etc.)
+- [ ] #10 Build `/panchakarma/` pillar page
+- [ ] #11 Update detail-page H1s to include "Treatment" + location
+
+### New Actions from 2026-05-18 Audit
+- [ ] Add `LocalBusiness`/`MedicalOrganization` JSON-LD to homepage (BaseLayout schema prop)
+- [ ] Create `/ayurveda-hospital-alappuzha/` page (590 searches/mo, LOW competition)
+- [ ] Add `llms.txt` to `public/` directory
+- [ ] Verify `/sitemap.xml` resolves (previously 404)
 
 ## Clinic Details (for content)
 
