@@ -799,6 +799,84 @@ export const conditionDetails: Record<string, ConditionDetail> = {
     ],
   },
 
+  "back-pain": {
+    overview:
+      "Back pain is one of the most common reasons patients seek Ayurvedic care. The presentations we see most often are lumbar spondylosis (wear-related disc and vertebral changes), lumbar disc herniation (with or without sciatica), sacroiliac joint dysfunction, and chronic muscular low-back pain from sustained sitting or postural strain. Classical Ayurveda groups all of these under Kati Shoola — pain in the lumbar region — with sciatica specifically described as Gridhrasi, a condition where vitiated Vata compresses and inflames the sciatic nerve channel. What distinguishes Ayurvedic management is its emphasis on restoring lubrication to the affected spinal segment and correcting the systemic Vata imbalance driving the degeneration, rather than only relieving symptoms at the surface.",
+    symptoms: [
+      "Dull, aching, or sharp pain in the lower back — may be constant or episodic, worsened by prolonged sitting, standing, or bending",
+      "Morning stiffness that improves with movement but returns after extended inactivity",
+      "Radiating pain down one or both legs — along the sciatic nerve distribution (buttock, back of thigh, calf, foot) in disc-related sciatica",
+      "Numbness, tingling, or weakness in the leg, foot, or toes",
+      "Pain that worsens with coughing, sneezing, or bearing down",
+      "Reduced lumbar range of motion — difficulty bending forward, backward, or rotating the trunk",
+      "Muscle spasms alongside the spine, particularly after sudden movements or lifting",
+      "Night pain that disturbs sleep or pain that is worse at rest than with gentle movement (flags possible inflammatory or serious cause — merits investigation)",
+    ],
+    ayurvedicView:
+      "Kati Pradesh — the lumbar region — is the seat of Apana Vata, the downward-moving sub-dosha responsible for elimination, reproduction, and support of the lower limbs. Chronic Vata aggravation (from cold, irregular diet, excessive travel, anxiety, prolonged sitting, or suppression of natural urges) dries the intervertebral discs and sacral joint tissues. When Ama is also present — from impaired digestion — it settles into the srotas (channels) around the lumbar vertebrae, producing the inflammatory, stiff presentations. Gridhrasi (sciatica) results from Vata's compression of the major nerve channel, sometimes complicated by Kapha (numbness, heaviness) or Pitta (burning, sharp pain). Treatment sequences are determined by which pattern predominates.",
+    approachComparison:
+      "Conventional management — NSAIDs, muscle relaxants, epidural steroid injections, and spinal surgery for structurally significant disc herniation — is effective for acute pain and genuine neurological compromise. It does not address the underlying disc dehydration, vertebral wear, or the postural and lifestyle factors that allow degeneration to progress. Ayurvedic care works best as the primary approach in chronic, recurrent, and postural low-back pain, and as an adjunct to conventional care after acute episodes are controlled. We do not recommend delaying surgery when there is progressive neurological deficit — foot drop, bladder dysfunction, or rapidly worsening weakness requires urgent neurosurgical evaluation.",
+    treatmentProtocol: [
+      {
+        phase: "Assessment & imaging review",
+        description:
+          "Review of MRI or X-ray findings, pain pattern mapping (referred vs. local, morning vs. evening, position-dependent), prakriti assessment, and Nadi Pariksha. This determines whether the presentation is Kati Shoola (lumbar), Gridhrasi (sciatic), or a more complex spinal picture.",
+      },
+      {
+        phase: "Kati Vasthi",
+        description:
+          "Warm medicated oil retained in a dough dam over the lumbar region for 30–45 minutes — the primary treatment for Kati Shoola. The oil is selected by pattern: Ksheerabala taila for disc degeneration, Dhanwantaram taila for Vata-predominant presentations, Mahanarayana taila for spasm and inflammatory overlay. Typically daily for 7–21 days.",
+      },
+      {
+        phase: "Abhyangam and Elakizhi or Choorna Pinda Swedam",
+        description:
+          "Full-body Abhyangam with Vata-pacifying oils precedes each Kati Vasthi session to prepare the tissues. Elakizhi (medicinal leaf bolus) or Choorna Pinda Swedam (herbal powder bolus) is applied over the spine and lumbar musculature to reduce spasm, improve circulation, and deepen the oleation.",
+      },
+      {
+        phase: "Vasti (medicated enema)",
+        description:
+          "The classical Ayurvedic text describes Vasti — medicated enema — as the principal therapy for Vata disorders. Kati Vasti alone treats the local segment; systemic Vata correction requires Anuvasana Vasti (oil enema) and Niruha Vasti (decoction enema) in a structured sequence (Yoga Vasti or Kala Vasti). This is particularly effective for sciatica, disc prolapse, and chronic recurrent back pain.",
+      },
+      {
+        phase: "Internal medications and follow-up",
+        description:
+          "Rasnasaptakam Kashayam and Maharasnadi Kashayam for the inflammatory-Vata picture; Yogaraja Guggulu for musculoskeletal degeneration; Ashwagandha Rasayana and Bala Taila internally for nerve and tissue rebuilding. Discharge includes a personalised posture guide, yoga modifications (Ardha Shalabhasana, Bhujangasana, Balasana), a Vata-pacifying dietary plan, and a review at one and three months.",
+      },
+    ],
+    expectedOutcomes:
+      "Acute and subacute low-back pain typically shows meaningful improvement within five to seven days of daily Kati Vasthi and Abhyangam. Chronic lumbar spondylosis and recurrent back pain require a 14–21 day residential program, with continued internal medication for three to six months. Sciatic pain that is primarily Vata-driven responds well — most patients achieve 60–80% pain reduction and significant functional improvement. Where disc herniation is structural and large, outcomes vary: nerve root pain often improves considerably; sensory deficit takes longer and may not fully resolve if the compression is longstanding. We set honest expectations at the first consultation based on imaging and clinical findings.",
+    faqs: [
+      {
+        q: "Can Ayurveda help me avoid back surgery?",
+        a: "For most common presentations — spondylosis, mild to moderate disc herniation, postural and muscular back pain — yes, Ayurvedic treatment is a genuine alternative. Surgery is essential when there is progressive neurological deficit (worsening weakness, foot drop, bladder involvement). We will tell you directly if we think surgical review is warranted.",
+      },
+      {
+        q: "What is Kati Vasthi and does it actually work?",
+        a: "Kati Vasthi retains warm medicated oil over the lumbar region in a dough dam, allowing deep absorption into the spinal structures. Clinical experience and patient outcomes consistently show reduction in disc-related pain and improved lumbar mobility — particularly in disc degeneration, sacroiliac pain, and muscular back pain.",
+      },
+      {
+        q: "How long before I get pain relief?",
+        a: "Acute muscular and postural back pain typically improves within three to five sessions. Chronic disc and nerve-root pain takes longer — most patients notice meaningful change by day seven to ten, with the full benefit developing over a complete 14–21 day course.",
+      },
+      {
+        q: "Does Vasti (medicated enema) really help back pain?",
+        a: "Yes — the classical texts and clinical practice both confirm this. The lumbar spine and sacrum are directly in the domain of Apana Vata; Vasti works systemically to calm Vata, which is why it often resolves sciatica and recurrent low-back pain better than local therapies alone.",
+      },
+      {
+        q: "I have an L4-L5 disc prolapse with sciatica. Is treatment safe?",
+        a: "Yes, provided neurological examination shows no progressive deficit. We review your MRI before treatment begins and modify protocols accordingly. Kati Vasthi, Vasti, and gentle Elakizhi are safe and effective for L4-L5 and L5-S1 disc problems.",
+      },
+      {
+        q: "Do I need to stay residentially?",
+        a: "Chronic and complex back pain benefits from a 14–21 day residential stay so Kati Vasthi and Vasti can run in a daily, structured sequence. For acute pain or as maintenance, outpatient visits three to five times per week are also effective.",
+      },
+      {
+        q: "What lifestyle changes will I need to maintain?",
+        a: "A Vata-pacifying diet (warm, well-cooked food; reduced raw, cold, and dry foods), consistent sleep and wake times, specific yoga for spinal health (modified cobra, child's pose, cat-cow), avoidance of prolonged sitting without lumbar support, and daily warm-oil self-massage of the lower back.",
+      },
+    ],
+  },
+
   "womens-health": {
     overview:
       "Women's reproductive and hormonal health — irregular menstruation, dysmenorrhoea, PCOS, fibroids, endometriosis, and perimenopausal and menopausal symptoms — forms a distinct area of classical Ayurvedic practice known as Stree Roga. At Vaidya Vrindavanam, Dr. Ganga specialises in this field. The Ayurvedic framework recognises that women's reproductive health is governed by the coordinated action of all three doshas across the monthly cycle, and that disruption of this rhythm produces the common conditions we see today — many of them downstream consequences of stress, irregular schedules, and dietary disruption.",

@@ -86,4 +86,6 @@ export const conditionSeoDescriptions: Record<string, string> = {
     'Ayurvedic treatment for varicose veins in Kerala — Raktamoksham & venous therapies for leg pain and vein health. Vaidya Vrindavanam, Haripad, Alappuzha.',
   'womens-health':
     'Ayurvedic women\'s health care in Kerala — PCOS, menstrual disorders, menopause & reproductive wellness with Dr. Ganga, Vaidya Vrindavanam, Haripad.',
+  'back-pain':
+    'Ayurvedic treatment for back pain & sciatica in Haripad, Kerala — Kati Vasthi, Vasti & Marma Chikitsa. Vaidya Vrindavanam, NH-66, Alappuzha.',
 };

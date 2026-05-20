@@ -3,8 +3,8 @@
 // conditions cross-link, session details, and FAQs (with FAQPage schema).
 //
 // Condition slugs available for `helpsConditions` cross-links:
-//   arthritis, asthma, diabetes, geriatric-care, hypertension, infertility,
-//   obesity, skin-disorders, stress-anxiety, varicose-veins, womens-health.
+//   arthritis, asthma, back-pain, diabetes, geriatric-care, hypertension,
+//   infertility, obesity, skin-disorders, stress-anxiety, varicose-veins, womens-health.
 
 export interface TreatmentFAQ {
   q: string;
