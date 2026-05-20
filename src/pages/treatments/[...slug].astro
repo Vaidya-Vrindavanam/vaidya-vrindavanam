@@ -13,7 +13,7 @@ import {
   ADDRESS_POSTAL_CODE,
   POSTAL_ADDRESS_SCHEMA,
 } from '../../config/contact';
-import { treatmentSeoDescriptions } from '../../data/seoDescriptions';
+import { treatmentSeoDescriptions, treatmentSeoTitles } from '../../data/seoDescriptions';
 import { treatmentDetails } from '../../data/treatmentDetails';
 
 export async function getStaticPaths() {
@@ -92,9 +92,16 @@ const schemaGraph: Record<string, unknown>[] = [
     "name": treatment.name,
     "description": treatment.shortDescription,
     "medicineSystem": "Ayurveda",
+    "recognizingAuthority": {
+      "@type": "Organization",
+      "name": "Ministry of AYUSH, Government of India",
+      "url": "https://ayush.gov.in"
+    },
+    "dateModified": "2026-05-20",
     "provider": {
       "@type": "MedicalBusiness",
       "name": "Vaidya Vrindavanam Ayurveda Hospital",
+      "url": "https://vaidyavrindavanam.com",
       "address": POSTAL_ADDRESS_SCHEMA
     }
   },
@@ -129,9 +136,10 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`${treatment.name} Treatment in Haripad, Kerala`}
+  title={treatmentSeoTitles[treatment.slug] ?? `${treatment.name} Treatment in Haripad, Kerala`}
   description={treatmentSeoDescriptions[treatment.slug] ?? `${treatment.shortDescription}, Book at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.`}
   schema={schema}
+  ogImage={treatment.imageUrl ? `${treatment.imageUrl}?w=1200&h=630&fit=crop&auto=format&q=80` : undefined}
 >
   <!-- Hero image: full-bleed, gradient fades into page background -->
   {treatment.imageUrl && (
@@ -189,7 +197,7 @@ const schema = {
         <article class="content-col">
           <header class="doc-header">
             <p class="category-label">{categoryLabels[treatment.category] ?? treatment.category.replace(/-/g, ' ')}</p>
-            <h1 class="doc-title">{treatment.name}</h1>
+            <h1 class="doc-title">{treatment.name} Treatment in Haripad</h1>
             {(treatment.sanskrit || treatment.malayalam) && (
               <p class="alt-names">
                 {treatment.sanskrit && <span>{treatment.sanskrit}</span>}

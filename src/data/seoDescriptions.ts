@@ -21,7 +21,7 @@ export const treatmentSeoDescriptions: Record<string, string> = {
   'nasyam':
     'Nasyam nasal oil therapy for sinusitis, migraines, cervical spondylosis & neurological conditions. Authentic Panchakarma at Vaidya Vrindavanam, Haripad.',
   'njavara-kizhi':
-    'Njavara Kizhi (Shashtika Shali Pinda Sweda) — warm rice bolus massage for paralysis, arthritis & muscle wasting. Kerala Ayurveda, Vaidya Vrindavanam, Haripad.',
+    'Njavara Kizhi (Shashtika Shali Pinda Sweda) — rice bolus therapy for paralysis, arthritis & muscle wasting. Vaidya Vrindavanam, Haripad, Kerala.',
   'njavara-theppu':
     'Njavara Theppu — medicated Njavara rice paste for skin rejuvenation, muscle nourishment & anti-ageing. Ayurvedic therapy at Vaidya Vrindavanam, Haripad.',
   'pichu':
@@ -49,6 +49,18 @@ export const treatmentSeoDescriptions: Record<string, string> = {
 export const packageSeoDescriptions: Record<string, string> = {
   'karkidaka-chikitsa':
     'Authentic Karkidaka Chikitsa packages in Haripad, Kerala. 7/14/21-day monsoon Ayurveda detox by certified Vaidyas. Operating since 2014. WhatsApp to book.',
+};
+
+// Per-slug title overrides for treatments whose auto-generated titles exceed 60 chars.
+// Slug → title string WITHOUT the " | Vaidya Vrindavanam" suffix (SEO.astro appends that).
+export const treatmentSeoTitles: Record<string, string> = {
+  'katee-greeva-vasthi':    'Kati Vasthi & Greeva Vasthi Treatment, Haripad',
+  'choorna-pinda-swedam':   'Choorna Pinda Swedam Treatment, Haripad, Kerala',
+  'jambeera-pinda-swedam':  'Jambeera Pinda Swedam Treatment, Haripad Kerala',
+  'abhyangam-swedam':       'Abhyangam Swedam Treatment in Haripad, Kerala',
+  'marma-chikitsa':         'Marma Chikitsa Treatment in Haripad, Kerala',
+  'njavara-kizhi':          'Njavara Kizhi Treatment in Haripad, Kerala',
+  'njavara-theppu':         'Njavara Theppu Treatment in Haripad, Kerala',
 };
 
 export const conditionSeoDescriptions: Record<string, string> = {
