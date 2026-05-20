@@ -3,7 +3,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABanner from '../../components/CTABanner.astro';
-import { whatsappLink, PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL } from '../../config/contact';
+import {
+  whatsappLink,
+  PHONE_PRIMARY,
+  PHONE_PRIMARY_RAW,
+  PHONE_SECONDARY,
+  PHONE_SECONDARY_RAW,
+  EMAIL,
+  CLINIC_NAME,
+  ADDRESS_STREET,
+  ADDRESS_LOCALITY,
+  ADDRESS_DISTRICT,
+  ADDRESS_REGION,
+  ADDRESS_POSTAL_CODE,
+  ADDRESS_COUNTRY_LABEL,
+  POSTAL_ADDRESS_SCHEMA,
+} from '../../config/contact';
 import '../../styles/hero-animations.css';
 
 const pageUrl = 'https://vaidyavrindavanam.com/packages/karkidaka-chikitsa/';
@@ -98,7 +113,7 @@ const faqs = [
   },
   {
     question: 'Where are you located and how do I reach you?',
-    answer: 'Vaidya Vrindavanam Ayurveda Hospital is in Haripad, Alappuzha district, Kerala, about 1 hr from Kochi airport (COK), 1 hr 15 min from Trivandrum airport (TRV), and 45 min from Kollam. Address: Haripad, Alappuzha, Kerala 690514. We can arrange airport pickup for residential package guests; mention this when you WhatsApp +91 90748 48705.',
+    answer: `${CLINIC_NAME} is near RK Junction on NH-66 in Haripad, Alappuzha district, Kerala, about 1 hr from Kochi airport (COK), 1 hr 15 min from Trivandrum airport (TRV), and 45 min from Kollam. Address: ${ADDRESS_STREET}, ${ADDRESS_LOCALITY}, ${ADDRESS_DISTRICT}, ${ADDRESS_REGION} ${ADDRESS_POSTAL_CODE}. We can arrange airport pickup for residential package guests; mention this when you WhatsApp ${PHONE_PRIMARY}.`,
   },
   {
     question: 'Who should NOT take Karkidaka Chikitsa?',
@@ -157,14 +172,7 @@ const schema = {
         url: 'https://vaidyavrindavanam.com',
         telephone: PHONE_PRIMARY,
         email: EMAIL,
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Haripad',
-          addressLocality: 'Haripad',
-          addressRegion: 'Kerala',
-          postalCode: '690514',
-          addressCountry: 'IN',
-        },
+        address: POSTAL_ADDRESS_SCHEMA,
         medicalSpecialty: 'Ayurveda',
         foundingDate: '2014',
       },
@@ -479,9 +487,10 @@ const schema = {
         <div class="space-y-4 text-sm text-text-secondary leading-relaxed">
           <div>
             <p class="text-xs tracking-[3px] uppercase text-brand-gold mb-2">Address</p>
-            <p class="text-text-primary">Vaidya Vrindavanam Ayurveda Hospital</p>
-            <p>Haripad, Alappuzha district</p>
-            <p>Kerala, India 690514</p>
+            <p class="text-text-primary">{CLINIC_NAME}</p>
+            <p>{ADDRESS_STREET}</p>
+            <p>{ADDRESS_LOCALITY}, {ADDRESS_DISTRICT} district</p>
+            <p>{ADDRESS_REGION}, {ADDRESS_COUNTRY_LABEL} {ADDRESS_POSTAL_CODE}</p>
           </div>
           <div>
             <p class="text-xs tracking-[3px] uppercase text-brand-gold mb-2">Contact</p>

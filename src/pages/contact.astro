@@ -2,7 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
-import { PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL, WA_DEFAULT } from '../config/contact';
+import {
+  PHONE_PRIMARY,
+  PHONE_PRIMARY_RAW,
+  PHONE_SECONDARY,
+  PHONE_SECONDARY_RAW,
+  EMAIL,
+  WA_DEFAULT,
+  ADDRESS_STREET,
+  ADDRESS_LOCALITY,
+  ADDRESS_DISTRICT,
+  ADDRESS_REGION,
+  ADDRESS_POSTAL_CODE,
+  ADDRESS_COUNTRY_LABEL,
+  POSTAL_ADDRESS_SCHEMA,
+  GEO_SCHEMA,
+} from '../config/contact';
 
 const faqs = [
   { question: 'What are your clinic hours?', answer: 'We are open Monday through Saturday. Morning: 9:00 AM – 12:00 PM. Evening: 4:00 PM – 7:00 PM. We are closed on Sundays for outpatient consultations, but inpatients receive care daily.' },
@@ -22,19 +37,8 @@ const schema = {
       "url": "https://vaidyavrindavanam.com/",
       "image": "https://vaidyavrindavanam.com/og-default.jpg",
       "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ classical treatments with residential care.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Near RK Junction, NH-66",
-        "addressLocality": "Haripad",
-        "addressRegion": "Kerala",
-        "postalCode": "690513",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 9.2333,
-        "longitude": 76.4608
-      },
+      "address": POSTAL_ADDRESS_SCHEMA,
+      "geo": GEO_SCHEMA,
       "telephone": `+${PHONE_PRIMARY_RAW}`,
       "email": EMAIL,
       "openingHoursSpecification": [
@@ -94,7 +98,7 @@ const schema = {
         <div class="space-y-4 text-sm text-text-secondary">
           <div>
             <p class="text-text-muted text-xs uppercase tracking-wider mb-1">Address</p>
-            <p>Near RK Junction, NH-66<br />Haripad, Alappuzha - 690513<br />Kerala, India</p>
+            <p>{ADDRESS_STREET}<br />{ADDRESS_LOCALITY}, {ADDRESS_DISTRICT} - {ADDRESS_POSTAL_CODE}<br />{ADDRESS_REGION}, {ADDRESS_COUNTRY_LABEL}</p>
           </div>
           <div>
             <p class="text-text-muted text-xs uppercase tracking-wider mb-1">Phone</p>
@@ -141,17 +145,20 @@ const schema = {
             <span id="name-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
           </div>
           <div>
-            <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="phone">Phone / WhatsApp</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" aria-describedby="phone-error" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="phone">
+              Phone / WhatsApp <span class="text-brand-gold normal-case tracking-normal">(or email)</span>
+            </label>
+            <input type="tel" id="phone" name="phone" required inputmode="tel" autocomplete="tel" pattern="[+0-9][0-9\s\-()+]{5,}" title="Enter a valid phone number, including country code if outside India." aria-describedby="phone-error contact-method-help" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
             <span id="phone-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
           </div>
           <div>
             <!-- name="email" tells Formspree to use this as the reply-to address -->
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="email">
-              Email Address <span class="text-brand-gold normal-case tracking-normal">(required for overseas enquiries)</span>
+              Email Address <span class="text-brand-gold normal-case tracking-normal">(or phone)</span>
             </label>
-            <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
+            <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error contact-method-help" class="w-full bg-brand-bg-alt border border-brand-gold-dim text-text-primary px-4 py-2.5 text-sm focus:border-brand-gold focus:outline-none" />
             <span id="email-error" class="text-xs text-red-400 mt-1 block" role="alert" hidden></span>
+            <p id="contact-method-help" class="text-xs text-text-subtle mt-2">Please share either a phone number or an email address so we can reply.</p>
           </div>
           <div>
             <label class="text-xs text-text-muted uppercase tracking-wider block mb-1" for="message">Message</label>
@@ -161,9 +168,9 @@ const schema = {
             SEND MESSAGE
           </button>
           <p class="text-xs text-text-subtle mt-3">
-            Your information is processed securely via
-            <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" class="text-brand-gold underline">Formspree</a>
-            and used only to respond to your enquiry. We do not share your data with third parties.
+            Your enquiry is sent through
+            <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" class="text-brand-gold underline">Formspree</a>,
+            our form-processing provider, and used by Vaidya Vrindavanam only to respond to you. Please avoid sharing urgent or highly sensitive medical details in this form.
           </p>
         </form>
       </div>
@@ -188,8 +195,17 @@ const schema = {
       const form = document.querySelector('form[action*="formspree"]');
       if (!form) return;
 
-      const GOLD_DIM = 'var(--color-brand-gold-dim, #6b5a2e)';
       const ERROR_COLOR = '#f87171';
+      const phoneField = form.querySelector('#phone');
+      const emailField = form.querySelector('#email');
+
+      function syncContactRequirements() {
+        if (!phoneField || !emailField) return;
+        const hasPhone = phoneField.value.trim().length > 0;
+        const hasEmail = emailField.value.trim().length > 0;
+        phoneField.toggleAttribute('required', !hasPhone && !hasEmail);
+        emailField.toggleAttribute('required', false);
+      }
 
       function validate(id) {
         const field = form.querySelector('#' + id);
@@ -208,8 +224,8 @@ const schema = {
             return 'Please enter a valid email address.';
         }
         if (id === 'phone' || id === 'email') {
-          const phone = (form.querySelector('#phone')).value.trim();
-          const email = (form.querySelector('#email')).value.trim();
+          const phone = phoneField ? phoneField.value.trim() : '';
+          const email = emailField ? emailField.value.trim() : '';
           if (!phone && !email)
             return 'Please provide at least a phone number or email address.';
         }
@@ -231,12 +247,22 @@ const schema = {
         if (!field) return;
         field.addEventListener('blur', function () { applyError(id, validate(id)); });
         field.addEventListener('input', function () {
+          syncContactRequirements();
+          if (id === 'phone' || id === 'email') {
+            ['phone', 'email'].forEach(function (contactId) {
+              const contactField = form.querySelector('#' + contactId);
+              if (contactField && contactField.getAttribute('aria-invalid') === 'true') {
+                applyError(contactId, validate(contactId));
+              }
+            });
+          }
           if (field.getAttribute('aria-invalid') === 'true') applyError(id, validate(id));
         });
       });
 
       form.addEventListener('submit', function (e) {
         var blocked = false;
+        syncContactRequirements();
         ['name', 'phone', 'email'].forEach(function (id) {
           var msg = validate(id);
           applyError(id, msg);
@@ -244,6 +270,8 @@ const schema = {
         });
         if (blocked) { e.preventDefault(); form.querySelector('[aria-invalid="true"]').focus(); }
       });
+
+      syncContactRequirements();
     })();
   </script>
 

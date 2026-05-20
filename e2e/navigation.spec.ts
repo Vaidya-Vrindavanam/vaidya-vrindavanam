@@ -1,37 +1,38 @@
 import { test, expect } from '@playwright/test';
+import { pagePath } from './helpers';
 
 test.describe('Navigation', () => {
   test('should navigate via navbar links', async ({ page }) => {
     await page.goto('/');
 
     // Test treatments link
-    const treatmentsLink = page.locator('nav a[href="/treatments"]');
+    const treatmentsLink = page.locator('#main-nav a[href="/treatments/"]');
     await treatmentsLink.click();
-    await page.waitForURL('**/treatments');
+    await page.waitForURL(pagePath('/treatments'));
 
     // Test conditions link
-    const conditionsLink = page.locator('nav a[href="/conditions"]');
+    const conditionsLink = page.locator('#main-nav a[href="/conditions/"]');
     await conditionsLink.click();
-    await page.waitForURL('**/conditions');
+    await page.waitForURL(pagePath('/conditions'));
   });
 
   test('should have working internal links', async ({ page }) => {
-    await page.goto('/treatments');
+    await page.goto('/treatments/');
 
     // Navigate to treatment detail
-    const allTreatmentLinks = page.locator('main a[href*="/treatments/"]');
+    const allTreatmentLinks = page.locator('main a[href^="/treatments/"]:not([href="/treatments/"])');
     const count = await allTreatmentLinks.count();
 
-    if (count > 1) {
-      const firstTreatmentLink = allTreatmentLinks.nth(1);
+    if (count > 0) {
+      const firstTreatmentLink = allTreatmentLinks.first();
       const href = await firstTreatmentLink.getAttribute('href');
 
-      if (href && href !== '/treatments') {
+      if (href) {
         await firstTreatmentLink.click();
 
         // Should be able to navigate back
         await page.goBack();
-        await page.waitForURL('**/treatments');
+        await page.waitForURL(pagePath('/treatments'));
       }
     }
   });
@@ -60,12 +61,12 @@ test.describe('Navigation', () => {
     await page.goto('/');
 
     // Navigate multiple times
-    await page.goto('/treatments');
-    await page.goto('/conditions');
-    await page.goto('/about');
+    await page.goto('/treatments/');
+    await page.goto('/conditions/');
+    await page.goto('/about/');
     await page.goto('/');
 
     // Should end up on homepage
-    await expect(page).toHaveURL('/');
+    await expect(page).toHaveURL(pagePath(''));
   });
 });

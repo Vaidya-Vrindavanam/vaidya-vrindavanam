@@ -5,7 +5,14 @@ import FAQAccordion from '../../components/FAQAccordion.astro';
 import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
 import { getTreatments, getConditions } from '../../lib/sanity';
 import type { Treatment, Condition } from '../../lib/sanity';
-import { PHONE_PRIMARY_RAW } from '../../config/contact';
+import {
+  PHONE_PRIMARY_RAW,
+  ADDRESS_LOCALITY,
+  ADDRESS_DISTRICT,
+  ADDRESS_REGION,
+  ADDRESS_POSTAL_CODE,
+  POSTAL_ADDRESS_SCHEMA,
+} from '../../config/contact';
 import { treatmentSeoDescriptions } from '../../data/seoDescriptions';
 import { treatmentDetails } from '../../data/treatmentDetails';
 
@@ -88,12 +95,7 @@ const schemaGraph: Record<string, unknown>[] = [
     "provider": {
       "@type": "MedicalBusiness",
       "name": "Vaidya Vrindavanam Ayurveda Hospital",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Haripad",
-        "addressRegion": "Kerala",
-        "addressCountry": "IN"
-      }
+      "address": POSTAL_ADDRESS_SCHEMA
     }
   },
   {
@@ -356,8 +358,8 @@ const schema = {
             <div class="info-block">
               <p class="info-label">Location</p>
               <p class="info-text">
-                Haripad, Alappuzha<br />
-                Kerala, 690513
+                {ADDRESS_LOCALITY}, {ADDRESS_DISTRICT}<br />
+                {ADDRESS_REGION}, {ADDRESS_POSTAL_CODE}
               </p>
               <p class="info-note">Residential care available 24/7</p>
             </div>

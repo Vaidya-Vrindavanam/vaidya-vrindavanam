@@ -9,6 +9,8 @@ import Analytics from '@vercel/analytics/astro';
 interface Props {
   title: string;
   description: string;
+  canonical?: string;
+  ogImage?: string;
   schema?: object;
   ogType?: string;
   articlePublishedTime?: string;
@@ -16,7 +18,7 @@ interface Props {
   lcpImage?: string;
 }
 
-const { title, description, schema, ogType, articlePublishedTime, articleAuthor, lcpImage } = Astro.props;
+const { title, description, canonical, ogImage, schema, ogType, articlePublishedTime, articleAuthor, lcpImage } = Astro.props;
 
 const lcpSrcset = lcpImage
   ? `${lcpImage}?w=240&h=160&fit=crop&auto=format&q=65 240w, ${lcpImage}?w=480&h=320&fit=crop&auto=format&q=65 480w, ${lcpImage}?w=720&h=480&fit=crop&auto=format&q=65 720w`
@@ -44,6 +46,8 @@ const lcpSrcset = lcpImage
     <SEO
       title={title}
       description={description}
+      canonical={canonical}
+      ogImage={ogImage}
       schema={schema}
       ogType={ogType}
       articlePublishedTime={articlePublishedTime}

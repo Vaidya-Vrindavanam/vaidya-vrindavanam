@@ -8,7 +8,7 @@ import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
 import { getTreatments, getConditions } from '../lib/sanity';
-import { WA_DEFAULT, PHONE_PRIMARY_RAW } from '../config/contact';
+import { WA_DEFAULT, PHONE_PRIMARY_RAW, EMAIL, GOOGLE_MAPS_URL, POSTAL_ADDRESS_SCHEMA, GEO_SCHEMA } from '../config/contact';
 
 const treatments = (await getTreatments()).sort((a, b) => a.order - b.order);
 const featuredTreatments = treatments.slice(0, 5);
@@ -31,7 +31,7 @@ const schema = {
       },
       "sameAs": [
         "https://www.facebook.com/people/Vaidya-Vrindavanam/100034507068925/",
-        "https://www.google.com/maps/place/Vaidya+Vrindavanam+Ayurveda+Hospital+Haripad/@9.2711918,76.4608952,17z"
+        GOOGLE_MAPS_URL
       ]
     },
     {
@@ -41,24 +41,13 @@ const schema = {
       "description": "Authentic Kerala Ayurveda hospital in Haripad offering Panchakarma, Marma Chikitsa, and 20+ traditional treatments with residential care.",
       "url": "https://vaidyavrindavanam.com/",
       "telephone": `+${PHONE_PRIMARY_RAW}`,
-      "email": "ayurvv@gmail.com",
+      "email": EMAIL,
       "image": "https://vaidyavrindavanam.com/og-default.jpg",
       "priceRange": "₹₹",
       "medicalSpecialty": "Ayurveda",
       "parentOrganization": { "@id": ORG_ID },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Near RK Junction, NH-66",
-        "addressLocality": "Haripad",
-        "addressRegion": "Kerala",
-        "postalCode": "690513",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 9.2711918,
-        "longitude": 76.4608952
-      },
+      "address": POSTAL_ADDRESS_SCHEMA,
+      "geo": GEO_SCHEMA,
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.3",
@@ -275,7 +264,7 @@ const schema = {
       <!-- Link to Google -->
       <div class="text-center mt-8">
         <a
-          href="https://www.google.com/maps/place/Vaidya+Vrindavanam+Ayurveda+Hospital+Haripad/@9.2711918,76.4608952,17z"
+          href={GOOGLE_MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
           class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors"

@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { pagePath } from './helpers';
 
 test.describe('Treatments', () => {
   test('should load treatments listing page', async ({ page }) => {
-    await page.goto('/treatments');
+    await page.goto('/treatments/');
 
     await expect(page).toHaveTitle(/Treatments/);
 
@@ -12,26 +13,24 @@ test.describe('Treatments', () => {
   });
 
   test('should display treatment cards', async ({ page }) => {
-    await page.goto('/treatments');
+    await page.goto('/treatments/');
 
     // TreatmentCards are <a> elements linking to /treatments/[slug]
-    const treatmentLinks = page.locator('main').locator('a[href*="/treatments/"]').filter({ hasNot: page.locator('a[href="/treatments"]') });
-    // Simpler: count all treatment detail links (avoid self-link)
-    const allLinks = page.locator('main a[href*="/treatments/"]');
+    const allLinks = page.locator('main a[href^="/treatments/"]:not([href="/treatments/"])');
     const count = await allLinks.count();
-    expect(count).toBeGreaterThan(1); // More than just list page link
+    expect(count).toBeGreaterThan(0);
   });
 
   test('should navigate to treatment detail page', async ({ page }) => {
-    await page.goto('/treatments');
+    await page.goto('/treatments/');
 
     // Get a treatment detail link (not the listing page link)
-    const firstTreatmentLink = page.locator('main a[href*="/treatments/"]').nth(1);
+    const firstTreatmentLink = page.locator('main a[href^="/treatments/"]:not([href="/treatments/"])').first();
     const href = await firstTreatmentLink.getAttribute('href');
 
-    if (href && href !== '/treatments') {
+    if (href) {
       await firstTreatmentLink.click();
-      await page.waitForURL(new RegExp(`${href}$`));
+      await page.waitForURL(pagePath(href.replace(/\/$/, '')));
 
       // On detail page, check that content loaded
       const content = page.locator('main');
@@ -40,12 +39,12 @@ test.describe('Treatments', () => {
   });
 
   test('should display treatment details', async ({ page }) => {
-    await page.goto('/treatments');
+    await page.goto('/treatments/');
 
-    const firstTreatmentLink = page.locator('main a[href*="/treatments/"]').nth(1);
+    const firstTreatmentLink = page.locator('main a[href^="/treatments/"]:not([href="/treatments/"])').first();
     const href = await firstTreatmentLink.getAttribute('href');
 
-    if (href && href !== '/treatments') {
+    if (href) {
       await firstTreatmentLink.click();
 
       // Check for content that should be on detail page

@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { pagePath } from './helpers';
 
 test.describe('Core Pages', () => {
   test('should load about page', async ({ page }) => {
-    await page.goto('/about');
+    await page.goto('/about/');
 
     await expect(page).toHaveTitle(/About/);
     const main = page.locator('main');
@@ -10,7 +11,7 @@ test.describe('Core Pages', () => {
   });
 
   test('should load packages page', async ({ page }) => {
-    await page.goto('/packages');
+    await page.goto('/packages/');
 
     await expect(page).toHaveTitle(/Packages/);
     const main = page.locator('main');
@@ -18,7 +19,7 @@ test.describe('Core Pages', () => {
   });
 
   test('should load contact page', async ({ page }) => {
-    await page.goto('/contact');
+    await page.goto('/contact/');
 
     await expect(page).toHaveTitle(/Contact/);
     const main = page.locator('main');
@@ -26,7 +27,7 @@ test.describe('Core Pages', () => {
   });
 
   test('should load blog listing page', async ({ page }) => {
-    await page.goto('/blog');
+    await page.goto('/blog/');
 
     await expect(page).toHaveTitle(/Blog/);
     const main = page.locator('main');
@@ -34,18 +35,18 @@ test.describe('Core Pages', () => {
   });
 
   test('should load blog post detail page', async ({ page }) => {
-    await page.goto('/blog');
+    await page.goto('/blog/');
 
-    const allBlogLinks = page.locator('main a[href*="/blog/"]');
+    const allBlogLinks = page.locator('main a[href^="/blog/"]:not([href="/blog/"])');
     const count = await allBlogLinks.count();
 
-    if (count > 1) { // There should be listing links
-      const firstBlogLink = allBlogLinks.nth(1);
+    if (count > 0) {
+      const firstBlogLink = allBlogLinks.first();
       const href = await firstBlogLink.getAttribute('href');
 
-      if (href && href !== '/blog') {
+      if (href) {
         await firstBlogLink.click();
-        await page.waitForURL(new RegExp(`${href}$`));
+        await page.waitForURL(pagePath(href.replace(/\/$/, '')));
 
         const article = page.locator('main');
         await expect(article).toBeVisible();

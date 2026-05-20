@@ -71,8 +71,6 @@ cp .env.example .env
 SANITY_PROJECT_ID=7rhexv2k
 SANITY_DATASET=production
 SANITY_API_TOKEN=<your-sanity-read-token>
-GOOGLE_MAPS_API_KEY=<optional>
-KIE_AI_API_KEY=<optional - only needed for image generation scripts>
 ```
 
 Get your Sanity API token from [sanity.io/manage](https://sanity.io/manage) → Project → API → Tokens → Add API token (Viewer role).
@@ -286,7 +284,6 @@ The site is deployed on Vercel with automatic deploys on push to `main`.
 SANITY_PROJECT_ID
 SANITY_DATASET
 SANITY_API_TOKEN
-GOOGLE_MAPS_API_KEY
 ```
 
 ### Security Headers
@@ -331,7 +328,7 @@ Configured as a single source of truth in `src/config/contact.ts`:
 | Phone (primary) | +91 90748 48705 |
 | Phone (secondary) | +91 82818 61587 |
 | Email | ayurvv@gmail.com |
-| Address | Near RK Junction, NH-66, Haripad, Alappuzha, Kerala 690514 |
+| Address | Near RK Junction, NH-66, Haripad, Alappuzha, Kerala 690513 |
 | Hours (Mon–Sat) | 9:00 AM–12:00 PM & 4:00 PM–7:00 PM |
 | Sunday | Closed (outpatient) |
 | WhatsApp | wa.me/919074848705 |
@@ -343,7 +340,6 @@ Configured as a single source of truth in `src/config/contact.ts`:
 
 - [ ] Add real doctor photos (placeholders in `about.astro` and `index.astro`)
 - [ ] Replace placeholder testimonials with real patient quotes
-- [ ] Fix Google Maps iframe embed (needs real API key in `contact.astro`)
 - [ ] Add more blog posts (target: 8–10 for launch)
 - [ ] Set up GA4 custom events (WhatsApp clicks, phone call clicks, form submissions)
 

@@ -3,13 +3,20 @@ import { toHTML } from '@portabletext/to-html'
 import sanitizeHtml from 'sanitize-html'
 import { marked } from 'marked'
 
-const client = createClient({
-  projectId: import.meta.env.SANITY_PROJECT_ID as string,
-  dataset: (import.meta.env.SANITY_DATASET as string | undefined) ?? 'production',
-  apiVersion: '2024-01-01',
-  useCdn: false,
-  token: import.meta.env.SANITY_API_TOKEN as string | undefined,
-})
+const sanityEnv = import.meta.env ?? process.env
+
+let client: ReturnType<typeof createClient> | undefined
+
+function getClient() {
+  client ??= createClient({
+    projectId: sanityEnv.SANITY_PROJECT_ID as string,
+    dataset: (sanityEnv.SANITY_DATASET as string | undefined) ?? 'production',
+    apiVersion: '2024-01-01',
+    useCdn: false,
+    token: sanityEnv.SANITY_API_TOKEN as string | undefined,
+  })
+  return client
+}
 
 // ---- Types (identical to payload.ts — pages import these unchanged) ----
 
@@ -51,6 +58,44 @@ export type BlogPost = {
   contentHTML: string
 }
 
+type TreatmentDoc = {
+  _id?: string
+  name?: string | null
+  slug?: string | null
+  sanskrit?: string | null
+  malayalam?: string | null
+  shortDescription?: string | null
+  icon?: string | null
+  imageUrl?: string | null
+  category?: Treatment['category'] | null
+  conditions?: Array<{ slug?: string | null }> | null
+  duration?: string | null
+  order?: number | null
+  featured?: boolean | null
+  content?: unknown
+}
+
+type ConditionDoc = {
+  _id?: string
+  name?: string | null
+  slug?: string | null
+  shortDescription?: string | null
+  treatments?: Array<{ slug?: string | null }> | null
+  order?: number | null
+  content?: unknown
+}
+
+type BlogPostDoc = {
+  _id?: string
+  title?: string | null
+  slug?: string | null
+  excerpt?: string | null
+  date?: string | null
+  author?: string | null
+  category?: BlogPost['category'] | null
+  content?: unknown
+}
+
 // ---- Portable Text → HTML ----
 
 const ALLOWED_TAGS = [
@@ -60,6 +105,14 @@ const ALLOWED_TAGS = [
 
 const ALLOWED_ATTRS: sanitizeHtml.IOptions['allowedAttributes'] = {
   a: ['href', 'title', 'target', 'rel'],
+}
+
+const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: ALLOWED_TAGS,
+  allowedAttributes: ALLOWED_ATTRS,
+  allowedSchemes: ['https', 'mailto', 'tel'],
+  disallowedTagsMode: 'discard',
+  nonTextTags: ['script', 'style', 'textarea', 'option', 'xmp'],
 }
 
 type PTBlock = { _type: string; style?: string; listItem?: string; level?: number; children?: Array<{ _type: string; text?: string }> }
@@ -136,47 +189,113 @@ function unwrapListItemParagraphs(html: string): string {
   return html.replace(/<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>/g, '<li>$1</li>')
 }
 
+export function sanitizeRenderedHTML(html: string): string {
+  return sanitizeHtml(unwrapListItemParagraphs(html), SANITIZE_OPTIONS)
+}
+
 function portableTextToHTML(content: unknown): string {
   if (!content || !Array.isArray(content) || content.length === 0) return ''
   try {
-    const sanitizeOpts = {
-      allowedTags: ALLOWED_TAGS,
-      allowedAttributes: ALLOWED_ATTRS,
-      allowedSchemes: ['https', 'mailto', 'tel'],
-    }
     const normalized = splitBulletBlocks(content as PTBlock[])
     if (hasMarkdownSyntax(normalized)) {
       const markdown = blocksToMarkdown(normalized)
       const rendered = marked.parse(markdown) as string
-      return sanitizeHtml(unwrapListItemParagraphs(rendered), sanitizeOpts)
+      return sanitizeRenderedHTML(rendered)
     }
     const raw = toHTML(normalized as Parameters<typeof toHTML>[0])
-    return sanitizeHtml(unwrapListItemParagraphs(raw), sanitizeOpts)
+    return sanitizeRenderedHTML(raw)
   } catch {
     return ''
   }
 }
 
+function requiredText(value: string | null | undefined): string | null {
+  const text = value?.trim()
+  return text ? text : null
+}
+
+function slugRefs(refs: Array<{ slug?: string | null }> | null | undefined): Array<{ slug: string }> {
+  return (refs ?? [])
+    .map(ref => requiredText(ref.slug))
+    .filter((slug): slug is string => Boolean(slug))
+    .map(slug => ({ slug }))
+}
+
+export function normalizeTreatments(docs: TreatmentDoc[]): Treatment[] {
+  return docs.flatMap(doc => {
+    const id = requiredText(doc._id)
+    const slug = requiredText(doc.slug)
+    const name = requiredText(doc.name)
+    const shortDescription = requiredText(doc.shortDescription)
+    const category = doc.category
+    if (!id || !slug || !name || !shortDescription || !category) return []
+
+    return [{
+      id,
+      slug,
+      name,
+      sanskrit: doc.sanskrit ?? undefined,
+      malayalam: doc.malayalam ?? undefined,
+      shortDescription,
+      icon: doc.icon ?? '🌿',
+      imageUrl: doc.imageUrl ?? undefined,
+      category,
+      conditions: slugRefs(doc.conditions),
+      duration: doc.duration ?? undefined,
+      order: doc.order ?? 99,
+      contentHTML: portableTextToHTML(doc.content),
+      featured: doc.featured ?? false,
+    }]
+  })
+}
+
+export function normalizeConditions(docs: ConditionDoc[]): Condition[] {
+  return docs.flatMap(doc => {
+    const id = requiredText(doc._id)
+    const slug = requiredText(doc.slug)
+    const name = requiredText(doc.name)
+    const shortDescription = requiredText(doc.shortDescription)
+    if (!id || !slug || !name || !shortDescription) return []
+
+    return [{
+      id,
+      slug,
+      name,
+      shortDescription,
+      treatments: slugRefs(doc.treatments),
+      order: doc.order ?? 99,
+      contentHTML: portableTextToHTML(doc.content),
+    }]
+  })
+}
+
+export function normalizeBlogPosts(docs: BlogPostDoc[]): BlogPost[] {
+  return docs.flatMap(doc => {
+    const id = requiredText(doc._id)
+    const slug = requiredText(doc.slug)
+    const title = requiredText(doc.title)
+    const excerpt = requiredText(doc.excerpt)
+    const category = doc.category
+    if (!id || !slug || !title || !excerpt || !category) return []
+
+    return [{
+      id,
+      slug,
+      title,
+      excerpt,
+      date: doc.date ? new Date(doc.date) : new Date(),
+      author: doc.author ?? 'Dr. Jayakrishnan T J',
+      category,
+      contentHTML: portableTextToHTML(doc.content),
+    }]
+  })
+}
+
 // ---- Public API (identical signatures to payload.ts) ----
 
 export async function getTreatments(): Promise<Treatment[]> {
-  const docs = await client.fetch<Array<{
-    _id: string
-    name: string
-    slug: string
-    sanskrit?: string
-    malayalam?: string
-    shortDescription: string
-    icon?: string
-    imageUrl?: string
-    category: Treatment['category']
-    conditions: Array<{ slug: string }>
-    duration?: string
-    order?: number
-    featured?: boolean
-    content?: unknown
-  }>>(`
-    *[_type == "treatment"] | order(order asc) {
+  const docs = await getClient().fetch<TreatmentDoc[]>(`
+    *[_type == "treatment" && defined(slug.current) && defined(name) && defined(shortDescription) && defined(category)] | order(order asc) {
       _id,
       name,
       "slug": slug.current,
@@ -196,22 +315,7 @@ export async function getTreatments(): Promise<Treatment[]> {
     }
   `)
 
-  return docs.map(doc => ({
-    id: doc._id,
-    slug: doc.slug,
-    name: doc.name,
-    sanskrit: doc.sanskrit ?? undefined,
-    malayalam: doc.malayalam ?? undefined,
-    shortDescription: doc.shortDescription,
-    icon: doc.icon ?? '🌿',
-    imageUrl: doc.imageUrl ?? undefined,
-    category: doc.category,
-    conditions: doc.conditions ?? [],
-    duration: doc.duration ?? undefined,
-    order: doc.order ?? 99,
-    contentHTML: portableTextToHTML(doc.content),
-    featured: doc.featured ?? false,
-  }))
+  return normalizeTreatments(docs)
 }
 
 export async function getTreatmentBySlug(slug: string): Promise<Treatment | null> {
@@ -220,16 +324,8 @@ export async function getTreatmentBySlug(slug: string): Promise<Treatment | null
 }
 
 export async function getConditions(): Promise<Condition[]> {
-  const docs = await client.fetch<Array<{
-    _id: string
-    name: string
-    slug: string
-    shortDescription: string
-    treatments: Array<{ slug: string }>
-    order?: number
-    content?: unknown
-  }>>(`
-    *[_type == "condition"] | order(order asc) {
+  const docs = await getClient().fetch<ConditionDoc[]>(`
+    *[_type == "condition" && defined(slug.current) && defined(name) && defined(shortDescription)] | order(order asc) {
       _id,
       name,
       "slug": slug.current,
@@ -242,15 +338,7 @@ export async function getConditions(): Promise<Condition[]> {
     }
   `)
 
-  return docs.map(doc => ({
-    id: doc._id,
-    slug: doc.slug,
-    name: doc.name,
-    shortDescription: doc.shortDescription,
-    treatments: doc.treatments ?? [],
-    order: doc.order ?? 99,
-    contentHTML: portableTextToHTML(doc.content),
-  }))
+  return normalizeConditions(docs)
 }
 
 export async function getConditionBySlug(slug: string): Promise<Condition | null> {
@@ -259,17 +347,8 @@ export async function getConditionBySlug(slug: string): Promise<Condition | null
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const docs = await client.fetch<Array<{
-    _id: string
-    title: string
-    slug: string
-    excerpt: string
-    date: string
-    author?: string
-    category: BlogPost['category']
-    content?: unknown
-  }>>(`
-    *[_type == "post"] | order(date desc) {
+  const docs = await getClient().fetch<BlogPostDoc[]>(`
+    *[_type == "post" && defined(slug.current) && defined(title) && defined(excerpt) && defined(category)] | order(date desc) {
       _id,
       title,
       "slug": slug.current,
@@ -281,16 +360,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     }
   `)
 
-  return docs.map(doc => ({
-    id: doc._id,
-    slug: doc.slug,
-    title: doc.title,
-    excerpt: doc.excerpt,
-    date: doc.date ? new Date(doc.date) : new Date(),
-    author: doc.author ?? 'Dr. Jayakrishnan T J',
-    category: doc.category,
-    contentHTML: portableTextToHTML(doc.content),
-  }))
+  return normalizeBlogPosts(docs)
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {

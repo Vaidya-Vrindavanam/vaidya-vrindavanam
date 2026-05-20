@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import DoctorProfile from '../components/DoctorProfile.astro';
 import CTABanner from '../components/CTABanner.astro';
-import { PHONE_PRIMARY_RAW } from '../config/contact';
+import { PHONE_PRIMARY_RAW, POSTAL_ADDRESS_SCHEMA } from '../config/contact';
 
 const schema = {
   "@context": "https://schema.org",
@@ -16,14 +16,7 @@ const schema = {
       "telephone": `+${PHONE_PRIMARY_RAW}`,
       "foundingDate": "2014",
       "sameAs": ["https://share.google/7sp4iCnGkZaIpZ53O"],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Near RK Junction, NH-66",
-        "addressLocality": "Haripad",
-        "addressRegion": "Kerala",
-        "postalCode": "690513",
-        "addressCountry": "IN"
-      },
+      "address": POSTAL_ADDRESS_SCHEMA,
       "employee": [
         {
           "@type": "Person",

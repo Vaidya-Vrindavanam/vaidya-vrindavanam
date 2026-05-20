@@ -111,8 +111,6 @@ Images are hosted on **Sanity Image CDN** (`cdn.sanity.io`) — persistent, no r
 SANITY_PROJECT_ID=<your-sanity-project-id>
 SANITY_DATASET=production
 SANITY_API_TOKEN=<editor token>
-GOOGLE_MAPS_API_KEY=...
-KIE_AI_API_KEY=...
 ```
 
 Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel dashboard → Settings → Environment Variables.
@@ -150,10 +148,9 @@ Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel das
 
 ### Critical Gaps (fix in priority order)
 1. **6 Google reviews (4.3★)** — competitors have 76–235; blocks Local Pack entry
-2. **No LocalBusiness / MedicalOrganization schema** — `BaseLayout.astro` passes `schema` prop but homepage may not be populating it correctly; verify and fix
-3. **Not listed on JustDial** — JustDial ranks #1–4 for every Haripad Ayurveda SERP
-4. **Treatment pages are thin** (< 300 words each) — Week 2 sub-task #7 still queued
-5. **No package pricing** — all 4 packages show "Contact for pricing"
+2. **Not listed on JustDial** — JustDial ranks #1–4 for every Haripad Ayurveda SERP
+3. **Treatment pages are thin** (< 300 words each) — Week 2 sub-task #7 still queued
+4. **No package pricing** — all 4 homepage packages show "Contact for pricing"
 
 ### Pending Week 2 Sub-tasks (from SEO-Audit-2026-04-22.md plan)
 - [ ] #7 Expand each treatment page to 900+ words + FAQ schema (20 treatments)
@@ -162,16 +159,27 @@ Also set `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` in Vercel das
 - [ ] #11 Update detail-page H1s to include "Treatment" + location
 
 ### New Actions from 2026-05-18 Audit
-- [ ] Add `LocalBusiness`/`MedicalOrganization` JSON-LD to homepage (BaseLayout schema prop)
+- [x] Add `LocalBusiness`/`MedicalOrganization` JSON-LD to homepage (BaseLayout schema prop)
 - [ ] Create `/ayurveda-hospital-alappuzha/` page (590 searches/mo, LOW competition)
 - [ ] Add `llms.txt` to `public/` directory
-- [ ] Verify `/sitemap.xml` resolves (previously 404)
+- [x] Verify `/sitemap.xml` resolves (generated from `dist/sitemap-index.xml` after build)
+
+### Code Health Fixes Completed
+- [x] Sanitized rendered CMS HTML and added regression coverage for unsafe raw-text containers
+- [x] Removed obsolete Google/KIE API key references and added secret scanning
+- [x] Centralized clinic name, address, phone, email, geo, and schema values
+- [x] Filtered malformed Sanity documents and broken references before rendering
+- [x] Added `/sitemap.xml` alias generation after build
+- [x] Forwarded canonical and Open Graph image props through `BaseLayout`
+- [x] Fixed sticky header overlap on condition detail pages
+- [x] Hardened contact form fallback validation and Formspree privacy copy
+- [x] Repaired the Playwright E2E suite; full Chromium, Firefox, and WebKit run passes
 
 ## Clinic Details (for content)
 
 - **Phone:** +91 90748 48705, +91 82818 61587
 - **Email:** ayurvv@gmail.com
-- **Location:** Haripad, Alappuzha, Kerala — 690514
+- **Location:** Near RK Junction, NH-66, Haripad, Alappuzha, Kerala — 690513
 - **Hours:** Mon–Sat 9AM–12PM & 4PM–7PM, Sunday closed
 - **USP:** Marma Chikitsa combined with modern chiropractic treatment
 - **Operating since:** 2014

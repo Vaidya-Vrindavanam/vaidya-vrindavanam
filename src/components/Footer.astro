@@ -1,5 +1,15 @@
 ﻿---
-import { PHONE_PRIMARY, PHONE_PRIMARY_RAW, PHONE_SECONDARY, PHONE_SECONDARY_RAW, EMAIL } from '../config/contact';
+import {
+  PHONE_PRIMARY,
+  PHONE_PRIMARY_RAW,
+  PHONE_SECONDARY,
+  PHONE_SECONDARY_RAW,
+  EMAIL,
+  ADDRESS_LOCALITY,
+  ADDRESS_DISTRICT,
+  ADDRESS_REGION,
+  ADDRESS_POSTAL_CODE,
+} from '../config/contact';
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
@@ -23,7 +33,7 @@ const year = new Date().getFullYear();
       <address class="not-italic text-sm text-text-secondary leading-relaxed">
         <p class="mb-4">
           Authentic Ayurvedic healing rooted in Kerala's ancient traditions.<br />
-          Haripad, Alappuzha, Kerala, 690513
+          {ADDRESS_LOCALITY}, {ADDRESS_DISTRICT}, {ADDRESS_REGION}, {ADDRESS_POSTAL_CODE}
         </p>
         <ul class="space-y-1 -my-1.5">
           <li>
