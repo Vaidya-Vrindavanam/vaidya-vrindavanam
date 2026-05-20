@@ -47,6 +47,11 @@ export type Condition = {
   contentHTML: string
 }
 
+export type FAQ = {
+  question: string
+  answer: string
+}
+
 export type BlogPost = {
   id: string
   slug: string
@@ -56,6 +61,7 @@ export type BlogPost = {
   author: string
   category: 'health-tips' | 'treatment-guides' | 'seasonal-advice' | 'patient-education'
   contentHTML: string
+  faqs: FAQ[]
 }
 
 type TreatmentDoc = {
@@ -94,6 +100,7 @@ type BlogPostDoc = {
   author?: string | null
   category?: BlogPost['category'] | null
   content?: unknown
+  faqs?: Array<{ question?: string | null; answer?: string | null }> | null
 }
 
 // ---- Portable Text → HTML ----
@@ -287,6 +294,11 @@ export function normalizeBlogPosts(docs: BlogPostDoc[]): BlogPost[] {
       author: doc.author ?? 'Dr. Jayakrishnan T J',
       category,
       contentHTML: portableTextToHTML(doc.content),
+      faqs: (doc.faqs ?? []).flatMap(f => {
+        const q = f.question?.trim()
+        const a = f.answer?.trim()
+        return q && a ? [{ question: q, answer: a }] : []
+      }),
     }]
   })
 }
@@ -356,7 +368,11 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       date,
       author,
       category,
-      content
+      content,
+      faqs[] {
+        question,
+        answer
+      }
     }
   `)
 
