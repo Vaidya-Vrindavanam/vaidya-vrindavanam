@@ -16,6 +16,8 @@ import {
 import { treatmentSeoDescriptions, treatmentSeoTitles } from '../../data/seoDescriptions';
 import { treatmentDetails } from '../../data/treatmentDetails';
 
+const buildDate = new Date().toISOString().split('T')[0];
+
 export async function getStaticPaths() {
   const [treatments, conditions] = await Promise.all([
     getTreatments(),
@@ -97,7 +99,7 @@ const schemaGraph: Record<string, unknown>[] = [
       "name": "Ministry of AYUSH, Government of India",
       "url": "https://ayush.gov.in"
     },
-    "dateModified": "2026-05-20",
+    "dateModified": buildDate,
     "provider": {
       "@type": "MedicalBusiness",
       "name": "Vaidya Vrindavanam Ayurveda Hospital",
