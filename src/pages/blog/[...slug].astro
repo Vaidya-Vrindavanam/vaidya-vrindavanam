@@ -40,9 +40,15 @@ const schema = {
       "image": "https://vaidyavrindavanam.com/og-default.jpg",
       "author": {
         "@type": "Person",
-        "name": post.author
+        "name": post.author,
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Vaidya Vrindavanam Ayurveda Hospital",
+          "url": "https://vaidyavrindavanam.com"
+        }
       },
       "datePublished": post.date.toISOString(),
+      "dateModified": post.date.toISOString(),
       "publisher": {
         "@type": "Organization",
         "name": "Vaidya Vrindavanam Ayurveda Hospital",
