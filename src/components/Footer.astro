@@ -27,8 +27,7 @@ const year = new Date().getFullYear();
   <div class="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
 
     <!-- Col 1: Clinic Info -->
-    <section aria-labelledby="footer-contact-heading">
-      <h2 id="footer-contact-heading" class="sr-only">Contact</h2>
+    <section aria-label="Contact">
       <p class="font-display text-xl text-brand-gold tracking-wide mb-4">Vaidya Vrindavanam</p>
       <address class="not-italic text-sm text-text-secondary leading-relaxed">
         <p class="mb-4">
@@ -56,8 +55,8 @@ const year = new Date().getFullYear();
     </section>
 
     <!-- Col 2: Navigate -->
-    <nav aria-labelledby="footer-nav-heading">
-      <h2 id="footer-nav-heading" class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Navigate</h2>
+    <nav aria-label="Navigate">
+      <p class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Navigate</p>
       <ul class="space-y-1 -my-1.5">
         {navLinks.map((link) => (
           <li>
@@ -73,8 +72,8 @@ const year = new Date().getFullYear();
     </nav>
 
     <!-- Col 3: Clinic Hours -->
-    <section aria-labelledby="footer-hours-heading">
-      <h2 id="footer-hours-heading" class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Clinic Hours</h2>
+    <section aria-label="Clinic Hours">
+      <p class="text-xs text-text-muted tracking-[4px] uppercase mb-4">Clinic Hours</p>
       <ul class="space-y-3 text-sm text-text-secondary">
         <li class="flex justify-between gap-4 border-b border-brand-gold-border pb-2">
           <span>Monday – Saturday</span>

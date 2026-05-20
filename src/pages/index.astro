@@ -74,6 +74,24 @@ const schema = {
         "jobTitle": "Consultant Physician",
         "description": "BAMS, MD (Ayurveda)"
       }
+    },
+    {
+      "@type": "Physician",
+      "@id": "https://vaidyavrindavanam.com/#dr-jayakrishnan",
+      "name": "Dr. Jayakrishnan T J",
+      "description": "BAMS, MD (Ayurveda) — Consultant Physician at Vaidya Vrindavanam",
+      "medicalSpecialty": "Ayurvedic Medicine",
+      "jobTitle": "Consultant Physician",
+      "worksFor": { "@id": HOSPITAL_ID }
+    },
+    {
+      "@type": "Physician",
+      "@id": "https://vaidyavrindavanam.com/#dr-ganga",
+      "name": "Dr. Ganga S S",
+      "description": "BAMS — Consultant Physician at Vaidya Vrindavanam",
+      "medicalSpecialty": "Ayurvedic Medicine",
+      "jobTitle": "Consultant Physician",
+      "worksFor": { "@id": HOSPITAL_ID }
     }
   ]
 };
@@ -81,7 +99,7 @@ const schema = {
 
 <BaseLayout
   title="Ayurveda Hospital in Haripad, Kerala"
-  description="Authentic Ayurveda in Haripad, Kerala. Panchakarma, Marma Chikitsa, 20+ treatments & residential packages from MD-qualified physicians since 2014. Book via WhatsApp."
+  description="Authentic Ayurveda in Haripad since 2014. Panchakarma, Marma Chikitsa & 20+ treatments by MD-qualified Vaidyas. Residential packages available — book a consultation."
   schema={schema}
   lcpImage={featuredTreatments[0]?.imageUrl}
 >
@@ -123,9 +141,8 @@ const schema = {
       <SectionHeader label="About the Hospital" heading="A Legacy of Healing" />
       <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-10 font-light">
         Since 2014, Vaidya Vrindavanam has been Haripad's trusted centre for authentic Ayurvedic healing.
-        We uniquely combine traditional <strong class="text-brand-gold">Marma Chikitsa</strong> with
-        <strong class="text-brand-gold">modern chiropractic treatment</strong>, alongside a full range
-        of Panchakarma therapies, residential care, and an in-house dispensary.
+        We combine traditional <strong class="text-brand-gold">Marma Chikitsa</strong> with <strong class="text-brand-gold">modern chiropractic care</strong> — a rare offering in Kerala.
+        Our treatments include a full range of Panchakarma therapies and residential programmes. We also run an in-house Ayurvedic dispensary for complete, integrated care.
       </p>
       <div class="flex gap-10 justify-center flex-wrap">
         <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician" image="/dr-jayakrishnan.webp" />
@@ -152,7 +169,12 @@ const schema = {
       </div>
 
       <div class="text-center">
-        <p class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</p>
+        <h2 class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</h2>
+        <p class="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-6 font-light">
+          We treat a wide range of chronic and lifestyle conditions using personalised Ayurvedic protocols.
+          Each plan is designed by our Vaidyas based on your constitution (prakriti) and the nature of the imbalance (vikriti).
+          Ayurvedic treatment works at the root cause — not just the symptom — making it effective for long-standing conditions that have not responded to other approaches.
+        </p>
         <div class="flex flex-wrap gap-2 justify-center">
           {conditions.map(c => (
             <ConditionTag name={c.name} slug={c.slug} />
