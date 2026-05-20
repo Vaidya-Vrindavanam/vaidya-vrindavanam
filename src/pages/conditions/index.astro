@@ -7,15 +7,26 @@ const conditions = (await getConditions()).sort((a, b) => a.order - b.order);
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "Conditions Treated with Ayurveda at Vaidya Vrindavanam",
-  "description": "Conditions treated at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.",
-  "itemListElement": conditions.map((c, i) => ({
-    "@type": "ListItem",
-    "position": i + 1,
-    "name": c.name,
-    "url": `https://vaidyavrindavanam.com/conditions/${c.slug}/`
-  }))
+  "@graph": [
+    {
+      "@type": "ItemList",
+      "name": "Conditions Treated with Ayurveda at Vaidya Vrindavanam",
+      "description": "Conditions treated at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.",
+      "itemListElement": conditions.map((c, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": c.name,
+        "url": `https://vaidyavrindavanam.com/conditions/${c.slug}/`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Conditions", "item": "https://vaidyavrindavanam.com/conditions/" }
+      ]
+    }
+  ]
 };
 ---
 

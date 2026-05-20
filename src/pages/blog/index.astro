@@ -8,23 +8,34 @@ const posts = (await getBlogPosts()).sort((a, b) => b.date.getTime() - a.date.ge
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "Vaidya Vrindavanam Ayurveda Health Blog",
-  "description": "Expert Ayurvedic health tips, treatment guides, and seasonal wellness advice from the doctors at Vaidya Vrindavanam, Haripad, Kerala.",
-  "url": "https://vaidyavrindavanam.com/blog/",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Vaidya Vrindavanam Ayurveda Hospital",
-    "url": "https://vaidyavrindavanam.com/"
-  },
-  "blogPost": posts.map(p => ({
-    "@type": "BlogPosting",
-    "headline": p.title,
-    "description": p.excerpt,
-    "datePublished": p.date.toISOString(),
-    "author": { "@type": "Person", "name": p.author },
-    "url": `https://vaidyavrindavanam.com/blog/${p.slug}/`
-  }))
+  "@graph": [
+    {
+      "@type": "Blog",
+      "name": "Vaidya Vrindavanam Ayurveda Health Blog",
+      "description": "Expert Ayurvedic health tips, treatment guides, and seasonal wellness advice from the doctors at Vaidya Vrindavanam, Haripad, Kerala.",
+      "url": "https://vaidyavrindavanam.com/blog/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Vaidya Vrindavanam Ayurveda Hospital",
+        "url": "https://vaidyavrindavanam.com/"
+      },
+      "blogPost": posts.map(p => ({
+        "@type": "BlogPosting",
+        "headline": p.title,
+        "description": p.excerpt,
+        "datePublished": p.date.toISOString(),
+        "author": { "@type": "Person", "name": p.author },
+        "url": `https://vaidyavrindavanam.com/blog/${p.slug}/`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://vaidyavrindavanam.com/blog/" }
+      ]
+    }
+  ]
 };
 ---
 

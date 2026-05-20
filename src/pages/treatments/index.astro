@@ -14,15 +14,26 @@ const categories = [
 
 const schema = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "Ayurvedic Treatments at Vaidya Vrindavanam",
-  "description": "Complete list of Ayurvedic treatments offered at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.",
-  "itemListElement": treatments.map((t, i) => ({
-    "@type": "ListItem",
-    "position": i + 1,
-    "name": t.name,
-    "url": `https://vaidyavrindavanam.com/treatments/${t.slug}/`
-  }))
+  "@graph": [
+    {
+      "@type": "ItemList",
+      "name": "Ayurvedic Treatments at Vaidya Vrindavanam",
+      "description": "Complete list of Ayurvedic treatments offered at Vaidya Vrindavanam Ayurveda Hospital, Haripad, Kerala.",
+      "itemListElement": treatments.map((t, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": t.name,
+        "url": `https://vaidyavrindavanam.com/treatments/${t.slug}/`
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaidyavrindavanam.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Treatments", "item": "https://vaidyavrindavanam.com/treatments/" }
+      ]
+    }
+  ]
 };
 ---
 
