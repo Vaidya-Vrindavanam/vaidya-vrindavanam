@@ -54,13 +54,21 @@ export const packageSeoDescriptions: Record<string, string> = {
 // Per-slug title overrides for treatments whose auto-generated titles exceed 60 chars.
 // Slug → title string WITHOUT the " | Vaidya Vrindavanam" suffix (SEO.astro appends that).
 export const treatmentSeoTitles: Record<string, string> = {
-  'katee-greeva-vasthi':    'Kati Vasthi & Greeva Vasthi Treatment, Haripad',
-  'choorna-pinda-swedam':   'Choorna Pinda Swedam Treatment, Haripad, Kerala',
-  'jambeera-pinda-swedam':  'Jambeera Pinda Swedam Treatment, Haripad Kerala',
-  'abhyangam-swedam':       'Abhyangam Swedam Treatment in Haripad, Kerala',
-  'marma-chikitsa':         'Marma Chikitsa Treatment in Haripad, Kerala',
-  'njavara-kizhi':          'Njavara Kizhi Treatment in Haripad, Kerala',
-  'njavara-theppu':         'Njavara Theppu Treatment in Haripad, Kerala',
+  'katee-greeva-vasthi':    'Kati & Greeva Vasthi Haripad',
+  'choorna-pinda-swedam':   'Choorna Pinda Swedam Haripad',
+  'jambeera-pinda-swedam':  'Jambeera Pinda Swedam Haripad',
+  'abhyangam-swedam':       'Abhyangam Swedam Haripad',
+  'marma-chikitsa':         'Marma Chikitsa Haripad',
+  'njavara-kizhi':          'Njavara Kizhi Haripad',
+  'njavara-theppu':         'Njavara Theppu Haripad',
+};
+
+// Per-slug title overrides for Sanity blog posts. Visible article headings stay
+// editorial; these are compact SERP titles before SEO.astro appends the brand.
+export const blogSeoTitles: Record<string, string> = {
+  'ayurvedic-daily-routine': 'Dinacharya Daily Routine',
+  'what-is-panchakarma': 'What is Panchakarma?',
+  'marma-chikitsa': 'Marma Chikitsa Guide',
 };
 
 export const conditionSeoDescriptions: Record<string, string> = {
