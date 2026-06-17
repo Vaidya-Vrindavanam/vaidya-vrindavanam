@@ -15,7 +15,7 @@ const { name, qualification, title, image, eager = false } = Astro.props;
     {image ? (
       <img
         src={image}
-        alt={name}
+        alt={`${name}, ${qualification}, ${title} at Vaidya Vrindavanam Haripad`}
         width="160"
         height="160"
         loading={eager ? 'eager' : 'lazy'}

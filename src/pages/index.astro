@@ -35,7 +35,7 @@ const schema = {
       "url": "https://vaidyavrindavanam.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://vaidyavrindavanam.com/og-default.jpg"
+        "url": "https://vaidyavrindavanam.com/favicon.svg"
       },
       "sameAs": [
         "https://www.facebook.com/people/Vaidya-Vrindavanam/100034507068925/",
@@ -76,11 +76,13 @@ const schema = {
           "closes": "19:00"
         }
       ],
+      "hasMap": GOOGLE_MAPS_URL,
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Alappuzha, Kerala, India"
+      },
       "founder": {
-        "@type": "Person",
-        "name": "Dr. Jayakrishnan T J",
-        "jobTitle": "Consultant Physician",
-        "description": "BAMS, MD (Ayurveda)"
+        "@id": "https://vaidyavrindavanam.com/#dr-jayakrishnan"
       }
     },
     {
@@ -106,7 +108,7 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Ayurveda Hospital Haripad"
+  title="Ayurveda Hospital Haripad, Kerala"
   description="Authentic Ayurveda in Haripad since 2014. Panchakarma, Marma Chikitsa & 20+ treatments by MD-qualified Vaidyas. Residential packages — book a consultation."
   schema={schema}
   lcpImage={featuredTreatments[0]?.imageUrl}
@@ -176,7 +178,7 @@ const schema = {
       </div>
 
       <div class="text-center">
-        <h2 class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</h2>
+        <SectionHeader heading="Conditions We Treat" />
         <p class="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-6 font-light">
           We treat a wide range of chronic and lifestyle conditions using personalised Ayurvedic protocols.
           Each plan is designed by our Vaidyas based on your constitution (prakriti) and the nature of the imbalance (vikriti).
