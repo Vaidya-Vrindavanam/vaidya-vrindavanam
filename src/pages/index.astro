@@ -303,48 +303,76 @@ const schema = {
 
       <!-- Google Rating Summary -->
       <div class="flex items-center justify-center gap-3 mb-10">
-        <span class="font-display text-4xl font-light text-brand-gold">4.3</span>
+        <span class="font-display text-4xl font-light text-brand-gold">4.6</span>
         <div>
           <div class="flex gap-0.5">
             {[1,2,3,4].map(() => (
               <svg width="16" height="16" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
             <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="half"><stop offset="43%" stop-color="var(--color-gold)"/><stop offset="43%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
+              <defs><linearGradient id="half"><stop offset="60%" stop-color="var(--color-gold)"/><stop offset="60%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
               <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z" fill="url(#half)"/>
             </svg>
           </div>
-          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">6 Google Reviews</p>
+          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">11 Google Reviews</p>
         </div>
       </div>
 
       <!-- Review Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-        <!-- Review 1 -->
-        <div class="border border-brand-gold-border bg-brand-bg p-6">
+        <!-- Athul Sudhesh -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
           <div class="flex gap-0.5 mb-4">
             {[1,2,3,4,5].map(() => (
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"Very good, a genuinely positive experience at the clinic."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"After ten days, my migraines dropped from roughly three a week to once a fortnight. The warm oil stream over the forehead is calming in a way that's hard to describe — I fell asleep during the second session. I still come back every few months for a maintenance course."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
-            <span class="text-xs text-text-primary font-body">Shephy Rustham</span>
+            <span class="text-xs text-text-primary font-body">Athul Sudhesh</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
           </div>
         </div>
 
-        <!-- Review 2 -->
-        <div class="border border-brand-gold-border bg-brand-bg p-6">
+        <!-- Karundes Das -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
           <div class="flex gap-0.5 mb-4">
             {[1,2,3,4,5].map(() => (
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"A trusted Ayurvedic clinic in Haripad, recommended for anyone seeking authentic treatment."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"Eighteen months of sciatica — I'd tried physiotherapy, acupuncture, and an epidural injection. The doctor identified specific marma points and combined targeted pressure therapy with medicines and dietary guidance. Three weeks in and I was sitting through full workdays without the burning sensation."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
-            <span class="text-xs text-text-primary font-body">Karundas Das</span>
+            <span class="text-xs text-text-primary font-body">Karundes Das</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+        <!-- Sreenath Sethu -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"I came in drained after a long, difficult stretch at work. By the third session of Pizhichil I could feel a difference: more warmth in my limbs, better energy. After the full course, the exhaustion that had become my normal for months was largely gone. The care here is personal in a way that's hard to find."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Sreenath Sethu</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+        <!-- Usha C G -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1">"My knee pain has reduced. I'm able to walk and sit comfortably now. I'm also sleeping well. The Pizhichil, Elakizhi, and Njavaraikizhi treatments were very soothing. The swelling in my body has completely reduced."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Usha C G</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
           </div>
         </div>
