@@ -7,6 +7,7 @@ import TreatmentCard from '../components/TreatmentCard.astro';
 import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
 import { getTreatments, getConditions, getBlogPosts } from '../lib/sanity';
 import { WA_DEFAULT, PHONE_PRIMARY_RAW, EMAIL, GOOGLE_MAPS_URL, POSTAL_ADDRESS_SCHEMA, GEO_SCHEMA } from '../config/contact';
 
@@ -21,6 +22,33 @@ const categoryLabels: Record<string, string> = {
   'seasonal-advice': 'Seasonal Advice',
   'patient-education': 'Patient Education',
 };
+
+const faqItems = [
+  {
+    question: "How long does a Panchakarma treatment take?",
+    answer: "Our Panchakarma programmes run for 7, 14, or 21 days. A 7-day course is ideal as a seasonal reset or for acute conditions; 14–21 day programmes address chronic conditions that require deeper detoxification. The appropriate duration is determined by our Vaidyas during your initial consultation at no extra charge."
+  },
+  {
+    question: "Do you offer outpatient consultations, or only residential stays?",
+    answer: "Both. Outpatient consultations are available Monday to Saturday, 9 AM–12 PM and 4–7 PM — no overnight stay required. For intensive Panchakarma programmes we offer full residential care with accommodation, meals, and 24/7 in-patient support throughout your stay."
+  },
+  {
+    question: "What is Marma Chikitsa and how is it different from regular Ayurveda?",
+    answer: "Marma Chikitsa works with 107 vital energy points on the body where prana (life force) is concentrated. Stimulating these points releases blockages, reduces inflammation, and accelerates healing. Vaidya Vrindavanam combines traditional Marma therapy with modern chiropractic techniques — a rare integration in Kerala — making it particularly effective for chronic pain, musculoskeletal disorders, and neurological conditions."
+  },
+  {
+    question: "What conditions do you treat?",
+    answer: "We treat arthritis and joint disorders, back and neck pain, sciatica, migraine, diabetes management, hypertension, obesity, skin disorders, stress and anxiety, women's health conditions, infertility, and geriatric care. Each plan is personalised based on your Prakriti (constitution) and current imbalance. Conditions that have not responded to conventional medicine frequently improve with our root-cause Ayurvedic approach."
+  },
+  {
+    question: "Is Karkidakam the best time for Panchakarma in Kerala?",
+    answer: "Yes. Karkidakam — the Malayalam monsoon month running from mid-July to mid-August — is traditionally the optimal period for Panchakarma. The cool, humid climate opens the body's channels and enhances absorption of medicated oils, making detoxification significantly more effective. Our Karkidaka Chikitsa 2026 programmes run from 17 July to 16 August with limited residential slots."
+  },
+  {
+    question: "How do I book a consultation at Vaidya Vrindavanam?",
+    answer: "The fastest way is via WhatsApp (+91 90748 48705) — share your condition and preferred dates and we will confirm your appointment within a few hours. You can also call +91 82818 61587 during clinic hours (Mon–Sat, 9 AM–12 PM or 4–7 PM). For residential Panchakarma programmes, early booking is strongly recommended as slots are limited."
+  }
+];
 
 const ORG_ID = "https://vaidyavrindavanam.com/#organization";
 const HOSPITAL_ID = "https://vaidyavrindavanam.com/#hospital";
@@ -152,6 +180,15 @@ const schema = {
       "medicalSpecialty": "Ayurvedic Medicine",
       "jobTitle": "Consultant Physician",
       "worksFor": { "@id": HOSPITAL_ID }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://vaidyavrindavanam.com/#faq",
+      "mainEntity": faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": { "@type": "Answer", "text": item.answer }
+      }))
     }
   ]
 };
@@ -193,6 +230,56 @@ const schema = {
 
   <!-- STATS -->
   <StatsBar />
+
+  <!-- DIFFERENTIATORS -->
+  <section class="bg-brand-bg border-b border-brand-gold-dim py-10 px-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2L3 6v5c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V6L12 2z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">MD-Qualified Vaidyas</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">BAMS + MD Ayurveda — highest qualification in Indian medicine</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">Marma & Chiropractic</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Traditional Marma therapy combined with modern chiropractic — rare in Kerala</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12L12 3l9 9"/>
+            <path d="M5 10.5V20h5v-5h4v5h5V10.5"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">Residential & Outpatient</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Full stay-in programmes with 24/7 care, or flexible day-visit consultations</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 20c0 0 0-8 6-11s10-1 10-1-2 4-8 7"/>
+            <path d="M6 20l6-7"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">In-house Pharmacy</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Authentic Ayurvedic medicines prepared and dispensed on-site</div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ABOUT + DOCTORS -->
   <section class="py-16 px-6 bg-brand-bg">
@@ -416,6 +503,14 @@ const schema = {
       </div>
     </section>
   )}
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Common Questions" heading="Frequently Asked" />
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
 
   <!-- CTA -->
   <CTABanner />
