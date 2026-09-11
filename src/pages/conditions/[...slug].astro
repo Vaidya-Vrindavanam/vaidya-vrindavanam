@@ -126,6 +126,9 @@ const schema = {
 
       <a
         data-testid="condition-consultation-cta"
+        data-analytics-event="condition_consultation_click"
+        data-analytics-location="condition_detail"
+        data-analytics-value={condition.slug}
         href={consultationLink}
         target="_blank"
         rel="noopener noreferrer"

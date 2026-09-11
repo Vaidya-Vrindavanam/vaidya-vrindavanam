@@ -18,6 +18,33 @@ test.describe('Core Pages', () => {
     await expect(main).toBeVisible();
   });
 
+  test('should expose conversion tracking hooks on primary CTAs', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.locator('[data-analytics-event="whatsapp_click"][data-analytics-location="hero"]')).toHaveCount(1);
+    await expect(page.locator('[data-analytics-event="whatsapp_click"][data-analytics-location="floating"]')).toHaveCount(1);
+    await expect(page.locator('[data-analytics-event="package_inquiry_click"]')).toHaveCount(4);
+    await expect(page.locator('[data-analytics-event="phone_click"]')).toHaveCount(3);
+  });
+
+  test('should send a GA event when a primary CTA is clicked', async ({ page }) => {
+    await page.goto('/');
+
+    const events = await page.evaluate(() => {
+      const calls: unknown[][] = [];
+      (window as Window & { gtag?: (...args: unknown[]) => void }).gtag = (...args: unknown[]) => calls.push(args);
+      const cta = document.querySelector('[data-analytics-event="whatsapp_click"][data-analytics-location="hero"]');
+      cta?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      return calls;
+    });
+
+    expect(events).toContainEqual([
+      'event',
+      'whatsapp_click',
+      expect.objectContaining({ cta_location: 'hero', page_path: '/' }),
+    ]);
+  });
+
   test('should not promote an expired seasonal booking campaign', async ({ page }) => {
     await page.goto('/');
 

@@ -24,6 +24,9 @@ const waLink = whatsappLink(whatsappMessage);
     href={waLink}
     target="_blank"
     rel="noopener noreferrer"
+    data-analytics-event="package_inquiry_click"
+    data-analytics-location="homepage_package_card"
+    data-analytics-value={name}
     class="inline-flex items-center min-h-[44px] mt-2 text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors"
   >
     REQUEST AVAILABILITY &amp; PRICING →
