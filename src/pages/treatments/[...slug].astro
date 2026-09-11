@@ -455,6 +455,7 @@ const schema = {
   /* ── Breadcrumb ── */
   .breadcrumb-nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
     font-size: 0.6875rem;
@@ -475,6 +476,7 @@ const schema = {
   }
   .breadcrumb-current {
     color: var(--color-gold);
+    overflow-wrap: anywhere;
   }
 
   /* ── Content header ── */
@@ -780,7 +782,7 @@ const schema = {
     .booking-aside {
       display: block;
       position: sticky;
-      top: 5.5rem;
+      top: calc(var(--site-header-height) + 1rem);
     }
   }
 

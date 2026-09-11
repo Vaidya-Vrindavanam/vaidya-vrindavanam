@@ -283,3 +283,12 @@ const schema = {
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Keep form text readable without focus-triggered zoom on iOS. */
+  @media (max-width: 767px) {
+    input, textarea {
+      font-size: 1rem;
+    }
+  }
+</style>

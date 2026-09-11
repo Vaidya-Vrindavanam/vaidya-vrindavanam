@@ -59,6 +59,8 @@
 @tailwind utilities;
 
 :root {
+  --site-header-height: 132px;
+  --section-nav-height: 0px;
   /* OKLCH-based palette. Surfaces sit in the forest-green hue (~140°) at low chroma;
      text neutrals tint toward the antique-gold hue (~80°) for cross-token cohesion. */
 
@@ -98,6 +100,10 @@
 
   body {
     @apply antialiased;
+  }
+
+  main section[id] {
+    scroll-margin-top: calc(var(--site-header-height) + var(--section-nav-height) + 16px);
   }
 
   /* Visible keyboard focus across all interactive elements (WCAG 2.4.7). */
