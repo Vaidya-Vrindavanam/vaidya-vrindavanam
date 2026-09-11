@@ -14,8 +14,30 @@ const currentPath = Astro.url.pathname;
 const whatsappUrl = WA_DEFAULT;
 ---
 
+<!-- Evergreen consultation prompt. Whole bar is one tap target. -->
+<a
+  id="announcement-bar"
+  href="/packages/"
+  aria-label="Explore consultations"
+  class="announcement-bar-bg sticky top-0 z-50 block hover:opacity-95 transition-opacity"
+  style="color: var(--color-bg-deep);"
+>
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 py-3 min-h-[44px] flex items-center justify-center">
+    <p class="text-center font-body text-sm font-light">
+      Authentic Kerala Ayurveda
+      <span class="underline underline-offset-2 font-medium ml-3">Explore consultations →</span>
+    </p>
+  </div>
+</a>
+
+<style>
+  .announcement-bar-bg {
+    background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold) 40%, var(--color-gold-light) 60%, var(--color-gold) 80%, var(--color-gold-dark) 100%);
+  }
+</style>
+
 <!-- Main Navbar -->
-<nav id="main-nav" class="sticky top-0 z-40 bg-brand-bg border-b border-brand-gold-border">
+<nav id="main-nav" class="sticky top-[44px] z-40 bg-brand-bg border-b border-brand-gold-border">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
     <!-- Logo -->

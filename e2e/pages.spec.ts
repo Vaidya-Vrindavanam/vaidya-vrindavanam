@@ -45,10 +45,14 @@ test.describe('Core Pages', () => {
     ]);
   });
 
-  test('should not promote an expired seasonal booking campaign', async ({ page }) => {
+  test('should show the evergreen consultation announcement', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.locator('#announcement-bar')).toHaveCount(0);
+    const announcement = page.locator('#announcement-bar');
+    await expect(announcement).toHaveCount(1);
+    await expect(announcement).toHaveAttribute('href', '/packages/');
+    await expect(announcement).toContainText('Authentic Kerala Ayurveda');
+    await expect(announcement).toContainText('Explore consultations');
     await expect(page.getByText(/Karkidakam 2026 now booking/i)).toHaveCount(0);
     await expect(page.getByText(/VIEW 2026 PACKAGE/i)).toHaveCount(0);
   });
