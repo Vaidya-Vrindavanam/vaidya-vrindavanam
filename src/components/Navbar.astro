@@ -1,13 +1,10 @@
 ﻿---
 import { WA_DEFAULT } from '../config/contact';
-// `featured` flag highlights a seasonal/feature link. Remove the Karkidaka entry
-// (and its featured flag) after Karkidakam 2026 ends, see comment on 16 Aug 2026.
-const navLinks: { label: string; href: string; featured?: boolean }[] = [
+const navLinks: { label: string; href: string }[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
   { label: 'Treatments', href: '/treatments/' },
   { label: 'Packages', href: '/packages/' },
-  { label: 'Karkidaka 2026', href: '/karkidaka-chikitsa/', featured: true },
   { label: 'Conditions', href: '/conditions/' },
   { label: 'Blog', href: '/blog/' },
   { label: 'Contact', href: '/contact/' },
@@ -17,41 +14,8 @@ const currentPath = Astro.url.pathname;
 const whatsappUrl = WA_DEFAULT;
 ---
 
-<!-- Announcement Bar, Karkidaka season hook. Whole bar is one tap target.
-     Rotate or revert after 16 Aug 2026. -->
-<a
-  id="announcement-bar"
-  href="/packages/karkidaka-chikitsa/"
-  class="announcement-bar-bg sticky top-0 z-50 block hover:opacity-95 transition-opacity"
-  style="color: var(--color-bg-deep);"
->
-  <div class="max-w-7xl mx-auto px-6 sm:px-8 py-3 min-h-[44px] flex items-center justify-center">
-    <p class="text-center font-body text-sm font-light">
-      The body's annual reset, Karkidakam 2026 now booking.
-      <span class="underline underline-offset-2 font-medium ml-1">View package →</span>
-    </p>
-  </div>
-</a>
-
-<style>
-  .announcement-bar-bg {
-    background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold) 40%, var(--color-gold-light) 60%, var(--color-gold) 80%, var(--color-gold-dark) 100%);
-  }
-  /* Subtle pulse on the seasonal nav indicator, "live this season". */
-  .nav-live-dot {
-    animation: nav-live-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  @keyframes nav-live-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: 0.45; transform: scale(0.85); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .nav-live-dot { animation: none; }
-  }
-</style>
-
 <!-- Main Navbar -->
-<nav id="main-nav" class="sticky top-[44px] z-40 bg-brand-bg border-b border-brand-gold-border">
+<nav id="main-nav" class="sticky top-0 z-40 bg-brand-bg border-b border-brand-gold-border">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
     <!-- Logo -->
@@ -67,15 +31,10 @@ const whatsappUrl = WA_DEFAULT;
         const baseClasses = "px-3 py-2 text-sm font-body transition-colors rounded-sm inline-flex items-center gap-1.5";
         const stateClasses = isActive
           ? 'text-brand-gold border-b border-brand-gold'
-          : link.featured
-            ? 'text-brand-gold hover:text-text-primary'
-            : 'text-text-secondary hover:text-text-primary';
+          : 'text-text-secondary hover:text-text-primary';
         return (
           <li>
             <a href={link.href} class={`${baseClasses} ${stateClasses}`}>
-              {link.featured && (
-                <span aria-hidden="true" class="nav-live-dot w-1.5 h-1.5 rounded-full bg-brand-gold inline-block"></span>
-              )}
               {link.label}
             </a>
           </li>
@@ -137,15 +96,10 @@ const whatsappUrl = WA_DEFAULT;
       const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
       const stateClasses = isActive
         ? 'text-brand-gold'
-        : link.featured
-          ? 'text-brand-gold hover:text-text-primary'
-          : 'text-text-primary hover:text-brand-gold';
+        : 'text-text-primary hover:text-brand-gold';
       return (
         <li>
           <a href={link.href} class={`font-body text-2xl transition-colors inline-flex items-center gap-2 ${stateClasses}`}>
-            {link.featured && (
-              <span aria-hidden="true" class="nav-live-dot w-2 h-2 rounded-full bg-brand-gold inline-block"></span>
-            )}
             {link.label}
           </a>
         </li>

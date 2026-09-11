@@ -52,4 +52,12 @@ test.describe('Conditions', () => {
       expect(count).toBeGreaterThanOrEqual(0);
     }
   });
+
+  test('should offer a condition-specific consultation enquiry', async ({ page }) => {
+    await page.goto('/conditions/back-pain/');
+
+    const consultationLink = page.getByTestId('condition-consultation-cta');
+    await expect(consultationLink).toBeVisible();
+    await expect(consultationLink).toHaveAttribute('href', /Back%20Pain/);
+  });
 });

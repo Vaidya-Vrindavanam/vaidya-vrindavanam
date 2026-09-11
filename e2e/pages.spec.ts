@@ -18,6 +18,23 @@ test.describe('Core Pages', () => {
     await expect(main).toBeVisible();
   });
 
+  test('should not promote an expired seasonal booking campaign', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.locator('#announcement-bar')).toHaveCount(0);
+    await expect(page.getByText(/Karkidakam 2026 now booking/i)).toHaveCount(0);
+    await expect(page.getByText(/VIEW 2026 PACKAGE/i)).toHaveCount(0);
+  });
+
+  test('should explain how package pricing is decided before enquiry', async ({ page }) => {
+    await page.goto('/packages/');
+
+    await expect(page.getByText(/Pricing shared after consultation/i).first()).toBeVisible();
+    const packageEnquiry = page.getByRole('link', { name: /Request availability & pricing/i }).first();
+    await expect(packageEnquiry).toBeVisible();
+    await expect(packageEnquiry).toHaveAttribute('href', /availability%2C%20pricing/i);
+  });
+
   test('should load contact page', async ({ page }) => {
     await page.goto('/contact/');
 
