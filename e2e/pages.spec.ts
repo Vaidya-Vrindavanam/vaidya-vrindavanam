@@ -18,6 +18,54 @@ test.describe('Core Pages', () => {
     await expect(main).toBeVisible();
   });
 
+  test('should expose conversion tracking hooks on primary CTAs', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.locator('[data-analytics-event="whatsapp_click"][data-analytics-location="hero"]')).toHaveCount(1);
+    await expect(page.locator('[data-analytics-event="whatsapp_click"][data-analytics-location="floating"]')).toHaveCount(1);
+    await expect(page.locator('[data-analytics-event="package_inquiry_click"]')).toHaveCount(4);
+    await expect(page.locator('[data-analytics-event="phone_click"]')).toHaveCount(3);
+  });
+
+  test('should send a GA event when a primary CTA is clicked', async ({ page }) => {
+    await page.goto('/');
+
+    const events = await page.evaluate(() => {
+      const calls: unknown[][] = [];
+      (window as Window & { gtag?: (...args: unknown[]) => void }).gtag = (...args: unknown[]) => calls.push(args);
+      const cta = document.querySelector('[data-analytics-event="whatsapp_click"][data-analytics-location="hero"]');
+      cta?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      return calls;
+    });
+
+    expect(events).toContainEqual([
+      'event',
+      'whatsapp_click',
+      expect.objectContaining({ cta_location: 'hero', page_path: '/' }),
+    ]);
+  });
+
+  test('should show the evergreen consultation announcement', async ({ page }) => {
+    await page.goto('/');
+
+    const announcement = page.locator('#announcement-bar');
+    await expect(announcement).toHaveCount(1);
+    await expect(announcement).toHaveAttribute('href', '/packages/');
+    await expect(announcement).toContainText('Authentic Kerala Ayurveda');
+    await expect(announcement).toContainText('Explore consultations');
+    await expect(page.getByText(/Karkidakam 2026 now booking/i)).toHaveCount(0);
+    await expect(page.getByText(/VIEW 2026 PACKAGE/i)).toHaveCount(0);
+  });
+
+  test('should explain how package pricing is decided before enquiry', async ({ page }) => {
+    await page.goto('/packages/');
+
+    await expect(page.getByText(/Pricing shared after consultation/i).first()).toBeVisible();
+    const packageEnquiry = page.getByRole('link', { name: /Request availability & pricing/i }).first();
+    await expect(packageEnquiry).toBeVisible();
+    await expect(packageEnquiry).toHaveAttribute('href', /availability%2C%20pricing/i);
+  });
+
   test('should load contact page', async ({ page }) => {
     await page.goto('/contact/');
 

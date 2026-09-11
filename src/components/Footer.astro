@@ -36,12 +36,12 @@ const year = new Date().getFullYear();
         </p>
         <ul class="space-y-1 -my-1.5">
           <li>
-            <a href={`tel:+${PHONE_PRIMARY_RAW}`} class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
+            <a href={`tel:+${PHONE_PRIMARY_RAW}`} data-analytics-event="phone_click" data-analytics-location="footer_primary" class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
               {PHONE_PRIMARY}
             </a>
           </li>
           <li>
-            <a href={`tel:+${PHONE_SECONDARY_RAW}`} class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
+            <a href={`tel:+${PHONE_SECONDARY_RAW}`} data-analytics-event="phone_click" data-analytics-location="footer_secondary" class="block py-1.5 text-text-secondary hover:text-brand-gold transition-colors">
               {PHONE_SECONDARY}
             </a>
           </li>

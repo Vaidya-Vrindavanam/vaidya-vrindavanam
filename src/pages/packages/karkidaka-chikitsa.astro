@@ -92,8 +92,8 @@ const faqs = [
     answer: 'Karkidaka Chikitsa (also called Karkidaka Vavu Chikitsa or monsoon Ayurveda) is a classical seasonal treatment performed in the Malayalam month of Karkidakam (roughly mid-July to mid-August). Because the body is naturally more receptive to detox and the climate is cool and damp, this is regarded by Ayurveda (and texts like Ashtanga Hridayam) as the most effective window of the year for Panchakarma, Rasayana and rejuvenation therapies. The package at Vaidya Vrindavanam combines Abhyangam, Pizhichil, Navarakizhi, Shirodhara, Karkidaka Vasthi, Karkidaka Kanji and Rasayana herbs supervised by our resident Vaidyas in Haripad, Alappuzha.',
   },
   {
-    question: 'When is the Karkidakam season in 2026?',
-    answer: 'Karkidakam 2026 runs from 17 July to 16 August 2026 (Malayalam Era 1201). For best results we recommend starting treatment within the first 10 days of the month so the full protocol completes within the season. We accept bookings from 1 June and 14-day / 21-day tiers tend to fill first; secure your slot early via WhatsApp on +91 90748 48705.',
+    question: 'When is the Karkidakam season?',
+    answer: 'Karkidakam usually falls from mid-July to mid-August in the Malayalam calendar. Ask us for the current season dates, available tiers, and residential availability before you plan your stay.',
   },
   {
     question: 'How long does the package run and which duration should I choose?',
@@ -101,7 +101,7 @@ const faqs = [
   },
   {
     question: 'What are the Karkidaka Chikitsa package rates?',
-    answer: `Karkidaka Chikitsa package rates depend on duration, therapy mix and whether you choose residential or out-patient care. Because Karkidaka Chikitsa is fully personalised after a doctor consultation, we share an itemised quote on request. WhatsApp ${PHONE_PRIMARY} or call ${PHONE_SECONDARY} for the current Karkidakam 2026 Karkidaka Chikitsa package rates; we will also confirm room availability and pick-up assistance from Kochi, Trivandrum or Kollam.`,
+    answer: `Karkidaka Chikitsa package rates depend on duration, therapy mix and whether you choose residential or out-patient care. Because Karkidaka Chikitsa is fully personalised after a doctor consultation, we share an itemised quote on request. WhatsApp ${PHONE_PRIMARY} or call ${PHONE_SECONDARY} for current package rates; we will also confirm room availability and pick-up assistance from Kochi, Trivandrum or Kollam.`,
   },
   {
     question: 'Is there a Karkidaka Chikitsa package near me in Trivandrum or Kochi?',
@@ -185,10 +185,8 @@ const schema = {
         priceCurrency: 'INR',
         priceSpecification: { '@type': 'PriceSpecification', valueAddedTaxIncluded: true },
         availability: 'https://schema.org/InStock',
-        validFrom: '2026-06-01',
-        validThrough: '2026-08-31',
         url: pageUrl,
-        description: 'Contact for current package pricing. 7/14/21-day tiers available during Karkidakam 2026 (17 July – 16 August).',
+        description: 'Contact for current package pricing and seasonal availability. 7, 14 and 21-day tiers are personalised after consultation.',
       },
     },
     {
@@ -236,7 +234,7 @@ const schema = {
   <section class="relative py-28 md:py-40 px-6 overflow-hidden isolate">
     <div aria-hidden="true" class="absolute inset-0 -z-10" style="background: radial-gradient(ellipse 110% 90% at 50% -15%, oklch(0.30 0.038 140) 0%, transparent 62%), linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);"></div>
 <div class="max-w-4xl mx-auto text-center relative z-10">
-      <p class="hero-eyebrow text-xs tracking-[5px] uppercase text-brand-gold mb-4">Seasonal Programme · 17 July – 16 August 2026</p>
+      <p class="hero-eyebrow text-xs tracking-[5px] uppercase text-brand-gold mb-4">Seasonal Programme · Mid-July to Mid-August</p>
       <h1 class="hero-heading font-display font-light text-text-primary tracking-wide leading-[1.05]" style="font-size: clamp(2.8rem, 6vw + 1rem, 5.5rem);">
         Karkidaka Chikitsa Package
       </h1>
@@ -350,7 +348,7 @@ const schema = {
         ))}
       </div>
       <p class="text-xs text-text-muted text-center mt-8 italic max-w-2xl mx-auto">
-        Pricing depends on duration, therapy mix and residential vs. out-patient care. Itemised quote shared on request. Karkidakam 2026 bookings open from 1 June.
+        Pricing depends on duration, therapy mix and residential vs. out-patient care. Itemised quote shared on request. Ask for current dates and room availability.
       </p>
     </div>
   </section>
@@ -559,8 +557,8 @@ const schema = {
 
   <!-- 14. SEASONAL URGENCY CTA -->
   <section class="py-16 px-6 bg-brand-bg-alt border-y border-brand-gold-dim text-center">
-    <p class="text-xs tracking-[3px] uppercase text-brand-gold mb-3">Limited Slots</p>
-    <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide">Karkidakam 2026 starts 17 July. Book your slot.</h2>
+    <p class="text-xs tracking-[3px] uppercase text-brand-gold mb-3">Seasonal Availability</p>
+    <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide">Plan your Karkidaka Chikitsa stay.</h2>
     <p class="text-sm text-text-muted mt-4 mb-8 max-w-xl mx-auto">Fourteen and twenty-one day tiers fill first. Send a WhatsApp message with your dates and main concerns: we'll share a personalised quote within a few hours.</p>
     <div class="flex gap-3 justify-center flex-wrap">
       <a href={waLinkGeneral} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center min-h-[44px] bg-brand-whatsapp text-white px-7 py-4 text-xs font-bold tracking-widest">WHATSAPP TO BOOK</a>

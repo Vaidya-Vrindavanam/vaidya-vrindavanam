@@ -66,16 +66,37 @@ const lcpSrcset = lcpImage
     <Footer />
     <WhatsAppButton />
     <!-- Google Analytics — deferred until after page load -->
-    <script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
+
+      document.addEventListener('click', function(event) {
+        var element = event.target instanceof Element
+          ? event.target.closest('[data-analytics-event]')
+          : null;
+        if (!element) return;
+
+        var eventName = element.getAttribute('data-analytics-event');
+        if (!eventName) return;
+
+        var params = {
+          cta_location: element.getAttribute('data-analytics-location') || 'unknown',
+          cta_label: (element.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 100),
+          page_path: window.location.pathname,
+        };
+        var value = element.getAttribute('data-analytics-value');
+        if (value) params.cta_value = value;
+
+        window.gtag('event', eventName, params);
+      });
+
       window.addEventListener('load', function() {
         var s = document.createElement('script');
         s.src = 'https://www.googletagmanager.com/gtag/js?id=G-48TMD9CGFK';
         s.async = true;
         document.head.appendChild(s);
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-48TMD9CGFK', { send_page_view: true });
+        window.gtag('js', new Date());
+        window.gtag('config', 'G-48TMD9CGFK', { send_page_view: true });
       });
     </script>
   </body>

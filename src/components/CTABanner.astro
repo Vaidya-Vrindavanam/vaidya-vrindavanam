@@ -10,12 +10,16 @@ import { WA_DEFAULT, PHONE_SECONDARY_RAW } from '../config/contact';
       href={WA_DEFAULT}
       target="_blank"
       rel="noopener noreferrer"
+      data-analytics-event="whatsapp_click"
+      data-analytics-location="bottom_cta"
       class="inline-flex items-center justify-center min-h-[44px] bg-brand-whatsapp text-white px-7 py-4 text-xs font-bold tracking-widest"
     >
       WHATSAPP US
     </a>
     <a
       href={`tel:+${PHONE_SECONDARY_RAW}`}
+      data-analytics-event="phone_click"
+      data-analytics-location="bottom_cta"
       class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-7 py-4 text-xs font-bold tracking-widest"
     >
       CALL NOW

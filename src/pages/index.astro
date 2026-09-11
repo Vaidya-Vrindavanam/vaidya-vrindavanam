@@ -7,6 +7,7 @@ import TreatmentCard from '../components/TreatmentCard.astro';
 import PackageCard from '../components/PackageCard.astro';
 import ConditionTag from '../components/ConditionTag.astro';
 import CTABanner from '../components/CTABanner.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
 import { getTreatments, getConditions, getBlogPosts } from '../lib/sanity';
 import { WA_DEFAULT, PHONE_PRIMARY_RAW, EMAIL, GOOGLE_MAPS_URL, POSTAL_ADDRESS_SCHEMA, GEO_SCHEMA } from '../config/contact';
 
@@ -22,6 +23,33 @@ const categoryLabels: Record<string, string> = {
   'patient-education': 'Patient Education',
 };
 
+const faqItems = [
+  {
+    question: "How long does a Panchakarma treatment take?",
+    answer: "Our Panchakarma programmes run for 7, 14, or 21 days. A 7-day course is ideal as a seasonal reset or for acute conditions; 14–21 day programmes address chronic conditions that require deeper detoxification. The appropriate duration is determined by our Vaidyas during your initial consultation at no extra charge."
+  },
+  {
+    question: "Do you offer outpatient consultations, or only residential stays?",
+    answer: "Both. Outpatient consultations are available Monday to Saturday, 9 AM–12 PM and 4–7 PM — no overnight stay required. For intensive Panchakarma programmes we offer full residential care with accommodation, meals, and 24/7 in-patient support throughout your stay."
+  },
+  {
+    question: "What is Marma Chikitsa and how is it different from regular Ayurveda?",
+    answer: "Marma Chikitsa works with 107 vital energy points on the body where prana (life force) is concentrated. Stimulating these points releases blockages, reduces inflammation, and accelerates healing. Vaidya Vrindavanam combines traditional Marma therapy with modern chiropractic techniques — a rare integration in Kerala — making it particularly effective for chronic pain, musculoskeletal disorders, and neurological conditions."
+  },
+  {
+    question: "What conditions do you treat?",
+    answer: "We treat arthritis and joint disorders, back and neck pain, sciatica, migraine, diabetes management, hypertension, obesity, skin disorders, stress and anxiety, women's health conditions, infertility, and geriatric care. Each plan is personalised based on your Prakriti (constitution) and current imbalance. Conditions that have not responded to conventional medicine frequently improve with our root-cause Ayurvedic approach."
+  },
+  {
+    question: "Is Karkidakam the best time for Panchakarma in Kerala?",
+    answer: "Yes. Karkidakam — the Malayalam monsoon month running from mid-July to mid-August — is traditionally the optimal period for Panchakarma. The cool, humid climate opens the body's channels and enhances absorption of medicated oils, making detoxification significantly more effective. Ask us for the current seasonal dates, programme options, and residential availability."
+  },
+  {
+    question: "How do I book a consultation at Vaidya Vrindavanam?",
+    answer: "The fastest way is via WhatsApp (+91 90748 48705) — share your condition and preferred dates and we will confirm your appointment within a few hours. You can also call +91 82818 61587 during clinic hours (Mon–Sat, 9 AM–12 PM or 4–7 PM). For residential Panchakarma programmes, early booking is strongly recommended as slots are limited."
+  }
+];
+
 const ORG_ID = "https://vaidyavrindavanam.com/#organization";
 const HOSPITAL_ID = "https://vaidyavrindavanam.com/#hospital";
 
@@ -35,7 +63,7 @@ const schema = {
       "url": "https://vaidyavrindavanam.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://vaidyavrindavanam.com/og-default.jpg"
+        "url": "https://vaidyavrindavanam.com/favicon.svg"
       },
       "sameAs": [
         "https://www.facebook.com/people/Vaidya-Vrindavanam/100034507068925/",
@@ -58,10 +86,60 @@ const schema = {
       "geo": GEO_SCHEMA,
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.3",
-        "reviewCount": "6",
+        "ratingValue": "4.6",
+        "reviewCount": "11",
         "bestRating": "5"
       },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Athul Sudhesh" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "I'd been on preventive migraine medication for three years with mixed results and wanted to try something different. After reading about Shirodhara, I came to Vaidya Vrindavanam. The vaidya did a proper consultation before starting and explained what to expect. The warm oil stream over the forehead is calming in a way that's hard to describe — I fell asleep during the second session. After ten days, my migraines dropped from roughly three a week to once a fortnight. I still come back every few months for a maintenance course."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Jayaprakash T K" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "I came to Vaidya Vrindavanam Ayurveda Hospital at Haripad for a 14-day Ayurveda treatment. As per their treatment protocol, I underwent therapies including Swedan, Elakizhi, Njavaraikizhi, and Pizhichil. As a result, my skin softness improved, my joints became more flexible, and the swelling reduced significantly. Muscle stiffness decreased, and I'm now able to move around without strain. My frozen shoulder has resolved. Overall body fatigue has reduced, and I've been getting sound sleep consistently."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Harisankar S" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "I came to this clinic due to shoulder and body pain, was able to properly identify the issues. Took few courses to get the inflammation out and I do occasionally visit to break the tension in muscles. Took a course of oil massage and steam, poultice and elakizhi to sort out the issues. I'm now in a much better situation. Jayakrishnan doctor is very helpful and patient and will listen to you and will clarify everything. Definitely recommend."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Shephy Rustham" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Verry Good"
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Karundes Das" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Eighteen months of sciatica — pain down the left leg every time I sat for more than an hour. I'd tried physiotherapy, acupuncture, and an epidural injection. At Vaidya Vrindavanam, the doctor identified specific marma points and combined targeted pressure therapy with intense medicines and dietary guidance. Three weeks in and I was sitting through full workdays without the burning sensation. What I appreciated most was that the vaidya explained his reasoning and didn't over-promise. That kind of honesty is rare."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Sreenath Sethu" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "I came in drained after a long, difficult stretch at work. The vaidya assessed my constitution during the first consultation and recommended Pizhichil — the continuous warm oil pour — as part of a rejuvenation course. I was sceptical, honestly. By the third session I could feel a difference: more warmth in my limbs, better energy. After the full course, the exhaustion that had become my normal for months was largely gone. The treatment room is private and the care here is personal in a way that's hard to find."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Usha C G" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "My knee pain has reduced. I'm able to walk and sit comfortably now. I'm also sleeping well. The Pizhichil, Elakizhi, and Njavaraikizhi treatments were very soothing. The swelling in my body has completely reduced."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Manesh Krishnan" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5" },
+          "reviewBody": "Excellent experience at the hospital, thanks to the expert care and effective treatment."
+        }
+      ],
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -76,11 +154,13 @@ const schema = {
           "closes": "19:00"
         }
       ],
+      "hasMap": GOOGLE_MAPS_URL,
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Alappuzha, Kerala, India"
+      },
       "founder": {
-        "@type": "Person",
-        "name": "Dr. Jayakrishnan T J",
-        "jobTitle": "Consultant Physician",
-        "description": "BAMS, MD (Ayurveda)"
+        "@id": "https://vaidyavrindavanam.com/#dr-jayakrishnan"
       }
     },
     {
@@ -100,13 +180,22 @@ const schema = {
       "medicalSpecialty": "Ayurvedic Medicine",
       "jobTitle": "Consultant Physician",
       "worksFor": { "@id": HOSPITAL_ID }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://vaidyavrindavanam.com/#faq",
+      "mainEntity": faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": { "@type": "Answer", "text": item.answer }
+      }))
     }
   ]
 };
 ---
 
 <BaseLayout
-  title="Ayurveda Hospital Haripad"
+  title="Ayurveda Hospital Haripad, Kerala"
   description="Authentic Ayurveda in Haripad since 2014. Panchakarma, Marma Chikitsa & 20+ treatments by MD-qualified Vaidyas. Residential packages — book a consultation."
   schema={schema}
   lcpImage={featuredTreatments[0]?.imageUrl}
@@ -128,6 +217,8 @@ const schema = {
           href={WA_DEFAULT}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-analytics-location="hero"
           class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-7 py-3 text-xs font-bold tracking-widest"
         >
           BOOK VIA WHATSAPP
@@ -142,14 +233,70 @@ const schema = {
   <!-- STATS -->
   <StatsBar />
 
+  <!-- DIFFERENTIATORS -->
+  <section class="bg-brand-bg border-b border-brand-gold-dim py-10 px-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2L3 6v5c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V6L12 2z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">MD-Qualified Doctors</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Personalised to your prakriti and vikriti — because the same condition requires a different treatment for every patient.</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">Marma & Chiropractic</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Traditional Marma therapy combined with modern chiropractic — rare in Kerala</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12L12 3l9 9"/>
+            <path d="M5 10.5V20h5v-5h4v5h5V10.5"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">Residential & Outpatient</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Full stay-in programmes with 24/7 care, or flexible day-visit consultations</div>
+      </div>
+
+      <div class="text-center">
+        <div class="flex justify-center mb-3 text-brand-gold">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 20c0 0 0-8 6-11s10-1 10-1-2 4-8 7"/>
+            <path d="M6 20l6-7"/>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-text-primary">Experienced Therapists</div>
+        <div class="text-xs text-text-muted mt-1 leading-relaxed">Trained in classical Kerala protocols — precise technique and years of practice mean every treatment works as Ayurveda intends, not just surface-level relaxation.</div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ABOUT + DOCTORS -->
   <section class="py-16 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto">
       <SectionHeader label="About the Hospital" heading="A Legacy of Healing" />
-      <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-10 font-light">
+      <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-4 font-light">
         Since 2014, Vaidya Vrindavanam has been Haripad's trusted centre for authentic Ayurvedic healing.
         We combine traditional <strong class="text-brand-gold">Marma Chikitsa</strong> with <strong class="text-brand-gold">modern chiropractic care</strong> — a rare offering in Kerala.
         Our treatments include a full range of Panchakarma therapies and residential programmes. We also run an in-house Ayurvedic dispensary for complete, integrated care.
+      </p>
+      <p class="text-sm text-text-secondary leading-relaxed text-center max-w-2xl mx-auto mb-10 font-light">
+        Located on NH-66 near Haripad town in Alappuzha district, we are easily accessible from Kochi (90 min),
+        Thiruvananthapuram (2 hrs), and Kozhikode (3.5 hrs). We welcome both outpatient consultations and
+        fully residential Panchakarma programmes — with round-the-clock in-patient care available year-round
+        for those travelling from across Kerala or from abroad.
       </p>
       <div class="flex gap-10 justify-center flex-wrap">
         <DoctorProfile name="Dr. Jayakrishnan T J" qualification="BAMS, MD (Ayurveda)" title="Consultant Physician" image="/dr-jayakrishnan.webp" />
@@ -176,11 +323,14 @@ const schema = {
       </div>
 
       <div class="text-center">
-        <h2 class="text-[9px] tracking-[2px] uppercase text-text-muted mb-4">Conditions We Specialise In</h2>
+        <SectionHeader heading="Conditions We Treat" />
         <p class="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-6 font-light">
           We treat a wide range of chronic and lifestyle conditions using personalised Ayurvedic protocols.
           Each plan is designed by our Vaidyas based on your constitution (prakriti) and the nature of the imbalance (vikriti).
           Ayurvedic treatment works at the root cause — not just the symptom — making it effective for long-standing conditions that have not responded to other approaches.
+          Our specialisations include musculoskeletal disorders (arthritis, back pain, cervical spondylosis),
+          lifestyle conditions (diabetes, hypertension, obesity), women's health, skin disorders,
+          stress and anxiety, and geriatric care.
         </p>
         <div class="flex flex-wrap gap-2 justify-center">
           {conditions.map(c => (
@@ -191,43 +341,15 @@ const schema = {
     </div>
   </section>
 
-  <!-- KARKIDAKA SEASONAL BANNER -->
-  <section class="py-14 px-6 bg-gradient-to-r from-brand-bg via-brand-bg-alt to-brand-bg border-y border-brand-gold-dim">
-    <div class="max-w-4xl mx-auto text-center">
-      <p class="text-[9px] tracking-[5px] uppercase text-brand-gold mb-3">Seasonal · Karkidakam 17 July – 16 August 2026</p>
-      <h2 class="text-2xl md:text-3xl font-display font-light text-text-primary tracking-wide">
-        Karkidaka Chikitsa Package, Monsoon Ayurveda
-      </h2>
-      <div class="w-8 h-px bg-brand-gold mx-auto mt-4"></div>
-      <p class="text-sm text-text-secondary mt-4 max-w-xl mx-auto leading-relaxed">
-        Authentic 7, 14 and 21-day monsoon Panchakarma programmes, supervised in person by our Vaidyas in Haripad. Limited slots; bookings open from 1 June.
-      </p>
-      <div class="flex gap-3 justify-center flex-wrap mt-6">
-        <a
-          href="/karkidaka-chikitsa/"
-          class="inline-flex items-center justify-center min-h-[44px] border border-brand-gold text-brand-gold px-6 py-3 text-xs font-bold tracking-widest hover:bg-brand-gold hover:text-brand-bg transition-colors"
-        >
-          LEARN ABOUT KARKIDAKA
-        </a>
-        <a
-          href="/packages/karkidaka-chikitsa/"
-          class="inline-flex items-center justify-center min-h-[44px] bg-brand-gold text-brand-bg px-6 py-3 text-xs font-bold tracking-widest"
-        >
-          VIEW 2026 PACKAGE →
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- PACKAGES -->
   <section class="py-16 px-6 bg-brand-bg">
     <div class="max-w-4xl mx-auto">
       <SectionHeader label="Residential Programs" heading="Healing Packages" subtitle="With accommodation & full board" />
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <PackageCard name="Rejuvenation" duration="7 – 14 days" price="₹ Contact for pricing" popular={true} whatsappMessage="Hi, I'm interested in the Rejuvenation package. Please share details and pricing." />
-        <PackageCard name="Detox" duration="7 – 21 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Detox package. Please share details and pricing." />
-        <PackageCard name="Weight Loss" duration="21 – 45 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Weight Loss package. Please share details and pricing." />
-        <PackageCard name="Relaxation" duration="10 – 20 days" price="₹ Contact for pricing" whatsappMessage="Hi, I'm interested in the Relaxation package. Please share details and pricing." />
+        <PackageCard name="Rejuvenation" duration="7 – 14 days" price="Pricing shared after consultation" popular={true} whatsappMessage="Hi, I'm interested in the Rejuvenation package. Please share availability, pricing, and what the doctor needs from me." />
+        <PackageCard name="Detox" duration="7 – 21 days" price="Pricing shared after consultation" whatsappMessage="Hi, I'm interested in the Detox package. Please share availability, pricing, and what the doctor needs from me." />
+        <PackageCard name="Weight Loss" duration="21 – 45 days" price="Pricing shared after consultation" whatsappMessage="Hi, I'm interested in the Weight Loss package. Please share availability, pricing, and what the doctor needs from me." />
+        <PackageCard name="Relaxation" duration="10 – 20 days" price="Pricing shared after consultation" whatsappMessage="Hi, I'm interested in the Relaxation package. Please share availability, pricing, and what the doctor needs from me." />
       </div>
       <div class="text-center mt-6">
         <a href="/packages/" class="text-brand-gold text-xs tracking-widest hover:text-text-primary transition-colors">VIEW ALL PACKAGES →</a>
@@ -242,48 +364,76 @@ const schema = {
 
       <!-- Google Rating Summary -->
       <div class="flex items-center justify-center gap-3 mb-10">
-        <span class="font-display text-4xl font-light text-brand-gold">4.3</span>
+        <span class="font-display text-4xl font-light text-brand-gold">4.6</span>
         <div>
           <div class="flex gap-0.5">
             {[1,2,3,4].map(() => (
               <svg width="16" height="16" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
             <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="half"><stop offset="43%" stop-color="var(--color-gold)"/><stop offset="43%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
+              <defs><linearGradient id="half"><stop offset="60%" stop-color="var(--color-gold)"/><stop offset="60%" stop-color="var(--color-gold)" stop-opacity="0.2"/></linearGradient></defs>
               <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z" fill="url(#half)"/>
             </svg>
           </div>
-          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">6 Google Reviews</p>
+          <p class="text-[10px] tracking-[3px] uppercase text-text-muted mt-1">11 Google Reviews</p>
         </div>
       </div>
 
       <!-- Review Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-        <!-- Review 1 -->
-        <div class="border border-brand-gold-border bg-brand-bg p-6">
+        <!-- Athul Sudhesh -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
           <div class="flex gap-0.5 mb-4">
             {[1,2,3,4,5].map(() => (
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"Very good, a genuinely positive experience at the clinic."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"After ten days, my migraines dropped from roughly three a week to once a fortnight. The warm oil stream over the forehead is calming in a way that's hard to describe — I fell asleep during the second session. I still come back every few months for a maintenance course."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
-            <span class="text-xs text-text-primary font-body">Shephy Rustham</span>
+            <span class="text-xs text-text-primary font-body">Athul Sudhesh</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
           </div>
         </div>
 
-        <!-- Review 2 -->
-        <div class="border border-brand-gold-border bg-brand-bg p-6">
+        <!-- Karundes Das -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
           <div class="flex gap-0.5 mb-4">
             {[1,2,3,4,5].map(() => (
               <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
             ))}
           </div>
-          <p class="text-sm text-text-secondary italic leading-relaxed font-light">"A trusted Ayurvedic clinic in Haripad, recommended for anyone seeking authentic treatment."</p>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"Eighteen months of sciatica — I'd tried physiotherapy, acupuncture, and an epidural injection. The doctor identified specific marma points and combined targeted pressure therapy with medicines and dietary guidance. Three weeks in and I was sitting through full workdays without the burning sensation."</p>
           <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
-            <span class="text-xs text-text-primary font-body">Karundas Das</span>
+            <span class="text-xs text-text-primary font-body">Karundes Das</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+        <!-- Sreenath Sethu -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1 line-clamp-5">"I came in drained after a long, difficult stretch at work. By the third session of Pizhichil I could feel a difference: more warmth in my limbs, better energy. After the full course, the exhaustion that had become my normal for months was largely gone. The care here is personal in a way that's hard to find."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Sreenath Sethu</span>
+            <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
+          </div>
+        </div>
+
+        <!-- Usha C G -->
+        <div class="border border-brand-gold-border bg-brand-bg p-6 flex flex-col">
+          <div class="flex gap-0.5 mb-4">
+            {[1,2,3,4,5].map(() => (
+              <svg width="13" height="13" viewBox="0 0 20 20" class="fill-brand-gold" xmlns="http://www.w3.org/2000/svg"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78L10 1z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-text-secondary italic leading-relaxed font-light flex-1">"My knee pain has reduced. I'm able to walk and sit comfortably now. I'm also sleeping well. The Pizhichil, Elakizhi, and Njavaraikizhi treatments were very soothing. The swelling in my body has completely reduced."</p>
+          <div class="mt-4 pt-4 border-t border-brand-gold-border flex items-center justify-between">
+            <span class="text-xs text-text-primary font-body">Usha C G</span>
             <span class="text-[10px] text-text-subtle tracking-wider">Google Review</span>
           </div>
         </div>
@@ -327,6 +477,14 @@ const schema = {
       </div>
     </section>
   )}
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 bg-brand-bg">
+    <div class="max-w-3xl mx-auto">
+      <SectionHeader label="Common Questions" heading="Frequently Asked" />
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
 
   <!-- CTA -->
   <CTABanner />

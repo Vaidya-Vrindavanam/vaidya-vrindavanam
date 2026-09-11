@@ -6,6 +6,7 @@ import { getConditions, getTreatments } from '../../lib/sanity';
 import type { Condition, Treatment } from '../../lib/sanity';
 import { conditionDetails } from '../../data/conditionDetails';
 import { conditionSeoDescriptions } from '../../data/seoDescriptions';
+import { whatsappLink } from '../../config/contact';
 
 export async function getStaticPaths() {
   const [conditions, allTreatments] = await Promise.all([
@@ -25,6 +26,7 @@ const relatedTreatments = allTreatments.filter(t =>
 );
 
 const detail = conditionDetails[condition.slug];
+const consultationLink = whatsappLink(`Hi, I'd like to book a consultation about ${condition.name}. Please share availability and the next steps.`);
 
 // Conditions for which the seasonal Karkidaka Chikitsa package is highly
 // indicated. Render a seasonal callout linking to the package page.
@@ -121,6 +123,19 @@ const schema = {
           </dl>
         )}
       </div>
+
+      <a
+        data-testid="condition-consultation-cta"
+        data-analytics-event="condition_consultation_click"
+        data-analytics-location="condition_detail"
+        data-analytics-value={condition.slug}
+        href={consultationLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center min-h-[44px] mt-8 bg-brand-gold text-brand-bg px-6 py-3 text-xs font-bold tracking-widest hover:bg-brand-gold/90 transition-colors"
+      >
+        ASK ABOUT {condition.name.toUpperCase()} →
+      </a>
     </div>
   </section>
 
@@ -275,12 +290,12 @@ const schema = {
     <section class="py-12 px-6 bg-brand-bg">
       <div class="max-w-3xl mx-auto">
         <div class="border border-brand-gold p-6 bg-brand-bg/60">
-          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold">Seasonal Opportunity · Karkidakam 2026</p>
+          <p class="text-[9px] tracking-[5px] uppercase text-brand-gold">Seasonal Care · Karkidakam</p>
           <h2 class="text-lg md:text-xl font-display text-text-primary mt-2">Best treated during the monsoon</h2>
-          <p class="text-sm text-text-secondary leading-relaxed mt-2">{condition.name} responds especially well to seasonal Panchakarma during the Malayalam month of Karkidakam (17 July – 16 August 2026). The classical approach combines Pizhichil, Navarakizhi, Shirodhara, Karkidaka Vasthi, Karkidaka Kanji and personalised Rasayana, read the full clinical guide, or see our 2026 programme.</p>
+          <p class="text-sm text-text-secondary leading-relaxed mt-2">{condition.name} responds especially well to seasonal Panchakarma during the Malayalam month of Karkidakam. The classical approach combines Pizhichil, Navarakizhi, Shirodhara, Karkidaka Vasthi, Karkidaka Kanji and personalised Rasayana. Read the full clinical guide or ask us about the current seasonal programme.</p>
           <div class="flex flex-wrap gap-3 mt-4">
             <a href="/karkidaka-chikitsa/" class="inline-flex items-center min-h-[44px] text-[10px] tracking-widest uppercase border border-brand-gold text-brand-gold px-4 py-2 hover:bg-brand-gold hover:text-brand-bg transition-colors">Read the Full Guide</a>
-            <a href="/packages/karkidaka-chikitsa/" class="inline-flex items-center min-h-[44px] text-[10px] tracking-widest uppercase bg-brand-gold text-brand-bg px-4 py-2">View 2026 Package →</a>
+            <a href="/packages/karkidaka-chikitsa/" class="inline-flex items-center min-h-[44px] text-[10px] tracking-widest uppercase bg-brand-gold text-brand-bg px-4 py-2">Explore Seasonal Care →</a>
           </div>
         </div>
       </div>

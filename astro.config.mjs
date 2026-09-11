@@ -9,6 +9,21 @@ export default defineConfig({
     format: 'directory',
     inlineStylesheets: 'always',
   },
+  vite: {
+    plugins: [
+      {
+        name: 'avoid-dev-toolbar-a11y-prebundle',
+        enforce: 'post',
+        configResolved(config) {
+          // Astro's dev toolbar adds these CJS packages to Vite's include list.
+          // Leaving them external avoids a Windows/esbuild resolution failure.
+          config.optimizeDeps.include = config.optimizeDeps.include.filter(
+            (dependency) => !dependency.includes('aria-query') && !dependency.includes('axobject-query'),
+          );
+        },
+      },
+    ],
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
